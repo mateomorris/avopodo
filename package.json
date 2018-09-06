@@ -1,0 +1,50 @@
+{
+  "name": "avopodo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "antd-mobile-rn": "^2.2.0",
+    "expo": "^26.0.0",
+    "howler": "^2.0.9",
+    "rapidapi-connect": "0.0.6",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-animatable": "^1.3.0",
+    "react-native-audio-toolkit": "^1.0.6",
+    "react-native-blur": "^3.2.2",
+    "react-native-indicators": "^0.12.0",
+    "react-native-linear-gradient": "^2.4.0",
+    "react-native-marquee": "^0.3.2",
+    "react-native-modalbox": "^1.4.2",
+    "react-native-music-control": "^0.7.3",
+    "react-native-navigation": "^2.0.2515",
+    "react-native-palette": "^0.3.2",
+    "react-native-progress": "^3.4.0",
+    "react-native-search-bar": "^3.4.1",
+    "react-native-snap-carousel": "^3.7.0",
+    "react-native-sound": "^0.10.9",
+    "react-native-svg": "^6.5.2",
+    "react-native-svg-uri": "^1.2.3",
+    "react-native-swipe-gestures": "^1.0.2",
+    "react-native-swipeout": "^2.3.3",
+    "react-native-track-player": "^0.2.5",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-persist": "^5.9.1",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "^5",
+    "jest": "23.5.0",
+    "react-redux": "^5.0.7",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

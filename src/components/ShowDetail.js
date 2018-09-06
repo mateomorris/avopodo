@@ -1,0 +1,55 @@
+import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+
+const styles = StyleSheet.create({
+    container: {
+        margin: 5, 
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 0
+        },
+        shadowRadius: 2,
+        shadowOpacity: 0.75
+    },
+    thumbnail: { 
+        width: 120, 
+        height: 120, 
+        borderRadius: 4
+    }
+});
+
+export default class ShowDetail extends React.Component {
+
+    _handlePress = () => {
+        this.props.onPress();
+    }
+
+    render() {
+
+        const { title, image, description, color } = this.props; 
+
+        return (
+            <TouchableOpacity onPress={this._handlePress} style={{ flexDirection: 'row', marginBottom: 15, with: '30%', paddingLeft: 10, paddingRight: 10, backgroundColor: 'black', paddingTop: 10, paddingBottom: 10 }}>
+                <View style={styles.container}>
+                    <Image source={{uri: image}} style={[styles.thumbnail, {backgroundColor: color}]} />
+                </View>
+                <View style={{ paddingLeft: 10, width: '65%' }}>
+                    {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{fontSize: 16, color: 'black', fontWeight: '700'}}>{title}</Text>
+                    </View> */}
+                    <View style={{ height: 130 }}>
+                        {/* <Text style={{fontSize: 15, color: '#fefefe', fontWeight: '900'}}>From the New York Times</Text> */}
+                        <Text 
+                            style={{fontSize: 15, color: '#fefefe', fontWeight: '500'}} 
+                            ellipsizeMode='tail' 
+                            numberOfLines={7}>
+                            {description}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+
+    }
+}
