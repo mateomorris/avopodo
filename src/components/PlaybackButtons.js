@@ -19,7 +19,7 @@ export default class PlaybackButton extends Component {
                     <Image style={{ height: 45, width: 45 }} source={require('../assets/skip-back.png')} resizeMode={'center'} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', marginTop: 50 }} onPress={() => {this.props.onPlayPause()}}>
-                    <MaterialIndicator color={ buffering ? 'transparent' : color } size={100} animationDuration={3000} />
+                    <MaterialIndicator color={ buffering ? color : 'transparent' } size={100} animationDuration={3000} />
                     <View style={{ 
                             position: 'absolute',
                             padding: 40, 

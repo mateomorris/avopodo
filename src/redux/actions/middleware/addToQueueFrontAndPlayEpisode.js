@@ -11,13 +11,13 @@ export function addToQueueFrontAndPlayEpisode(show, episode) {
         console.log(show)
         let state = getState().reducer;
         // dispatch(addEpisodeToQueue(show, episode))
-        dispatch(toggleBufferingStatus(false))
+        dispatch(toggleBufferingStatus(true))
         this.interval = setInterval(() => { 
             TrackPlayer.getBufferedPosition().then((buffered) => {
                 TrackPlayer.getPosition().then((position) => {
                 if (buffered > position) {
                   clearInterval(this.interval);
-                  dispatch(toggleBufferingStatus(true))
+                  dispatch(toggleBufferingStatus(false))
                 } else {
                   console.log('Buffering')
                 }

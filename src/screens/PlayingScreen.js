@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -20,7 +20,8 @@ class PlayingScreen extends React.Component {
 
   state = {
     artworks: [],
-    playingNextEpisode : false
+    playingNextEpisode : false,
+    appState: AppState.currentState
   }
 
   _handleFavoritePress = () => {
@@ -36,6 +37,25 @@ class PlayingScreen extends React.Component {
   componentWillMount = () => {
     // let currentTrackEpisodeId = this.props.state.nowPlaying.episode.id;
     // this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
+  }
+
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('App has come to the foreground!')
+      this.props.actions.syncQueue()
+    } else {
+      console.log('App in background')
+    }
+    this.setState({appState: nextAppState});
   }
 
   _renderFavorites = (favorites) => {

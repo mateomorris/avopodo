@@ -53,8 +53,9 @@ class PlaylistDetailScreen extends Component {
     _getShowList = () => {
         let { playlist } = this.props
 
-        let shows = playlist.shows.map((showId) => {
+        let shows = playlist.shows.filter((showId) => {
             return this.props.state.subscribedShows.find((subscribedShow) => {
+                console.log(subscribedShow.id, showId)
                 return subscribedShow.id == showId
             })
         })
@@ -66,6 +67,8 @@ class PlaylistDetailScreen extends Component {
                 return show
             }
         })
+
+        console.log( [...shows, ...restOfSubscribedShows])
 
         return [...shows, ...restOfSubscribedShows]
     }
@@ -524,37 +527,35 @@ class PlaylistDetailScreen extends Component {
                     padding: 20,
                     flexDirection: 'row'
                 }}>
-                    { this.state.showPlaylistDetails &&
-                    <Button 
-                    onClick={() => {
-                            Alert.alert(
-                                'Are you sure you want to delete this playlist?',
-                                '(no take-backs)',
-                                [
-                                    {text: 'No', onPress: () => {}},
-                                    {text: 'Yes', onPress: () => {
-                                        this.props.actions.removePlaylist(this.state.playlistId)
-                                        Navigation.dismissLightBox()
-                                    }}
-                                ]
-                            )
-                    }} 
-                    style={{
-                        backgroundColor: 'red',
-                        borderColor: 'transparent',
-                        marginRight: 10,
-                    }}>
-                        <View style={{
+                    {   this.state.showPlaylistDetails &&
+                        <Button 
+                        onClick={() => {
+                                Alert.alert(
+                                    'Are you sure you want to delete this playlist?',
+                                    '(no take-backs)',
+                                    [
+                                        {text: 'No', onPress: () => {}},
+                                        {text: 'Yes', onPress: () => {
+                                            this.props.actions.removePlaylist(this.state.playlistId)
+                                            Navigation.dismissLightBox()
+                                        }}
+                                    ]
+                                )
+                        }} 
+                        style={{
+                            backgroundColor: 'red',
+                            borderColor: 'transparent',
+                            marginRight: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            paddingTop: 5
+                            flexDirection: 'row'
                         }}>
-                            <Image source={require('../assets/x.png')} style={{
-                                width: 25,
-                                height: 25
-                            }} resizeMode={'cover'}/>
-                        </View>
-                    </Button>
+                                <Image source={require('../assets/x.png')} style={{
+                                   flex: 1,
+                                   height: '100%',
+                                   width: 50
+                                }} resizeMode={'contain'}/>
+                        </Button>
                     }
                     <Button 
                     onClick={() => {

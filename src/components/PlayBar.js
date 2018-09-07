@@ -57,6 +57,10 @@ class PlayBar extends React.Component {
                         name: 'example.PlayingScreen',
                         passProps: {},
                         options: {
+                            statusBar: {
+                                visible : true,
+                                style: 'light'
+                            },
                             topBar: {
                                 visible: false
                             }
@@ -127,7 +131,7 @@ class PlayBar extends React.Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9}}>
-                    <MaterialIndicator color={ bufferingStatus ? 'transparent' : 'rgba(250,250,250,.3)' } size={30} animationDuration={2000} />
+                    <MaterialIndicator color={ bufferingStatus ? 'rgba(250,250,250,.3)' : 'transparent' } size={30} animationDuration={2000} />
                     <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/>
                 </TouchableOpacity>
             {/* </View> */}

@@ -121,6 +121,18 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     // this.props.actions.setupPlayer();
 
+    // Activate playbar
+    Navigation.showOverlay({
+        component: {
+            name: 'example.PlayBar',
+            options: {
+                overlay: {
+                    interceptTouchOutside: false
+                }
+            }
+        }
+    });
+
 
     if ('id' in this.props.state.nowPlaying) {
       let currentTrackEpisodeId = this.props.state.nowPlaying.id;
@@ -129,6 +141,7 @@ class HomeScreen extends React.Component {
       console.log(this.props.state, 'No episode is currently playing')
     }
 
+    // TODO: Offline functionality
     NetInfo.getConnectionInfo().then((connectionInfo) => {
       console.log(connectionInfo)
       console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);

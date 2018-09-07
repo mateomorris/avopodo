@@ -64,6 +64,20 @@ class ShowDetailScreen extends React.Component {
         this._getEpisodeList(this.props.id);
     }
 
+    _handleEpisodeThumbnailPress = (episode) => {
+
+        let show = {
+            title: episode.showTitle,
+            image: episode.showImage,
+            color: episode.showColor,
+            description: episode.showImageHighRes,
+            imageHighRes: episode.showImageHighRes
+        }
+        
+        this.props.actions.addToQueueFrontAndPlayEpisode(show, episode);
+
+    }
+
     _playAudio = async (title, image, imageHighRes, description, color, episode) => {
 
         let show = { title, image, imageHighRes, description, color }

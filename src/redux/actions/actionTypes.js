@@ -23,3 +23,5 @@ export const SET_NEWEST_FROM_SUBSCRIBED = 'Set newest from subscribed';
 export const MARK_EPISODE_AS_PLAYED = 'Mark episode as played';
 export const EDIT_PLAYLIST = 'Edit playlist';
 export const REMOVE_PLAYLIST = 'Remove playlist';
+export const SETUP_APP = 'Setup app';
+export const SYNC_QUEUE = 'Sync queue';

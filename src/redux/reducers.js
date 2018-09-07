@@ -19,7 +19,8 @@ import {
     SET_NEWEST_FROM_SUBSCRIBED,
     MARK_EPISODE_AS_PLAYED,
     EDIT_PLAYLIST,
-    REMOVE_PLAYLIST
+    REMOVE_PLAYLIST,
+    SYNC_QUEUE
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -43,6 +44,24 @@ const initialState = {
 function reducer(state = initialState, action) {
     console.log(state)
     switch (action.type) {
+        case SYNC_QUEUE: 
+            console.log('SYNCING QUEUE')
+            TrackPlayer.getCurrentTrack().then((track) => {
+                console.log(state.playQueue, track)
+                if (state.nowPlaying.id != track) {
+                    console.log(state)
+                    let newQueue = state.playQueue.slice(state.playQueue.findIndex(item => item.id == track))
+                    console.log('Queue is not current', newQueue)
+                    return {
+                        ...state,
+                        playQueue : newQueue
+                    }
+                } else {
+                    console.log(state.nowPlaying.id, track)
+                    console.log('Queue is current')
+                    return state
+                }
+            })
         case REMOVE_PLAYLIST: 
             return {
                 ...state,
@@ -90,42 +109,6 @@ function reducer(state = initialState, action) {
                 newestFromSubscribed: action.episodeList
             }
         case SETUP_PLAYER:
-            TrackPlayer.reset();
-            TrackPlayer.setupPlayer().then(()=>{
-                TrackPlayer.updateOptions({
-                    capabilities: [
-                        TrackPlayer.CAPABILITY_PLAY,
-                        TrackPlayer.CAPABILITY_PAUSE,
-                        TrackPlayer.CAPABILITY_STOP,
-                        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
-                    ]
-                });
-            });
-
-            TrackPlayer.registerEventHandler(async (data) => {
-                if (data.type === 'playback-track-changed') {
-                  if (data.nextTrack) {
-                    const track = await TrackPlayer.getTrack(data.nextTrack);
-                    TrackStore.title = track.title;
-                    TrackStore.artist = track.artist;
-                    TrackStore.artwork = track.artwork;
-                  }
-                } else if(data.type == 'remote-seek') {
-                    TrackPlayer.seekTo(200)
-                } else if(data.type == 'remote-play') {
-                  TrackPlayer.play()
-                } else if(data.type == 'remote-pause') {
-                  TrackPlayer.pause()
-                } else if(data.type == 'remote-next') {
-                  TrackPlayer.skipToNext()
-                } else if(data.type == 'remote-previous') {
-                  TrackPlayer.skipToPrevious()
-                } else if (data.type === 'playback-state') {
-                  PlayerStore.playbackState = data.state;
-                }
-            });
-              
 
             let currentEpisodePosition = state.playQueue.map(episode => episode.id).indexOf(state.nowPlaying.id)
 
@@ -133,7 +116,6 @@ function reducer(state = initialState, action) {
                 let playQueue = state.playQueue.slice(currentEpisodePosition).map((episode) => {
                     return trackDetails(episode)
                 })
-                console.log('Track player queue', playQueue)
                 TrackPlayer.add(playQueue).then(() => {
                     console.log(state.nowPlaying)
                     TrackPlayer.pause()
@@ -152,8 +134,13 @@ function reducer(state = initialState, action) {
         case ADD_PLAYLIST_TO_QUEUE: 
             // NEXT: Dispatch all the pieces to make this functional
             TrackPlayer.reset();
-            TrackPlayer.add(action.trackPlayerQueue)
-            TrackPlayer.play()
+            TrackPlayer.add(action.trackPlayerQueue).then(() => {
+                TrackPlayer.getQueue().then((queue) => {
+                    console.log(queue)
+                    TrackPlayer.play()
+                })
+            })
+
             return {
                 ...state, 
                 playing: true,
@@ -256,6 +243,7 @@ function reducer(state = initialState, action) {
 
             return {
                 ...state,
+                active: true,
                 playing: action.startPlaying
             };
         case START_PLAYER: 
@@ -378,17 +366,6 @@ function reducer(state = initialState, action) {
                 TrackPlayer.skip(track.id).then(() => {
                     TrackPlayer.play();
                 })
-            });
-
-            Navigation.showOverlay({
-                component: {
-                    name: 'example.PlayBar',
-                    options: {
-                        overlay: {
-                            interceptTouchOutside: false
-                        }
-                    }
-                }
             });
 
             return {

@@ -23,6 +23,11 @@ import PlaylistDetailScreen from './src/screens/PlaylistDetailScreen';
 
 import PlayBar from './src/components/PlayBar';
 
+
+////////////////////////////////
+console.disableYellowBox = true;
+////////////////////////////////
+
 const config = {
   key: 'root',
   storage,
