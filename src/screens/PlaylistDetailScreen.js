@@ -53,22 +53,24 @@ class PlaylistDetailScreen extends Component {
     _getShowList = () => {
         let { playlist } = this.props
 
-        let shows = playlist.shows.filter((showId) => {
+        let shows = playlist.shows.map((showId) => {
             return this.props.state.subscribedShows.find((subscribedShow) => {
                 console.log(subscribedShow.id, showId)
-                return subscribedShow.id == showId
+                return subscribedShow.id == showId ? subscribedShow : false
             })
         })
 
         let restOfSubscribedShows = this.props.state.subscribedShows.filter((show) => {
-            if (!playlist.shows.find((showId) => {
-                return showId == show.id
+
+            if (!playlist.shows.find((showId) => { 
+                return showId == show.id;
             })) {
+                console.log(show)
                 return show
             }
         })
 
-        console.log( [...shows, ...restOfSubscribedShows])
+        console.log( shows, restOfSubscribedShows )
 
         return [...shows, ...restOfSubscribedShows]
     }
@@ -219,7 +221,7 @@ class PlaylistDetailScreen extends Component {
                     released : this.state.releaseRange,
                     shows : this.state.checkedShows
                 })
-                Navigation.dismissLightBox()
+                Navigation.dismissOverlay(this.props.componentId)
             } else {
                 Alert.alert(
                     'No episodes fit criteria, try casting a wider net',
@@ -537,7 +539,7 @@ class PlaylistDetailScreen extends Component {
                                         {text: 'No', onPress: () => {}},
                                         {text: 'Yes', onPress: () => {
                                             this.props.actions.removePlaylist(this.state.playlistId)
-                                            Navigation.dismissLightBox()
+                                            Navigation.dismissOverlay(this.props.componentId)
                                         }}
                                     ]
                                 )
