@@ -21,7 +21,8 @@ class PlaylistsScreen extends React.Component {
 
   _playAudio = (playlist) => {
     
-    this.props.actions.addPlaylistToQueue(playlist);
+    this.props.actions.addPlaylistToQueue(playlist)
+    this.props.actions.toggleBufferingStatus(false)
 
   }
 
