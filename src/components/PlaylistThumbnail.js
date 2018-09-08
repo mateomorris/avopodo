@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SvgUri from 'react-native-svg-uri';
 
+import playlistIcons from '../assets/playlist-icons'
 
 const styles = StyleSheet.create({
     containerOuter: { 
@@ -69,6 +70,10 @@ const styles = StyleSheet.create({
 
 export default class PlaylistThumbnail extends React.Component {
 
+    state = {
+        pressStatus : false
+    }
+
     _handleRightPress = () => {
         this.props.onRightPress();
     }
@@ -110,6 +115,13 @@ export default class PlaylistThumbnail extends React.Component {
         }
     }
 
+    _onHideUnderlay(){
+        this.setState({ pressStatus: false });
+    }
+    _onShowUnderlay(){
+        this.setState({ pressStatus: true });
+    }
+
     render() {
 
         const { icon, title, duration, episodes } = this.props; 
@@ -127,9 +139,29 @@ export default class PlaylistThumbnail extends React.Component {
 
         return (
             <View style={{ overflow: 'hidden' }}>
-                <View style={styles.containerOuter}>
+                <View style={[styles.containerOuter, { shadowOpacity: this.state.pressStatus ? 0.4 : 0.75 }]}>
                     <View style={styles.containerInner}>
-                        <TouchableOpacity style={styles.backgroundImages} onPress={() => this._handleRightPress()}>
+                        <TouchableHighlight
+                        activeOpacity={0.5}
+                        onPress={() => this._handleRightPress()}
+                        style={{ 
+                            width: '100%',
+                            position: 'absolute'
+                        }}
+                        onHideUnderlay={this._onHideUnderlay.bind(this)}
+                        onShowUnderlay={this._onShowUnderlay.bind(this)}
+                        >
+                            <View style={[{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end' }]}>
+                                {
+                                    episodes ? episodes.slice(0,3).map((episode, index) => {
+                                        return (
+                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={styles.backgroundImage} key={index}/>
+                                        )
+                                    }) : null
+                                }
+                            </View>
+                        </TouchableHighlight>
+                        {/* <TouchableOpacity style={styles.backgroundImages} onPress={() => this._handleRightPress()}>
                             {
                                 episodes ? episodes.slice(0,3).map((episode, index) => {
                                     return (
@@ -137,47 +169,47 @@ export default class PlaylistThumbnail extends React.Component {
                                     )
                                 }) : null
                             }
-                        </TouchableOpacity>
-                            <LinearGradient style={styles.infoContainer} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
-                                <TouchableOpacity 
-                                    onPress={() => this._handleLeftPress()}
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center'
-                                    }}
-                                    >
-                                    <View style={{
-                                        paddingRight: 10
-                                    }}>
-                                        <SvgUri width="30" height="30" source={icon} fill={'white'} fillAll={true}/>
-                                    </View>
-                                    <View>
-                                        <Text style={ styles.title }>{ title.toUpperCase() }</Text>
-                                        <Text style={ styles.duration }>{ this._durationLabel(duration) }</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </LinearGradient>
-                            <View pointerEvents="none" style={{ flex: 1 }}>
-                                {/* <Image 
-                                    source={require('../assets/play.png')} 
-                                    style={{
-                                        height: 20,
-                                        width: 20,
-                                        position: 'absolute',
-                                        right: 5,
-                                        bottom: 5,
-                                        zIndex: 99999
-                                    }}
-                                /> */}
-                                <SvgUri style={{
-                                        height: 20,
-                                        width: 20,
-                                        position: 'absolute',
-                                        right: 5,
-                                        bottom: 5,
-                                        zIndex: 99999
-                                }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
-                            </View>
+                        </TouchableOpacity> */}
+                        <LinearGradient style={[styles.infoContainer, {}]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
+                            <TouchableOpacity 
+                                onPress={() => this._handleLeftPress()}
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                                >
+                                <View style={{
+                                    paddingRight: 10
+                                }}>
+                                    <SvgUri width="30" height="30" source={icon} fill={'white'} fillAll={true}/>
+                                </View>
+                                <View>
+                                    <Text style={ styles.title }>{ title.toUpperCase() }</Text>
+                                    <Text style={ styles.duration }>{ this._durationLabel(duration) }</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <View pointerEvents="none" style={{ flex: 1 }}>
+                            {/* <Image 
+                                source={require('../assets/play.png')} 
+                                style={{
+                                    height: 20,
+                                    width: 20,
+                                    position: 'absolute',
+                                    right: 5,
+                                    bottom: 5,
+                                    zIndex: 99999
+                                }}
+                            /> */}
+                            <SvgUri style={{
+                                    height: 20,
+                                    width: 20,
+                                    position: 'absolute',
+                                    right: 5,
+                                    bottom: 5,
+                                    zIndex: 99999
+                            }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                        </View>
                     </View>
                 </View>
             </View>          
