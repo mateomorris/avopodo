@@ -85,9 +85,9 @@ class PlaylistsScreen extends React.Component {
               title={item.name} 
               duration={item.duration} 
               icon={playlistIcons[item.icon]} 
-              episodes={item.episodeQueue}
-              onRightPress={() => {this._handlePlaylistPlayPress(item)}}
-              onLeftPress={() => {this._handlePlaylistDetailPress(item)}}
+              episodes={item.episodeQueue} 
+              onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
+              onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />
           )
         })}

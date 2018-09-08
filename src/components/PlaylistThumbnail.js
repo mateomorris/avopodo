@@ -151,7 +151,7 @@ export default class PlaylistThumbnail extends React.Component {
                         onHideUnderlay={this._onHideUnderlay.bind(this)}
                         onShowUnderlay={this._onShowUnderlay.bind(this)}
                         >
-                            <View style={[{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end' }]}>
+                            <View style={[{ width: '100%', flexDirection: 'row-reverse', justifyContent: 'flex-start' }]}>
                                 {
                                     episodes ? episodes.slice(0,3).map((episode, index) => {
                                         return (
