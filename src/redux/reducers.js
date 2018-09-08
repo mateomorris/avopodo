@@ -34,7 +34,7 @@ const initialState = {
   nowPlaying: {},
   playing: false,
   active: false,
-  activePlaylist : null,
+  activePlaylist : {},
   playQueue: [],
   episodePlaybackPositions: {},
   currentTrackPosition: 0,
@@ -49,7 +49,7 @@ function reducer(state = initialState, action) {
             TrackPlayer.reset();
             return {
                 ...state,
-                activePlaylist : null,
+                activePlaylist : {},
                 nowPlaying : {},
                 playQueue : []
             };

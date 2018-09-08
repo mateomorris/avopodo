@@ -25,16 +25,10 @@ export function addToQueueFrontAndPlayEpisode(show, episode) {
 
 
         // If a playlist is currently playing and this episode isn't in it, remove the playlist
-        if (
-            state.activePlaylist && 
-            !state.activePlaylist.episodeQueue.find(episodeInPlaylist => episodeInPlaylist.id == episode.id)
-        ) {
+        if (!typeof state.activePlaylist.episodeQueue === 'undefined' && !state.activePlaylist.episodeQueue.find(episodeInPlaylist => episodeInPlaylist.id == episode.id)) {
             console.log('Cannot find episode in playlist')
             dispatch(resetQueue())
-        } else {
-            console.log('Found episode in playlist', state.activePlaylist.episodeQueue.find(episode => episode.id == episode.id))
         }
-
 
 
         // Check if episode is already at the top of the queue

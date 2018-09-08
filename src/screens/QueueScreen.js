@@ -80,7 +80,7 @@ class QueueScreen extends Component {
                         fontSize: 30, 
                         fontWeight: '700',
                         color: 'white',
-                    }}>{ playlist ? playlist.name : 'Up Next' }</Text>
+                    }}>{ playlist.name ? playlist.name : 'Up Next' }</Text>
                 </View>
                 <View
                     style={{
