@@ -27,8 +27,8 @@ export default class PlaybackButton extends Component {
                         position: 'absolute', 
                         justifyContent: 'center', 
                         alignItems: 'center', 
-                        height: 100, 
-                        width: 100, 
+                        height: 110, 
+                        width: 110, 
                         backgroundColor: `${color}88`,
                     }}>
                         <SvgUri style={{ 
@@ -39,7 +39,7 @@ export default class PlaybackButton extends Component {
                             alignItems: 'center', 
                             borderRadius: 500,
                             zIndex: -1,
-                        }} width="80" height="80" source={this.props.playbackStatus ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg')} fill={color} fillAll={true}/>
+                        }} width="90" height="90" source={this.props.playbackStatus ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg')} fill={color} fillAll={true}/>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ alignItems: 'center', paddingLeft: 40, justifyContent: 'center', width: 50, height: 100, paddingRight: 30 }} onPress={() => {this.props.onJumpForward()}}>
