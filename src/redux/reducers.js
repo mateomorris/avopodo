@@ -20,7 +20,8 @@ import {
     MARK_EPISODE_AS_PLAYED,
     EDIT_PLAYLIST,
     REMOVE_PLAYLIST,
-    SYNC_QUEUE
+    SYNC_QUEUE,
+    RESET_QUEUE
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -44,6 +45,14 @@ const initialState = {
 function reducer(state = initialState, action) {
     // console.log(state)
     switch (action.type) {
+        case RESET_QUEUE: 
+            TrackPlayer.reset();
+            return {
+                ...state,
+                activePlaylist : null,
+                nowPlaying : {},
+                playQueue : []
+            };
         case SYNC_QUEUE: 
             console.log('SYNCING QUEUE')
             TrackPlayer.getCurrentTrack().then((track) => {
