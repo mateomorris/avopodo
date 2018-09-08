@@ -50,10 +50,9 @@ class PlayingScreen extends React.Component {
 
   _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!')
       this.props.actions.syncQueue()
     } else {
-      console.log('App in background')
+
     }
     this.setState({appState: nextAppState});
   }
@@ -90,7 +89,6 @@ class PlayingScreen extends React.Component {
   }
 
   _markEpisodeAsPlayed = (episodeId, carousel) => {
-      console.log('Marking episode as played, playing next')
       carousel.snapToNext() // handles playing the next track 
       this.props.actions.markEpisodeAsPlayed(episodeId)
       this.setState({
