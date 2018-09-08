@@ -79,7 +79,7 @@ class PlayingScreen extends React.Component {
   _renderItem ({item, index}) {
     return (
         <View style={{ width: '100%', height: '100%' }}>
-            <Image source={{ uri: item.showImage }} style={{ height: '100%', width: '100%'}} resizeMode={'contain'}/>
+            <Image source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%', backgroundColor: 'blue'}} resizeMode={'contain'}/>
         </View>
     );
   }

@@ -62,7 +62,7 @@ export default class EpisodeSnippet extends React.Component {
         return (
             <TouchableOpacity style={{ flexDirection: 'row', marginBottom: 15, marginTop: 10, height: 130, overflow: 'hidden' }} onPress={() => {this.props.onPress()}}>
                 <TouchableOpacity style={styles.container} onPress={() => { this.props.onThumbnailPress() }}>
-                    <Image source={{uri: showImageHighRes || showImage, cache: force-cache}} style={[styles.thumbnail, {backgroundColor: showColor}]} />
+                    <Image source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: showColor}]} />
                     <SvgUri style={{
                             height: 20,
                             width: 20,

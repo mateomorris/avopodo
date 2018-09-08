@@ -44,7 +44,7 @@ export default class ShowThumbnail extends React.Component {
                 underlayColor={color}
                 onPress={() => {this._handlePress()}} 
                 style={[styles.container, this.props.style]}>
-              <Image source={{uri: art, cache: force-cache}} style={[styles.thumbnail, (featured ? styles.featured : ''), , {backgroundColor: color}]} />
+              <Image source={{uri: art, cache: 'force-cache'}} style={[styles.thumbnail, (featured ? styles.featured : ''), , {backgroundColor: color}]} />
             </TouchableHighlight>
         );
 

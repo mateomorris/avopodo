@@ -133,7 +133,7 @@ export default class PlaylistThumbnail extends React.Component {
                             {
                                 episodes ? episodes.slice(0,3).map((episode, index) => {
                                     return (
-                                        <Image source={{uri: episode.showImage, cache: force-cache}} style={styles.backgroundImage} key={index}/>
+                                        <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={styles.backgroundImage} key={index}/>
                                     )
                                 }) : null
                             }
