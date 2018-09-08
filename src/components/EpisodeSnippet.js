@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import SvgUri from 'react-native-svg-uri';
 
 const styles = StyleSheet.create({
     container: {
@@ -62,16 +63,13 @@ export default class EpisodeSnippet extends React.Component {
             <TouchableOpacity style={{ flexDirection: 'row', marginBottom: 15, marginTop: 10, height: 130, overflow: 'hidden' }} onPress={() => {this.props.onPress()}}>
                 <TouchableOpacity style={styles.container} onPress={() => { this.props.onThumbnailPress() }}>
                     <Image source={{uri: showImageHighRes || showImage}} style={[styles.thumbnail, {backgroundColor: showColor}]} />
-                    <Image 
-                        source={require('../assets/play.png')} 
-                        style={{
+                    <SvgUri style={{
                             height: 20,
                             width: 20,
                             position: 'absolute',
                             right: 5,
                             bottom: 5
-                        }}
-                    />
+                        }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
                     <View 
                         style={{ 
                             backgroundColor: 'black', 

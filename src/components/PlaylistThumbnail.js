@@ -158,7 +158,7 @@ export default class PlaylistThumbnail extends React.Component {
                                 </TouchableOpacity>
                             </LinearGradient>
                             <View pointerEvents="none" style={{ flex: 1 }}>
-                                <Image 
+                                {/* <Image 
                                     source={require('../assets/play.png')} 
                                     style={{
                                         height: 20,
@@ -168,7 +168,15 @@ export default class PlaylistThumbnail extends React.Component {
                                         bottom: 5,
                                         zIndex: 99999
                                     }}
-                                />
+                                /> */}
+                                <SvgUri style={{
+                                        height: 20,
+                                        width: 20,
+                                        position: 'absolute',
+                                        right: 5,
+                                        bottom: 5,
+                                        zIndex: 99999
+                                }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
                             </View>
                     </View>
                 </View>

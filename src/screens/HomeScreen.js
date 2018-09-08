@@ -267,7 +267,7 @@ class HomeScreen extends React.Component {
     let { togglePlayback } = this.props.actions
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingBottom: this.props.state.active ? 30 : 0}}>
         <ScrollView contentContainerStyle={styles.container}>
           {/* { this._renderPlaylists(this.state.playlists) } */}
           { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : this._renderPopularFeed() }

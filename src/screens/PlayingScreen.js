@@ -145,7 +145,20 @@ class PlayingScreen extends React.Component {
           onPlaylistPress={() => { this._onPlaylistPress() }}
         />
         <GestureRecognizer
-        onSwipeDown={() => { Navigation.dismissModal(this.props.componentId); }}
+        onSwipeDown={() => {
+              Navigation.dismissModal(this.props.componentId).then(() => {
+                Navigation.showOverlay({
+                    component: {
+                        name: 'example.PlayBar',
+                        options: {
+                            overlay: {
+                                interceptTouchOutside: false
+                            }
+                        }
+                    }
+                });
+              })
+         }}
         config={config}
         style={{
           flex: 1

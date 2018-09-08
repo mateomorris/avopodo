@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
+import SvgUri from 'react-native-svg-uri';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { MaterialIndicator } from 'react-native-indicators';
@@ -113,7 +114,8 @@ class PlayBar extends React.Component {
                 flex: 1
             }}>
                 <TouchableOpacity onPress={() => this._handlePress()}>
-                    <Image style={{height: 20, width: 20}} source={require('../assets/up-arrow.png')} />
+                    {/* <Image style={{height: 20, width: 20}} source={require('../assets/up-caret.png')} /> */}
+                    <SvgUri style={{ width: 20, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this._handlePress()} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
                     <View style={{ alignItems: 'center' }}>
@@ -131,8 +133,9 @@ class PlayBar extends React.Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9}}>
-                    <MaterialIndicator color={ bufferingStatus ? 'rgba(250,250,250,.3)' : 'transparent' } size={30} animationDuration={2000} />
-                    <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/>
+                    <MaterialIndicator color={ bufferingStatus ? 'rgba(250,250,250,.3)' : 'transparent' } size={35} animationDuration={2000} />
+                    <SvgUri style={{height: 25, width: 25, position: 'absolute' }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                    {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/> */}
                 </TouchableOpacity>
             {/* </View> */}
             </GestureRecognizer>
