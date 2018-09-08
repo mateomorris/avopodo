@@ -24,7 +24,7 @@ class QueueScreen extends Component {
             flexDirection : 'row',
             height: 65
         }}>
-            <Image source={{ uri : item.showImage }} 
+            <Image source={{ uri : item.showImage, cache: 'force-cache' }} 
                 style={{
                     width: 45,
                     height: 45,

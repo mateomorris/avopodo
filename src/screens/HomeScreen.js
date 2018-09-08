@@ -270,7 +270,7 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1, paddingBottom: this.props.state.active ? 30 : 0}}>
         <ScrollView contentContainerStyle={styles.container}>
           {/* { this._renderPlaylists(this.state.playlists) } */}
-          { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : this._renderPopularFeed() }
+          { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
         </ScrollView>
         {/* <PlayBar nav={Navigation}/> */}
       </View>
