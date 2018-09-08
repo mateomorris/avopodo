@@ -4,7 +4,9 @@ import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
+import SvgUri from 'react-native-svg-uri';
 
+import playlistIcons from '../assets/playlist-icons'
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions'
 
@@ -72,12 +74,14 @@ class QueueScreen extends Component {
                 paddingLeft: 25, 
                 paddingRight: 25, 
             }}>
-                <Text style={{
-                    fontSize: 30, 
-                    fontWeight: '700',
-                    color: 'white',
-                    paddingTop: 25,
-                }}>{ playlist ? playlist : 'Up Next' }</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'flex-start', paddingTop: 25 }}>
+                    { playlist && <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/> }
+                    <Text style={{
+                        fontSize: 30, 
+                        fontWeight: '700',
+                        color: 'white',
+                    }}>{ playlist ? playlist.name : 'Up Next' }</Text>
+                </View>
                 <View
                     style={{
                         backgroundColor: 'white',
