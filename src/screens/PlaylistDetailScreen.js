@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList } from 'react-native';
+import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList, KeyboardAvoidingView } from 'react-native';
 import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -287,295 +287,297 @@ class PlaylistDetailScreen extends Component {
         let { playlist } = this.props
 
         return(
-            <Lightbox componentId={this.props.componentId} style={{
-                paddingBottom: 25
-            }}>
-                <View style={{
-                    flexDirection: 'row',
-                    paddingTop: 25,
-                    paddingLeft: 25,
-                    paddingBottom: 5,
-                    alignItems: 'center',
-                    justifyContent: 'flex-start'
+            <KeyboardAvoidingView behavior="padding">
+                <Lightbox componentId={this.props.componentId} style={{
+                    paddingBottom: 25
                 }}>
-                    <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
-                    <Text style={{
-                        fontSize: 30, 
-                        fontWeight: '700',
-                        color: 'white',
-                    }}>{playlist.name}</Text>
-                </View>
-                {/* <View
-                    style={{
-                        backgroundColor: 'white',
-                        height: 5,
-                        width: 45,
-                        marginTop: 10,
-                        marginBottom: 15,
-                        borderRadius: 1,
-                        marginLeft: 25, 
-                    }}
-                ></View> */}
-                <FlatList
-                data={playlist.episodeQueue}
-                renderItem={this._renderPlaylistItem}
-                style={{
-                    paddingLeft: 25, 
-                    paddingRight: 25,
-                    paddingBottom: 25,
-                    backgroundColor: 'rgba(0,0,0,.3)',
-                }}
-                />
-                {
-                    this.state.showPlaylistDetails &&
-                    <View>
+                    <View style={{
+                        flexDirection: 'row',
+                        paddingTop: 25,
+                        paddingLeft: 25,
+                        paddingBottom: 5,
+                        alignItems: 'center',
+                        justifyContent: 'flex-start'
+                    }}>
+                        <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
                         <Text style={{
-                            fontSize: 20,
+                            fontSize: 30, 
+                            fontWeight: '700',
                             color: 'white',
-                            paddingLeft: 25, 
-                            paddingTop: 10
-                        }}>Episodes from which shows?</Text>
-                        <ScrollView style={{
-                            backgroundColor: 'rgba(0,0,0,.3)',
-                            marginBottom: 10,
-                            marginTop: 10
-                        }}>
-                            <FlatList
-                            horizontal={true}
-                            data={this._getShowList()}
-                            extraData={this.props.state}
-                            renderItem={({item, separators}) => (
-                                <TouchableOpacity onPress={() => { this._addShowToNewPlaylist(item.id) }}>
-                                    <ImageBackground source={{uri: item.image}} style={{
-                                        height: 100, 
-                                        width: 100,
-                                        margin: 10,
-                                        marginRight: 0,
-                                        borderRadius: 10
-                                    }}>
-                                        { 
-                                            this.state.checkedShows.includes(item.id) &&
-                                            this._renderCheckMark(item.id) 
-                                        }
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                            )}
-                            />
-                        </ScrollView>
-                        <Text style={{
-                            fontSize: 20,
-                            color: 'white',
-                            paddingLeft: 25, 
-                        }}>Released when?</Text>
-                        <View style={{ 
-                            backgroundColor: 'rgba(0,0,0,.3)', 
-                            flexDirection: 'row',
-                            marginTop: 10,
-                            marginBottom: 10,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingLeft: 30,
-                            paddingRight: 30
-                        }}>
-                            <View style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                paddingRight: 2.5
-                            }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontWeight: '700',
-                                    fontSize: 20
-                                }}>
-                                    Within the past
-                                </Text>
-                            </View>
-                            <Picker
-                            style={{ 
-                                flex: 1,
-                                paddingLeft: 2.5,
-                                marginLeft: 2.5,
-                                borderLeftColor: 'rgba(0,0,0,.5)',
-                                borderLeftWidth: 3
-                            }}
-                            selectedValue={this.state.releaseRange}
-                            itemStyle={{
-                                height: 100, 
-                                textAlign: 'left',
-                                color: '#eee',
-                            }}
-                            onValueChange={(value) => { this.setState({ releaseRange: value }) }}>
-                                <Picker.Item label="week" value="week" />
-                                <Picker.Item label="two weeks" value="two-weeks" />
-                                <Picker.Item label="month" value="month" />
-                                <Picker.Item label="eternity" value="eternity" />
-                            </Picker>
-                        </View>
-                        <Text style={{
-                            fontSize: 20,
-                            color: 'white',
-                            paddingLeft: 25, 
-                        }}>How long?</Text>
-                        <View style={{ 
-                            backgroundColor: 'rgba(0,0,0,.3)', 
-                            flexDirection: 'row',
-                            marginTop: 10,
-                            marginBottom: 10,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingLeft: 30,
-                            paddingRight: 30
-                        }}>
-                            <View style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                paddingRight: 2.5
-                            }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontWeight: '700',
-                                    fontSize: 20
-                                }}>
-                                    No longer than
-                                </Text>
-                            </View>
-                            <Picker
-                            style={{ 
-                                flex: 1,
-                                paddingLeft: 2.5,
-                                marginLeft: 2.5,
-                                borderLeftColor: 'rgba(0,0,0,.5)',
-                                borderLeftWidth: 3
-                            }}
-                            selectedValue={this.state.episodeLength}
-                            itemStyle={{
-                                height: 100, 
-                                textAlign: 'left',
-                                color: '#eee',
-                            }}
-                            onValueChange={(value) => { this.setState({ episodeLength: value }) }}>
-                                <Picker.Item label="10 minutes" value="ten-minutes" />
-                                <Picker.Item label="30 minutes" value="thirty-minutes" />
-                                <Picker.Item label="an hour" value="an-hour" />
-                                <Picker.Item label="an eternity" value="an-eternity" />
-                            </Picker>
-                        </View>
-                        <Text style={{
-                            fontSize: 20,
-                            color: 'white',
-                            paddingLeft: 25, 
-                            marginBottom: 10
-                        }}>Which play first?</Text>
-                        <View style={{
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            backgroundColor: 'rgba(0,0,0,.3)', 
-                            paddingTop: 20,
-                            paddingBottom: 20,
-                            flexDirection: 'row'
-                        }}>
-                            <Button style={{
-                                flex: 1,
-                                marginRight: 10,
-                                backgroundColor: this.state.playFirst ==  'oldest' ? '#222' : 'white'
-                            }} onClick={() => {
-                                this.setState({ playFirst: 'oldest' })
-                            }}>
-                                <Text style={{
-                                    color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
-                                }}>Oldest First</Text>
-                            </Button>
-                            <Button style={{
-                                flex: 1,
-                                backgroundColor: this.state.playFirst ==  'newest' ? '#222' : 'white'
-                            }} onClick={() => {
-                                this.setState({ playFirst: 'newest' })
-                            }}>
-                                <Text style={{
-                                    color: this.state.playFirst ==  'newest' ? 'white' : '#222'
-                                }}>Newest First</Text>
-                            </Button>
-                        </View>
-                        <Text style={{
-                            fontSize: 20,
-                            color: 'white',
-                            paddingLeft: 25, 
-                            marginBottom: 10,
-                            marginTop: 10
-                        }}>What's it called?</Text>
-                        <View style={{
-                            paddingLeft: 30,
-                            backgroundColor: 'rgba(0,0,0,.3)', 
-                            paddingTop: 20,
-                            paddingBottom: 20
-                        }}>
-                            <TextInput
-                                style={{
-                                    height: 40, 
-                                    borderColor: 'gray', 
-                                    color: 'white',
-                                    fontSize: 18,
-                                    fontWeight: '700',
-                                    fontSize: 20,
-                                    textDecorationLine: 'underline'
-                                }}
-                                onChangeText={(text) => this.setState({playlistName : text})}
-                                value={ this.state.playlistName }
-                            />
-                        </View>
+                        }}>{playlist.name}</Text>
                     </View>
-                }
-                <View style={{
-                    padding: 20,
-                    flexDirection: 'row'
-                }}>
-                    {   this.state.showPlaylistDetails &&
+                    {/* <View
+                        style={{
+                            backgroundColor: 'white',
+                            height: 5,
+                            width: 45,
+                            marginTop: 10,
+                            marginBottom: 15,
+                            borderRadius: 1,
+                            marginLeft: 25, 
+                        }}
+                    ></View> */}
+                    <FlatList
+                    data={playlist.episodeQueue}
+                    renderItem={this._renderPlaylistItem}
+                    style={{
+                        paddingLeft: 25, 
+                        paddingRight: 25,
+                        paddingBottom: 25,
+                        backgroundColor: 'rgba(0,0,0,.3)',
+                    }}
+                    />
+                    {
+                        this.state.showPlaylistDetails &&
+                        <View>
+                            <Text style={{
+                                fontSize: 20,
+                                color: 'white',
+                                paddingLeft: 25, 
+                                paddingTop: 10
+                            }}>Episodes from which shows?</Text>
+                            <ScrollView style={{
+                                backgroundColor: 'rgba(0,0,0,.3)',
+                                marginBottom: 10,
+                                marginTop: 10
+                            }}>
+                                <FlatList
+                                horizontal={true}
+                                data={this._getShowList()}
+                                extraData={this.props.state}
+                                renderItem={({item, separators}) => (
+                                    <TouchableOpacity onPress={() => { this._addShowToNewPlaylist(item.id) }}>
+                                        <ImageBackground source={{uri: item.image}} style={{
+                                            height: 100, 
+                                            width: 100,
+                                            margin: 10,
+                                            marginRight: 0,
+                                            borderRadius: 10
+                                        }}>
+                                            { 
+                                                this.state.checkedShows.includes(item.id) &&
+                                                this._renderCheckMark(item.id) 
+                                            }
+                                        </ImageBackground>
+                                    </TouchableOpacity>
+                                )}
+                                />
+                            </ScrollView>
+                            <Text style={{
+                                fontSize: 20,
+                                color: 'white',
+                                paddingLeft: 25, 
+                            }}>Released when?</Text>
+                            <View style={{ 
+                                backgroundColor: 'rgba(0,0,0,.3)', 
+                                flexDirection: 'row',
+                                marginTop: 10,
+                                marginBottom: 10,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingLeft: 30,
+                                paddingRight: 30
+                            }}>
+                                <View style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingRight: 2.5
+                                }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        fontWeight: '700',
+                                        fontSize: 20
+                                    }}>
+                                        Within the past
+                                    </Text>
+                                </View>
+                                <Picker
+                                style={{ 
+                                    flex: 1,
+                                    paddingLeft: 2.5,
+                                    marginLeft: 2.5,
+                                    borderLeftColor: 'rgba(0,0,0,.5)',
+                                    borderLeftWidth: 3
+                                }}
+                                selectedValue={this.state.releaseRange}
+                                itemStyle={{
+                                    height: 100, 
+                                    textAlign: 'left',
+                                    color: '#eee',
+                                }}
+                                onValueChange={(value) => { this.setState({ releaseRange: value }) }}>
+                                    <Picker.Item label="week" value="week" />
+                                    <Picker.Item label="two weeks" value="two-weeks" />
+                                    <Picker.Item label="month" value="month" />
+                                    <Picker.Item label="eternity" value="eternity" />
+                                </Picker>
+                            </View>
+                            <Text style={{
+                                fontSize: 20,
+                                color: 'white',
+                                paddingLeft: 25, 
+                            }}>How long?</Text>
+                            <View style={{ 
+                                backgroundColor: 'rgba(0,0,0,.3)', 
+                                flexDirection: 'row',
+                                marginTop: 10,
+                                marginBottom: 10,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingLeft: 30,
+                                paddingRight: 30
+                            }}>
+                                <View style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingRight: 2.5
+                                }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        fontWeight: '700',
+                                        fontSize: 20
+                                    }}>
+                                        No longer than
+                                    </Text>
+                                </View>
+                                <Picker
+                                style={{ 
+                                    flex: 1,
+                                    paddingLeft: 2.5,
+                                    marginLeft: 2.5,
+                                    borderLeftColor: 'rgba(0,0,0,.5)',
+                                    borderLeftWidth: 3
+                                }}
+                                selectedValue={this.state.episodeLength}
+                                itemStyle={{
+                                    height: 100, 
+                                    textAlign: 'left',
+                                    color: '#eee',
+                                }}
+                                onValueChange={(value) => { this.setState({ episodeLength: value }) }}>
+                                    <Picker.Item label="10 minutes" value="ten-minutes" />
+                                    <Picker.Item label="30 minutes" value="thirty-minutes" />
+                                    <Picker.Item label="an hour" value="an-hour" />
+                                    <Picker.Item label="an eternity" value="an-eternity" />
+                                </Picker>
+                            </View>
+                            <Text style={{
+                                fontSize: 20,
+                                color: 'white',
+                                paddingLeft: 25, 
+                                marginBottom: 10
+                            }}>Which play first?</Text>
+                            <View style={{
+                                paddingLeft: 10,
+                                paddingRight: 10,
+                                backgroundColor: 'rgba(0,0,0,.3)', 
+                                paddingTop: 20,
+                                paddingBottom: 20,
+                                flexDirection: 'row'
+                            }}>
+                                <Button style={{
+                                    flex: 1,
+                                    marginRight: 10,
+                                    backgroundColor: this.state.playFirst ==  'oldest' ? '#222' : 'white'
+                                }} onClick={() => {
+                                    this.setState({ playFirst: 'oldest' })
+                                }}>
+                                    <Text style={{
+                                        color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
+                                    }}>Oldest First</Text>
+                                </Button>
+                                <Button style={{
+                                    flex: 1,
+                                    backgroundColor: this.state.playFirst ==  'newest' ? '#222' : 'white'
+                                }} onClick={() => {
+                                    this.setState({ playFirst: 'newest' })
+                                }}>
+                                    <Text style={{
+                                        color: this.state.playFirst ==  'newest' ? 'white' : '#222'
+                                    }}>Newest First</Text>
+                                </Button>
+                            </View>
+                            <Text style={{
+                                fontSize: 20,
+                                color: 'white',
+                                paddingLeft: 25, 
+                                marginBottom: 10,
+                                marginTop: 10
+                            }}>What's it called?</Text>
+                            <View style={{
+                                paddingLeft: 30,
+                                backgroundColor: 'rgba(0,0,0,.3)', 
+                                paddingTop: 20,
+                                paddingBottom: 20
+                            }}>
+                                <TextInput
+                                    style={{
+                                        height: 40, 
+                                        borderColor: 'gray', 
+                                        color: 'white',
+                                        fontSize: 18,
+                                        fontWeight: '700',
+                                        fontSize: 20,
+                                        textDecorationLine: 'underline'
+                                    }}
+                                    onChangeText={(text) => this.setState({playlistName : text})}
+                                    value={ this.state.playlistName }
+                                />
+                            </View>
+                        </View>
+                    }
+                    <View style={{
+                        padding: 20,
+                        flexDirection: 'row'
+                    }}>
+                        {   this.state.showPlaylistDetails &&
+                            <Button 
+                            onClick={() => {
+                                    Alert.alert(
+                                        'Are you sure you want to delete this playlist?',
+                                        '(no take-backs)',
+                                        [
+                                            {text: 'No', onPress: () => {}},
+                                            {text: 'Yes', onPress: () => {
+                                                this.props.actions.removePlaylist(this.state.playlistId)
+                                                Navigation.dismissOverlay(this.props.componentId)
+                                            }}
+                                        ]
+                                    )
+                            }} 
+                            style={{
+                                backgroundColor: 'red',
+                                borderColor: 'transparent',
+                                marginRight: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'row'
+                            }}>
+                                    <Image source={require('../assets/x.png')} style={{
+                                    flex: 1,
+                                    height: '100%',
+                                    width: 50
+                                    }} resizeMode={'contain'}/>
+                            </Button>
+                        }
                         <Button 
                         onClick={() => {
-                                Alert.alert(
-                                    'Are you sure you want to delete this playlist?',
-                                    '(no take-backs)',
-                                    [
-                                        {text: 'No', onPress: () => {}},
-                                        {text: 'Yes', onPress: () => {
-                                            this.props.actions.removePlaylist(this.state.playlistId)
-                                            Navigation.dismissOverlay(this.props.componentId)
-                                        }}
-                                    ]
-                                )
-                        }} 
+                                this.state.showPlaylistDetails ? 
+                                this._editPlaylist(this._updatePlaylist()) :
+                                this.setState({
+                                    showPlaylistDetails : true
+                                })
+                        }}
                         style={{
-                            backgroundColor: 'red',
-                            borderColor: 'transparent',
-                            marginRight: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row'
+                            flex: 1
                         }}>
-                                <Image source={require('../assets/x.png')} style={{
-                                   flex: 1,
-                                   height: '100%',
-                                   width: 50
-                                }} resizeMode={'contain'}/>
+                            <Text>
+                                { this.state.showPlaylistDetails ? 'Save' : 'Edit' } Playlist
+                            </Text>
                         </Button>
-                    }
-                    <Button 
-                    onClick={() => {
-                            this.state.showPlaylistDetails ? 
-                            this._editPlaylist(this._updatePlaylist()) :
-                            this.setState({
-                                showPlaylistDetails : true
-                            })
-                    }}
-                    style={{
-                        flex: 1
-                    }}>
-                        <Text>
-                            { this.state.showPlaylistDetails ? 'Save' : 'Edit' } Playlist
-                        </Text>
-                    </Button>
-                </View>
-            </Lightbox>
+                    </View>
+                </Lightbox>
+            </KeyboardAvoidingView>
         )
     }
 }

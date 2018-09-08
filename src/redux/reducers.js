@@ -42,23 +42,18 @@ const initialState = {
 };
 
 function reducer(state = initialState, action) {
-    console.log(state)
+    // console.log(state)
     switch (action.type) {
         case SYNC_QUEUE: 
             console.log('SYNCING QUEUE')
             TrackPlayer.getCurrentTrack().then((track) => {
-                console.log(state.playQueue, track)
                 if (state.nowPlaying.id != track) {
-                    console.log(state)
                     let newQueue = state.playQueue.slice(state.playQueue.findIndex(item => item.id == track))
-                    console.log('Queue is not current', newQueue)
                     return {
                         ...state,
                         playQueue : newQueue
                     }
                 } else {
-                    console.log(state.nowPlaying.id, track)
-                    console.log('Queue is current')
                     return state
                 }
             })
@@ -103,7 +98,6 @@ function reducer(state = initialState, action) {
                 finishedEpisodes : state.finishedEpisodes.concat([state.nowPlaying.id])
             }
         case SET_NEWEST_FROM_SUBSCRIBED: 
-            console.log(action.episodeList)
             return {
                 ...state,
                 newestFromSubscribed: action.episodeList
@@ -132,20 +126,23 @@ function reducer(state = initialState, action) {
                 activeQueueItem : 0
             };
         case ADD_PLAYLIST_TO_QUEUE: 
-            // NEXT: Dispatch all the pieces to make this functional
+            // Reset the queue
+            // Add and play the first item in the new queue
+            // Add the rest of the items to the queue
             TrackPlayer.reset();
-            TrackPlayer.add(action.trackPlayerQueue).then(() => {
-                TrackPlayer.getQueue().then((queue) => {
-                    console.log(queue)
-                    TrackPlayer.play()
-                })
+            TrackPlayer.add(action.trackPlayerQueue[0]).then(() => {
+                TrackPlayer.play()
+                TrackPlayer.add(action.trackPlayerQueue.slice(1))
+                // TrackPlayer.getQueue().then((queue) => {
+                //     TrackPlayer.play()
+                // })
             })
 
             return {
                 ...state, 
                 playing: true,
                 active: true,
-                activePlaylist: action.playlist.name,
+                activePlaylist: action.playlist,
                 bufferingStatus: false, 
                 nowPlaying: action.playlist.episodeQueue[0],
                 playQueue: action.playlist.episodeQueue
@@ -189,7 +186,6 @@ function reducer(state = initialState, action) {
             };
 
         case CREATE_PLAYLIST: 
-            console.log(action.playlist)
             let { playlistId, playlistName, shows, releaseRange, episodeLength, playFirst, selectedPlaylistIcon } = action.playlist;
             return {
                 ...state, 
@@ -234,8 +230,6 @@ function reducer(state = initialState, action) {
                 TrackPlayer.seekTo(retrievedTrackPosition);
                 TrackPlayer.play();
             }
-
-            console.log(state.nowPlaying)
 
             if(!action.startPlaying) {
                 TrackPlayer.pause()
@@ -289,7 +283,6 @@ function reducer(state = initialState, action) {
             let trackToPlay = state.playQueue[action.index];
             var track = trackDetails(trackToPlay);
 
-            console.log(action.index, state.playQueue, track)
             // Removing the skipped item from the queue for now
             // TODO: Always keep the most recently skipped item in the queue so it can be returned to
 
@@ -297,8 +290,6 @@ function reducer(state = initialState, action) {
             TrackPlayer.skip(track.id).then(() => {
                 TrackPlayer.play()
             })
-
-            console.log(action.index, state.playQueue)
 
             // TrackPlayer.add([track]).then(() => {
             //     TrackPlayer.remove(state.playQueue[0].id).then(() => {
@@ -398,13 +389,11 @@ function reducer(state = initialState, action) {
 
             const newSubscribedShows = state.subscribedShows.map((show) => {
                 if (show.id == action.id) {
-                    console.log(show)
                     show.episodeList = show.episodeList.map((episode) => {
                         episode.showColor = action.color
                         return episode
                     })
                     show.color = action.color
-                    console.log(show)
                     return show;
                 } else {
                     return show

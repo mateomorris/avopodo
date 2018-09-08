@@ -32,7 +32,7 @@ export default class ShowDetail extends React.Component {
         return (
             <TouchableOpacity onPress={this._handlePress} style={{ flexDirection: 'row', marginBottom: 15, with: '30%', paddingLeft: 10, paddingRight: 10, backgroundColor: 'black', paddingTop: 10, paddingBottom: 10 }}>
                 <View style={styles.container}>
-                    <Image source={{uri: image}} style={[styles.thumbnail, {backgroundColor: color}]} />
+                    <Image source={{uri: image, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: color}]} />
                 </View>
                 <View style={{ paddingLeft: 10, width: '65%' }}>
                     {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>

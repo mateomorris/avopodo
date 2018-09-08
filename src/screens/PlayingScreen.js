@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -78,9 +78,9 @@ class PlayingScreen extends React.Component {
 
   _renderItem ({item, index}) {
     return (
-        <View style={{ width: '100%', height: '100%' }}>
-            <Image source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%', backgroundColor: 'blue'}} resizeMode={'contain'}/>
-        </View>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Image source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%' }} resizeMode={'contain'}/>
+      </View>
     );
   }
 
@@ -126,6 +126,8 @@ class PlayingScreen extends React.Component {
     let { nowPlaying, playing, active, activePlaylist, playQueue, bufferingStatus, activeQueueItem } = this.props.state
     let { togglePlayback, updateEpisodePlaybackPosition, markEpisodeAsPlayed } = this.props.actions
 
+    console.log(this.props.state)
+
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -139,7 +141,7 @@ class PlayingScreen extends React.Component {
       }}>
         <NowPlayingHeader 
           componentId={this.props.componentId} 
-          label={activePlaylist}
+          playlist={activePlaylist}
           onPlaylistPress={() => { this._onPlaylistPress() }}
         />
         <GestureRecognizer
@@ -171,7 +173,7 @@ class PlayingScreen extends React.Component {
             data={playQueue}
             renderItem={this._renderItem}
             sliderWidth={Dimensions.get('window').width}
-            itemWidth={Dimensions.get('window').width-50}
+            itemWidth={Dimensions.get('window').width }
             itemHeight={Dimensions.get('window').width }
             sliderHeight={Dimensions.get('window').width}
             firstItem={activeQueueItem}
