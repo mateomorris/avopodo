@@ -119,7 +119,7 @@ class PlayBar extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this._handlePress()} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
                     <View style={{ alignItems: 'center' }}>
-                        <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }}>{ nowPlaying.title }</Text>
+                        <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
                         {/* <MarqueeText
                         style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }}
                         marqueeOnStart
@@ -129,7 +129,7 @@ class PlayBar extends React.Component {
                         >
                             {nowPlaying.title}
                         </MarqueeText> */}
-                        <Text style={{ color: 'white', fontSize: 10 }}>{ nowPlaying.showTitle }</Text>
+                        <Text style={{ color: 'white', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9}}>
