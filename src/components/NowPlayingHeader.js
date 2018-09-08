@@ -8,6 +8,7 @@ import SvgUri from 'react-native-svg-uri';
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
 import EpisodeSnippet from '../components/EpisodeSnippet';
+import playlistIcons from '../assets/playlist-icons'
 
 import * as actions from '../redux/actions'
 
@@ -70,11 +71,18 @@ class NowPlayingHeader extends React.Component {
                 {/* <Image source={require('../assets/down-arrow.png')}/> */}
                 <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
             </TouchableOpacity>
-            <View>
+            { this.props.playlist && <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'flex-start'
+            }}>
+                 <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
                 <Text style={{
-                    color: 'white'
-                }}>{this.props.label}</Text>
-            </View>
+                    color: 'white',
+                    fontWeight: '600',
+                    fontSize: 17
+                }}>{this.props.playlist.name}</Text>
+            </View> }
             <View style={{
                 paddingTop: 0
             }}>
