@@ -75,7 +75,7 @@ class PlaylistsScreen extends React.Component {
     );
   }
 
-  _renderPlaylists = (playlists) => {
+  _renderPlaylists = (playlists, nowPlaying) => {
     return (
       <View>
         {playlists.map((item, index) => {
@@ -85,7 +85,9 @@ class PlaylistsScreen extends React.Component {
               title={item.name} 
               duration={item.duration} 
               icon={playlistIcons[item.icon]} 
-              episodes={item.episodeQueue} 
+              episodes={item.episodeQueue.slice(
+                item.episodeQueue.findIndex(episode => episode.id == nowPlaying.id)
+              )} 
               onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
               onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />
@@ -152,7 +154,7 @@ class PlaylistsScreen extends React.Component {
         <ScrollView contentContainerStyle={styles.container}>
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 10, paddingRight: 10 }}>
-            { this._renderPlaylists(this.props.playlists) }
+            { this._renderPlaylists(this.props.playlists, this.props.nowPlaying) }
             <View style={{
               backgroundColor: 'black',
               marginTop: 10,
@@ -201,6 +203,7 @@ function mapStateToProps(state, ownProps) {
 	return {
     subscribedShows: state.reducer.subscribedShows,
     playlists: state.reducer.playlists,
+    nowPlaying: state.reducer.nowPlaying,
 	};
 }
 

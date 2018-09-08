@@ -126,8 +126,6 @@ class PlayingScreen extends React.Component {
     let { nowPlaying, playing, active, activePlaylist, playQueue, bufferingStatus, activeQueueItem } = this.props.state
     let { togglePlayback, updateEpisodePlaybackPosition, markEpisodeAsPlayed } = this.props.actions
 
-    console.log(this.props.state)
-
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
