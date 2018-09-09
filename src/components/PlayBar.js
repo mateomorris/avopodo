@@ -49,9 +49,18 @@ class PlayBar extends React.Component {
         },
         initialPlay: null,
         opacity: new Animated.Value(1),
-        height : new Animated.Value(50),
+        height : new Animated.Value(0),
         bottomSpacing : new Animated.Value(47),
         expanded: false
+    }
+
+    componentDidMount() {
+        // Show PlayBar 
+        Animated.timing(this.state.height, {
+            toValue: 50,
+            duration: 300,
+            delay: 200,
+        }).start();
     }
 
     panResponder = PanResponder.create({    
@@ -69,7 +78,9 @@ class PlayBar extends React.Component {
             if (this.state.expanded) {
                 this.state.height.setValue(Dimensions.get('window').height + 47 - gesture.moveY)
             } else {
-                this.state.height.setValue((gesture.dy - 47) * -1)
+                console.log(gesture.dy)
+                // TODO: Make `null` remove the playbar when it gets swiped down
+                gesture.dy >= 0 ? null : this.state.height.setValue((gesture.dy - 47) * -1)
             }
         },
         onPanResponderRelease : (e, gesture) => {
