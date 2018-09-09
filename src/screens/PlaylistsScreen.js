@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
@@ -138,6 +138,14 @@ class PlaylistsScreen extends React.Component {
       Alert.alert(`You must subscribe to at least five shows before creating a playlist`, `otherwise like, what's the point`);
     }
   }
+
+
+  handleViewRef = ref => this.view = ref;
+  
+  bounce = () => this.view.bounce(800).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
+  
+
+
 
   render() {
 
