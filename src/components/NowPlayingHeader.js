@@ -54,19 +54,9 @@ class NowPlayingHeader extends React.Component {
           }}>
             <TouchableOpacity style={{
                 padding: 10,
+                paddingRight: 30,
             }} onPress={() => {
-                Navigation.dismissModal(this.props.componentId).then(() => {
-                  Navigation.showOverlay({
-                      component: {
-                          name: 'example.PlayBar',
-                          options: {
-                              overlay: {
-                                  interceptTouchOutside: false
-                              }
-                          }
-                      }
-                  });
-                })
+              this.props.onPress()
             }}>
                 {/* <Image source={require('../assets/down-arrow.png')}/> */}
                 <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
@@ -84,7 +74,7 @@ class NowPlayingHeader extends React.Component {
                 }}>{this.props.playlist.name}</Text>
             </View> }
             <View style={{
-                paddingTop: 0
+                paddingTop: 0,
             }}>
               <TouchableOpacity onPress={() => {
                 this.props.onPlaylistPress()

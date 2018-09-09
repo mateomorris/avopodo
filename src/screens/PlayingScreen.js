@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BlurView } from 'react-native-blur';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Carousel from 'react-native-snap-carousel';
@@ -21,7 +22,12 @@ class PlayingScreen extends React.Component {
   state = {
     artworks: [],
     playingNextEpisode : false,
-    appState: AppState.currentState
+    appState: AppState.currentState,
+    loadedImages: {
+      0 : new Animated.Value(1), 
+      1 : new Animated.Value(1), 
+      2 : new Animated.Value(1)
+    }
   }
 
   _handleFavoritePress = () => {
@@ -39,6 +45,9 @@ class PlayingScreen extends React.Component {
     // this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
   }
 
+  componentDidUpdate() {
+
+  }
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -77,10 +86,32 @@ class PlayingScreen extends React.Component {
   }
 
   _renderItem ({item, index}) {
+    console.log('Showing carousel number: ', index)
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Image source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%' }} resizeMode={'contain'}/>
-      </View>
+      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}}>
+        <Animated.View
+          style={{
+              position: "absolute",
+              top: 0, left: 0, bottom: 0, right: 0,
+              zIndex: 9,
+              opacity: this.state.loadedImages[index]
+          }}>
+            <BlurView
+              style={{ flex: 1 }}
+              viewRef={this.state.viewRef}
+              blurType="dark"
+              blurAmount={10}
+          />
+        </Animated.View>
+        <Image onLoad={() => {
+          // Show Carousel
+          Animated.timing(this.state.loadedImages[index], {
+              toValue: 0,
+              duration: 500,
+              delay: 0,
+          }).start()
+        }} source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%' }} resizeMode={'contain'} />
+      </Animated.View>
     );
   }
 
@@ -140,6 +171,7 @@ class PlayingScreen extends React.Component {
         <NowPlayingHeader 
           componentId={this.props.componentId} 
           playlist={activePlaylist}
+          onPress={() => { this.props.onClose() }}
           onPlaylistPress={() => { this._onPlaylistPress() }}
         />
         <GestureRecognizer
@@ -161,21 +193,24 @@ class PlayingScreen extends React.Component {
         style={{
           flex: 1
         }}>
-          <Carousel
-            ref={(c) => { this._carousel = c; }}
-            layout={'stack'} 
-            layoutCardOffset={`18`} 
-            onBeforeSnapToItem={(index) => {
-              this._playNextItemInQueue(index)}}
-              // NEXT: Set state playingNextEpisode back to false
-            data={playQueue}
-            renderItem={this._renderItem}
-            sliderWidth={Dimensions.get('window').width}
-            itemWidth={Dimensions.get('window').width }
-            itemHeight={Dimensions.get('window').width }
-            sliderHeight={Dimensions.get('window').width}
-            firstItem={activeQueueItem}
-          />
+          {
+            this.props.expanded &&
+            <Carousel
+              ref={(c) => { this._carousel = c; }}
+              layout={'stack'} 
+              layoutCardOffset={`18`} 
+              onBeforeSnapToItem={(index) => {
+                this._playNextItemInQueue(index)}}
+                // NEXT: Set state playingNextEpisode back to false
+              data={playQueue.slice(0,3)}
+              renderItem={this._renderItem.bind(this)}
+              sliderWidth={Dimensions.get('window').width}
+              // sliderHeight={}
+              itemWidth={Dimensions.get('window').width - 100 }
+              itemHeight={Dimensions.get('window').width - 50 }
+              firstItem={activeQueueItem}
+            />
+          }
         </GestureRecognizer>
 
         <View style={{
