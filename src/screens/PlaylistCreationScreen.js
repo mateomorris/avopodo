@@ -71,7 +71,7 @@ class PlaylistCreationScreen extends Component {
     }
 
     componentDidUpdate = () => {
-        console.log(this.state)
+
     }
 
     _renderShowAddtion() {
@@ -139,8 +139,6 @@ class PlaylistCreationScreen extends Component {
     
 
     render() {
-
-        console.log(playlistIcons)
 
         return(
             <KeyboardAvoidingView behavior="padding">

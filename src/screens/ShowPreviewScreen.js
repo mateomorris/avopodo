@@ -24,7 +24,6 @@ class ShowPreviewScreen extends Component {
         }) 
 
         this.props.actions.getHighResArtwork(this.props.item.itunesId).then((artwork) => {
-            console.log(artwork)
             this.setState({ artwork });
         })
     }

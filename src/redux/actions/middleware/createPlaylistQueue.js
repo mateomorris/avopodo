@@ -62,6 +62,7 @@ export function createPlaylistQueue({ episodeLength, playFirst, releaseRange, sh
                     }
 
                 } else {
+                    console.log('No episodes found')
                     return false
                 }
 

@@ -63,6 +63,13 @@ class PlayBar extends React.Component {
             duration: 300,
             delay: 200,
         }).start();
+
+        TrackPlayer.getState().then((state) => {
+            if (state == 'paused' && this.props.state.playing) {
+                // TODO: Ensure the app knows that the track is paused
+                this.props.actions.togglePlayback();
+            }
+        })
     }
 
     _closeModal = () => {
@@ -71,7 +78,7 @@ class PlayBar extends React.Component {
             this.state.height,         
             {
                 toValue:47, 
-                tension: 5
+                tension: 0
             }    
         ).start();
 
@@ -80,7 +87,7 @@ class PlayBar extends React.Component {
             this.state.bottomSpacing,         
             {
                 toValue: 47, 
-                tension: 5
+                tension: 0
             }    
         ).start();
 
@@ -135,7 +142,6 @@ class PlayBar extends React.Component {
             if (this.state.expanded) {
                 gesture.dy > 0 && this.state.height.setValue(Dimensions.get('window').height - gesture.dy)
             } else {
-                console.log(gesture.dy)
                 // TODO: Make `null` remove the playbar when it gets swiped down
                 gesture.dy >= 0 ? null : this.state.height.setValue((gesture.dy - 47) * -1)
             }
@@ -214,15 +220,17 @@ class PlayBar extends React.Component {
                         {/* <Image style={{height: 20, width: 20}} source={require('../assets/up-caret.png')} /> */}
                         <SvgUri style={{ width: 20, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
+                    {/* <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}> */}
+                    <View style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
                             <Text style={{ color: 'white', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
                         </View>
-                    </TouchableOpacity>
+                    </View>
+                    {/* </TouchableOpacity> */}
                     <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9}}>
                         <MaterialIndicator color={ bufferingStatus ? 'rgba(250,250,250,.3)' : 'transparent' } size={35} animationDuration={2000} />
-                        <SvgUri style={{height: 25, width: 25, position: 'absolute' }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                        <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 3 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
                         {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/> */}
                     </TouchableOpacity>
                 </Animated.View>

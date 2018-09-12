@@ -5,10 +5,8 @@ export function playNextItemInQueue(index) {
         let state = getState().reducer;
 
         if (index) {
-            console.log('Playing specific queue item')
             dispatch(playQueueItem(index))
         } else {
-            console.log('Playing NEXT queue item')
 
             let { id } = state.nowPlaying
             let nextQueueItem = state.playQueue.findIndex((item) => {

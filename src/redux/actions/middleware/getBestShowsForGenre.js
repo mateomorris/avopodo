@@ -9,8 +9,6 @@ export function getBestShowsForGenre (genreId) {
         }})
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson)
-
             return responseJson;
           })
           .then()

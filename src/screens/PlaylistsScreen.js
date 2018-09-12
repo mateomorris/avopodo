@@ -44,7 +44,6 @@ class PlaylistsScreen extends React.Component {
   }
 
   _handlePlaylistPlayPress = (playlist) => {
-    console.log(playlist)
 
     // let playlistQueue = playlist.episodeQueue.map((episode) => {
     //   return {
@@ -75,6 +74,14 @@ class PlaylistsScreen extends React.Component {
     );
   }
 
+  _getMostRecentPlaylistItemIndex = (episodeQueue, nowPlaying) => {
+    if (episodeQueue[0].id == nowPlaying.id) {
+      return 1
+    } else {
+      return 0
+    }
+  }
+
   _renderPlaylists = (playlists, nowPlaying) => {
     return (
       <View>
@@ -85,9 +92,7 @@ class PlaylistsScreen extends React.Component {
               title={item.name} 
               duration={item.duration} 
               icon={playlistIcons[item.icon]} 
-              episodes={item.episodeQueue.slice(
-                item.episodeQueue.findIndex(episode => episode.id == nowPlaying.id)
-              )} 
+              episodes={item.episodeQueue ? item.episodeQueue.slice(this._getMostRecentPlaylistItemIndex(item.episodeQueue, nowPlaying)) : null} 
               onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
               onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />

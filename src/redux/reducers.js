@@ -43,7 +43,6 @@ const initialState = {
 };
 
 function reducer(state = initialState, action) {
-    // console.log(state)
     switch (action.type) {
         case RESET_QUEUE: 
             TrackPlayer.reset();
@@ -54,7 +53,6 @@ function reducer(state = initialState, action) {
                 playQueue : []
             };
         case SYNC_QUEUE: 
-            console.log('SYNCING QUEUE')
             TrackPlayer.getCurrentTrack().then((track) => {
                 if (state.nowPlaying.id != track) {
                     let newQueue = state.playQueue.slice(state.playQueue.findIndex(item => item.id == track))
@@ -74,13 +72,10 @@ function reducer(state = initialState, action) {
                 })
             }
         case EDIT_PLAYLIST: 
-            console.log(action.playlist)
             return {
                 ...state,
                 playlists: state.playlists.map((playlist) => {
-                    console.log(playlist)
                     if (playlist.id == action.playlist.id) {
-                        console.log(`SETTING PLAYLIST UPDATE FOR`, playlist, action.playlist)
                         return {
                             id : action.playlist.id,
                             duration : action.playlist.length, // swap
@@ -120,7 +115,6 @@ function reducer(state = initialState, action) {
                     return trackDetails(episode)
                 })
                 TrackPlayer.add(playQueue).then(() => {
-                    console.log(state.nowPlaying)
                     TrackPlayer.pause()
 
                     // TrackPlayer.skip(state.nowPlaying.id).then(() => {
@@ -277,7 +271,6 @@ function reducer(state = initialState, action) {
             }
 
         case REMOVE_ITEM_FROM_QUEUE: 
-            console.log(state.playQueue)
             return {
                 ...state, 
                 activeQueueItem : action.index,

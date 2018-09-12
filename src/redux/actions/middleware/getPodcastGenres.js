@@ -12,7 +12,6 @@ export function getPodcastGenres () {
             let topLevelGenres = responseJson.genres.filter((category) => {
                 return category.parent_id == 67
             })
-            console.log(topLevelGenres)
 
             return topLevelGenres;
           })

@@ -54,7 +54,6 @@ class HomeScreen extends React.Component {
     TrackPlayer.add([track]).then(function() {
         TrackPlayer.play();
     });
-    console.log(this.props.state)
   }
 
   _checkForPlaybackStatus = ( show, episode ) => {
@@ -138,13 +137,12 @@ class HomeScreen extends React.Component {
       let currentTrackEpisodeId = this.props.state.nowPlaying.id;
       this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
     } else {
-      console.log(this.props.state, 'No episode is currently playing')
+      console.log('No episode is currently playing')
     }
 
     // TODO: Offline functionality
     NetInfo.getConnectionInfo().then((connectionInfo) => {
-      console.log(connectionInfo)
-      console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+
     });
 
     this.props.actions.getNewestFromSubscribed();

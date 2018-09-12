@@ -38,7 +38,6 @@ export function addToQueueFrontAndPlayEpisode(show, episode) {
             // Check if item is already in queue, move it to the front
             state.playQueue.forEach((item, index) => {
                 if (item.id == episode.id) {
-                    console.log(`Already in queue as item ${index}`);
                     dispatch(moveQueueItemToFront(index));
                 }
             });

@@ -4,8 +4,6 @@ export function getHighResArtwork (id) {
         .then((response) => response.json())
         .then((responseJson) => {
 
-            console.log(id)
-
             if (responseJson.results) {
                 const artwork = responseJson.results[0].artworkUrl600
                 return artwork
