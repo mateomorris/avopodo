@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 class PlayBar extends React.Component {
 
     state = {
+        visible : false,
         active: false,
         playing: false, 
         nowPlaying: {
@@ -56,7 +57,31 @@ class PlayBar extends React.Component {
         expanded: false
     }
 
+    componentDidUpdate() {
+        console.log(this.props.state.active)
+        if (this.props.state.active && !this.state.visible) {
+            this.setState({
+                visible : true
+            })
+        }
+    }
+
     componentDidMount() {
+        TrackPlayer.getState().then((state) => {
+            if (state == 'paused' && this.props.state.playing) {
+                // TODO: Ensure the app knows that the track is paused
+                this.props.actions.togglePlayback();
+            }
+        })
+    }
+
+    componentDidUpdate() {
+        if (!this.state.visible && this.props.state.active) {
+            this._becomeVisible()
+        }
+    }
+
+    _becomeVisible = () => {
         // Show PlayBar 
         Animated.timing(this.state.height, {
             toValue: 50,
@@ -64,11 +89,8 @@ class PlayBar extends React.Component {
             delay: 200,
         }).start();
 
-        TrackPlayer.getState().then((state) => {
-            if (state == 'paused' && this.props.state.playing) {
-                // TODO: Ensure the app knows that the track is paused
-                this.props.actions.togglePlayback();
-            }
+        this.setState({
+            visible : true
         })
     }
 
@@ -139,6 +161,9 @@ class PlayBar extends React.Component {
     _removePlayBar = (thing) => {
         this.state.height.setValue(0)
         this.props.actions.resetQueue()
+        this.setState({
+            visible : false
+        })
     }
 
     panResponder = PanResponder.create({    
@@ -220,8 +245,6 @@ class PlayBar extends React.Component {
         let { togglePlayback } = this.props.actions
 
         return (
-            active
-            && 
             <Animated.View 
             {...this.panResponder.panHandlers} 
             style={[{ height: this.state.height, position: 'absolute', bottom: this.state.bottomSpacing, width: '100%', overflow: 'hidden' }]}>

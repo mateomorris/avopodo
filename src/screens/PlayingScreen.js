@@ -20,6 +20,7 @@ import NowPlayingHeader from '../components/NowPlayingHeader';
 class PlayingScreen extends React.Component {
 
   state = {
+    visible : false,
     artworks: [],
     playingNextEpisode : false,
     appState: AppState.currentState,
@@ -27,7 +28,8 @@ class PlayingScreen extends React.Component {
       0 : new Animated.Value(1), 
       1 : new Animated.Value(1), 
       2 : new Animated.Value(1)
-    }
+    },
+    carouselActive : false
   }
 
   _handleFavoritePress = () => {
@@ -45,16 +47,37 @@ class PlayingScreen extends React.Component {
     // this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
   }
 
-  componentDidUpdate() {
-
-  }
-
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  componentDidUpdate() {
+      if (this.props.expanded && !this.state.carouselActive) { // Expanded AND carousel is inactive -> set to visible
+          this._openCarousel()
+      } else if (!this.props.expanded && this.state.carouselActive) { // Unexpanded AND carousel is active -> close carousel
+          this._closeCarousel()
+      }
+  }
+
+
+  _openCarousel = () => {
+    setTimeout(() => {
+      this.setState({carouselActive: true}
+    )}, 500)
+  }
+
+  _closeCarousel = () => {
+    this.state.loadedImages[0].setValue(1)
+    this.state.loadedImages[1].setValue(1)
+    this.state.loadedImages[2].setValue(1)
+
+    this.setState({
+      carouselActive : false
+    })
   }
 
   _handleAppStateChange = (nextAppState) => {
@@ -86,7 +109,6 @@ class PlayingScreen extends React.Component {
   }
 
   _renderItem ({item, index}) {
-    console.log('Showing carousel number: ', index)
     return (
       <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}}>
         <Animated.View
@@ -195,6 +217,7 @@ class PlayingScreen extends React.Component {
         }}>
           {
             this.props.expanded &&
+            this.state.carouselActive &&
             <Carousel
               ref={(c) => { this._carousel = c; }}
               layout={'stack'} 
