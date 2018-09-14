@@ -18,7 +18,7 @@ export function startPlayer() {
                         TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
                     ]
                 });
-            });
+        });
 
             TrackPlayer.registerEventHandler(async (data) => {
                 console.log(data)
@@ -32,7 +32,7 @@ export function startPlayer() {
                     TrackPlayer.seekTo(200)
                 } else if(data.type == 'remote-play') {
                     console.log('Remote play')
-                  TrackPlayer.play()
+                    TrackPlayer.play()
                 } else if(data.type == 'remote-pause') {
                     console.log('Remote pause')
                     TrackPlayer.pause()

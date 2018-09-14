@@ -13,7 +13,6 @@ export function getSearchResults (term) {
                 return response.json()
             })
             .then((responseJson) => {
-            console.log(responseJson)
             let searchResults = responseJson.results.map((item) => {
                 return {
                     id: item.id, 

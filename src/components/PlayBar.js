@@ -136,6 +136,11 @@ class PlayBar extends React.Component {
         })
     }
 
+    _removePlayBar = (thing) => {
+        this.state.height.setValue(0)
+        this.props.actions.resetQueue()
+    }
+
     panResponder = PanResponder.create({    
         onStartShouldSetPanResponder : () => true,
         onPanResponderMove : (e, gesture) => {
@@ -143,26 +148,33 @@ class PlayBar extends React.Component {
                 gesture.dy > 0 && this.state.height.setValue(Dimensions.get('window').height - gesture.dy)
             } else {
                 // TODO: Make `null` remove the playbar when it gets swiped down
-                gesture.dy >= 0 ? null : this.state.height.setValue((gesture.dy - 47) * -1)
+                this.state.height.setValue((gesture.dy - 47) * -1)
+                if (gesture.moveY >= 620) {
+                   this._removePlayBar(gesture)
+                }
             }
         },
         onPanResponderRelease : (e, gesture) => {
 
-            
-            if (!this.state.expanded && gesture.dy > -15) { // If released too low, spring back
+            console.log(gesture)
 
+            if (!this.state.expanded && gesture.dy > -15 && gesture.moveY < 620) { // If released too low, spring back
+                console.log('Putting the small playbar back')
                 this._closeModal()
 
-            } else if (!this.state.expanded) { // If it's dragged far enough
-
+            } else if (!this.state.expanded && gesture.dy < -15 ) { // If it's dragged far enough
+                console.log('Expanding playbar')
                 this._expandModal()
 
             } else if (this.state.expanded && gesture.dy > 50 ) { // If it's expanded and gets dragged down
-
+                console.log('Unexpand modal')
                 this._closeModal()
 
-            } else if (this.state.expanded) { // If it's expande and doesn't get dragged down far enough
-                    this._expandModal()
+            } else if (this.state.expanded) { // If it's expanded and doesn't get dragged down far enough
+                console.log('Re-expand modal')
+                this._expandModal()
+            } else {
+                console.log('No matching conditions')
             }
 
         } 

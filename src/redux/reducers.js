@@ -50,7 +50,8 @@ function reducer(state = initialState, action) {
                 ...state,
                 activePlaylist : {},
                 nowPlaying : {},
-                playQueue : []
+                playQueue : [],
+                active: false
             };
         case SYNC_QUEUE: 
             TrackPlayer.getCurrentTrack().then((track) => {
