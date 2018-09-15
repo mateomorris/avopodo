@@ -228,9 +228,8 @@ class ShowDetailScreen extends React.Component {
             if (result.newEpisodeAvailable) {
                 this.props.actions.getEpisodeListForShow(result.show.id).then(({ episodeList }) => {
                     this.setState({refreshing: false}, () => {
-                        this.props.actions.setEpisodeListForShow(result.show.id, episodeList).then(() => {
-                            console.log(this.props.state)
-                        })
+                        this.props.actions.setEpisodeListForShow(result.show.id, episodeList)
+                        this._getEpisodeList(result.show.id);
                     })
                 })
             } else {
