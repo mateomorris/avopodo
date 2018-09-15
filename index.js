@@ -84,6 +84,7 @@ persistStore(store, null, () => {
                     bottomTab: {
                       text: 'Home',
                       icon: require('./src/assets/tab-icons/home.png'),
+                      selectedIcon: require('./src/assets/tab-icons/home-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     },
                     topBar: {
@@ -109,6 +110,7 @@ persistStore(store, null, () => {
                     bottomTab: {
                       text: 'Search',
                       icon: require('./src/assets/tab-icons/discover.png'),
+                      selectedIcon: require('./src/assets/tab-icons/discover-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     },
                     topBar: {
@@ -134,6 +136,7 @@ persistStore(store, null, () => {
                     bottomTab: {
                       text: 'Playlists',
                       icon: require('./src/assets/tab-icons/playlists.png'),
+                      selectedIcon: require('./src/assets/tab-icons/playlists-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     },
                     topBar: {
@@ -159,6 +162,7 @@ persistStore(store, null, () => {
                     bottomTab: {
                       text: 'Subscribed',
                       icon: require('./src/assets/tab-icons/subscribed.png'),
+                      selectedIcon: require('./src/assets/tab-icons/subscribed-active.png'),
                       testID: 'FIRST_TAB_BAR_BUTTON'
                     },
                     topBar: {
