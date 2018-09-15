@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, NetInfo } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, NetInfo, RefreshControl } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
@@ -28,6 +28,7 @@ import { LoadingIndicator } from '../components/SimpleComponents';
 class HomeScreen extends React.Component {
 
   state = {
+    refreshing: false,
     buffered: false,
     active: false,
     playing: false, 
@@ -145,13 +146,15 @@ class HomeScreen extends React.Component {
 
     });
 
-    this.props.actions.getNewestFromSubscribed();
+    // this.props.actions.getNewestFromSubscribed();
+    this._onRefresh()
     // this._getNewestFromSubscribed()
 
     // #TODO: Clean playQueue by removing played tracks
   }
 
   _getNewestFromSubscribed = () => {
+    this.props.actions.getNewestFromSubscribed()
     this.props.actions.getNewestFromSubscribed().then((results) => {
       let episodeList = results.map((episodeList) => {
         // console.log(episodeList.episodeList[0].showId, this.props.state)
@@ -166,7 +169,8 @@ class HomeScreen extends React.Component {
         return b.publishDate - a.publishDate 
       })
       this.setState({
-        homeFeed : episodeList
+        homeFeed : episodeList,
+        refreshing: addToQueueFrontAndPlayEpisode
       })
     })
   }
@@ -259,6 +263,17 @@ class HomeScreen extends React.Component {
     )
   }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        this.props.actions.getNewestFromSubscribed().then((fetchSuccessful) => {
+          if (fetchSuccessful) {
+            setTimeout(() => {
+                this.setState({refreshing: false}
+            )}, 1000)
+          } 
+        })
+    }
+
   render() {
 
     let { nowPlaying, playing } = this.props.state
@@ -266,7 +281,15 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 45 : 0 }]}>
+        <ScrollView 
+          contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 45 : 0 }]}
+          refreshControl={
+              <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+              />
+          }
+        >
           {/* { this._renderPlaylists(this.state.playlists) } */}
           { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
         </ScrollView>

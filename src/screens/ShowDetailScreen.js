@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 class ShowDetailScreen extends React.Component {
 
     state = {
+        refreshing : false,
         firstEpisodeReached: false,
         bufferedPosition: null,
         playingPosition: null,
@@ -62,6 +63,7 @@ class ShowDetailScreen extends React.Component {
 
     componentDidMount = () => {
         this._getEpisodeList(this.props.id);
+        this._onRefresh()
     }
 
     _handleEpisodeThumbnailPress = (episode) => {
@@ -216,20 +218,53 @@ class ShowDetailScreen extends React.Component {
         });
     }
 
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+
+        let thisShow = this.props.state.subscribedShows.find(show => show.id == this.props.id)
+
+        this.props.actions.checkIfNewEpisode(thisShow).then((result) => {
+            console.log(result)
+            if (result.newEpisodeAvailable) {
+                this.props.actions.getEpisodeListForShow(result.show.id).then(({ episodeList }) => {
+                    this.setState({refreshing: false}, () => {
+                        this.props.actions.setEpisodeListForShow(result.show.id, episodeList).then(() => {
+                            console.log(this.props.state)
+                        })
+                    })
+                })
+            } else {
+                console.log('No new episodes')
+                setTimeout(() => {
+                    this.setState({refreshing: false}
+                )}, 1000)
+            }
+        });
+    }
+
     render() {
 
         const { title, image, imageHighRes, description, color  } = this.props
 
         return (
             <View style={{ flex: 1 }}>
-                <ScrollView style={{ flexDirection: 'column' }} onScroll={(e) => this._checkIfBottomReached(e)}>
-                    <ShowDetail 
-                        title={title}
-                        image={imageHighRes}
-                        description={description}
-                        color={color}
-                        onPress={() => {this._showShowDetailLightbox(this.props)}}
-                    />
+                <ShowDetail 
+                    title={title}
+                    image={imageHighRes}
+                    description={description}
+                    color={color}
+                    onPress={() => {this._showShowDetailLightbox(this.props)}}
+                />
+                <ScrollView 
+                    style={{ flexDirection: 'column' }} 
+                    onScroll={(e) => this._checkIfBottomReached(e)}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh}
+                        />
+                    }
+                >
                     { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) }
                     { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
                 </ScrollView>

@@ -12,7 +12,7 @@ export function getNewestFromSubscribed() {
         })
 
         // Check each subscribed show for a new episode
-        Promise.all(checkIfNewEpisodePromises).then((values) => {
+        return Promise.all(checkIfNewEpisodePromises).then((values) => {
 
             // Collect Promises for each show that needs to fetch a fresh episode list
             let compiledEpisodeList = values.map((response) => {
@@ -23,7 +23,7 @@ export function getNewestFromSubscribed() {
                 }
             })
 
-            // Fetch necessary episode list (return stored list for the rest)
+            // Fetch necessary episode list (return stored list for the rest), then sort them by date
             Promise.all(compiledEpisodeList).then((episodeLists) => {
                 let newestEpisodesList = episodeLists.map((episodeList) => {
                     return episodeList[0]
@@ -33,7 +33,12 @@ export function getNewestFromSubscribed() {
                 dispatch(setNewestFromSubscribed(newestEpisodesList));
             })
 
-        }, reason => console.log('Episode List Fetch Failed', reason))
+            return true
+
+        }, (reason) => {
+            return false
+            console.log('Episode List Fetch Failed', reason)
+        })
 
     }
 }

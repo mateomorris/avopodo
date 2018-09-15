@@ -30,7 +30,8 @@ export default class ShowDetail extends React.Component {
         const { title, image, description, color } = this.props; 
 
         return (
-            <TouchableOpacity onPress={this._handlePress} style={{ flexDirection: 'row', marginBottom: 15, with: '30%', paddingLeft: 10, paddingRight: 10, backgroundColor: 'black', paddingTop: 10, paddingBottom: 10 }}>
+            // TODO: Subtly show shadow on scroll
+            <TouchableOpacity onPress={this._handlePress} style={{ flexDirection: 'row', with: '30%', shadowRadius: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.8, paddingLeft: 10, paddingRight: 10, backgroundColor: 'black', paddingTop: 10, paddingBottom: 10 }}> 
                 <View style={styles.container}>
                     <Image source={{uri: image, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: color}]} />
                 </View>
