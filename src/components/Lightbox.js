@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert, Animated } from 'react-native';
 import { Navigation } from "react-native-navigation";
 import { BlurView } from 'react-native-blur';
 import * as Animatable from 'react-native-animatable';
@@ -7,9 +7,19 @@ import * as Animatable from 'react-native-animatable';
 export default class LightBox extends Component {
 
     state = {
-
+        opacity : new Animated.Value(0)
     }
 
+    componentDidMount() {
+        // Shrink to normal
+        Animated.timing(            
+            this.state.opacity,         
+            {
+                toValue:1, 
+                duration: 200
+            }    
+        ).start();
+    }
 
     componentWillMount() {
 
@@ -21,13 +31,14 @@ export default class LightBox extends Component {
         let window = Dimensions.get('window');
 
         return(
-            <View style={{
+            <Animated.View style={{
                 width: '100%',
                 height: '100%',
                 backgroundColor: 'rgba(0,0,0,.5)',
                 padding: 10,
-                alignItems: 'center'
-            }} animation="fadeIn" >
+                alignItems: 'center',
+                opacity: this.state.opacity
+            }}>
                 <BlurView
                     style={{
                         position: "absolute",
@@ -66,7 +77,7 @@ export default class LightBox extends Component {
                     }}>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </Animated.View>
         )
     }
 }
