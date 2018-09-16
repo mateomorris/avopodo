@@ -248,7 +248,8 @@ class PlaylistDetailScreen extends Component {
                     width: 45,
                     height: 45,
                     borderRadius: 2.5,
-                    marginRight: 10
+                    marginRight: 10,
+                    backgroundColor: item.showColor
                 }}
             />
             <View style={{

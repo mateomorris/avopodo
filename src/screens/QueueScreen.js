@@ -32,7 +32,7 @@ class QueueScreen extends Component {
                     height: 45,
                     borderRadius: 2.5,
                     marginRight: 10,
-                    backgroundColor: '#EEEEEE'
+                    backgroundColor: item.showColor
                 }}
             />
             <View style={{

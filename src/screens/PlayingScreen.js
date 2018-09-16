@@ -84,7 +84,7 @@ class PlayingScreen extends React.Component {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       this.props.actions.syncQueue()
     } else {
-
+      console.log('In background')
     }
     this.setState({appState: nextAppState});
   }
@@ -110,7 +110,7 @@ class PlayingScreen extends React.Component {
 
   _renderItem ({item, index}) {
     return (
-      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}}>
+      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden', borderRadius: 5, backgroundColor: item.showColor}}>
         <Animated.View
           style={{
               position: "absolute",
@@ -142,11 +142,13 @@ class PlayingScreen extends React.Component {
   }
 
   _markEpisodeAsPlayed = (episodeId, carousel) => {
-      // carousel.snapToNext() // handles playing the next track 
+      carousel.snapToNext() // handles playing the next track 
       this.props.actions.markEpisodeAsPlayed(episodeId)
       this.setState({
         playingNextEpisode : true
       })
+
+      console.log(this.props.state)
   }
 
   _startNewTrack = () => {
@@ -179,6 +181,7 @@ class PlayingScreen extends React.Component {
     let { nowPlaying, playing, active, activePlaylist, playQueue, bufferingStatus, activeQueueItem } = this.props.state
     let { togglePlayback, updateEpisodePlaybackPosition, markEpisodeAsPlayed } = this.props.actions
 
+    console.log(playQueue)
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -198,18 +201,7 @@ class PlayingScreen extends React.Component {
         />
         <GestureRecognizer
         onSwipeDown={() => {
-              Navigation.dismissModal(this.props.componentId).then(() => {
-                Navigation.showOverlay({
-                    component: {
-                        name: 'example.PlayBar',
-                        options: {
-                            overlay: {
-                                interceptTouchOutside: false
-                            }
-                        }
-                    }
-                });
-              })
+            this.props.onClose()
          }}
         config={config}
         style={{
@@ -259,12 +251,14 @@ class PlayingScreen extends React.Component {
             </TouchableOpacity> */}
           </View>
           <PlayProgressBar 
+            color={nowPlaying.showColor}
             onProgressUpdate={(position) => {
               updateEpisodePlaybackPosition(nowPlaying.id, position);
             }} 
             onFinishTrack={() => { 
               // Dispatch action to mark the track as played
-              this._markEpisodeAsPlayed(nowPlaying.id, this._carousel)
+              console.log('ON FINISH TRACK')
+              // this._markEpisodeAsPlayed(nowPlaying.id, this._carousel)
             }}
             onStartNewTrack={() => {
               this._startNewTrack()

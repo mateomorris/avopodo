@@ -21,7 +21,7 @@ export default class PlaybackButton extends Component {
                     <SvgUri  style={{transform: [{ rotate: '90deg'},{ translateY: 35 }] }} width="50" height="50" source={require('../assets/interface-icons/seek.svg')} fill={'#EEE'} fillAll={true}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', marginTop: 50 }} onPress={() => {this.props.onPlayPause()}}>
-                    <MaterialIndicator color={ buffering ? color : 'transparent' } size={100} animationDuration={3000} />
+                    <MaterialIndicator color={ buffering ? color : 'transparent' } size={110} animationDuration={3000} />
                     <View style={{ 
                         borderRadius: 500,
                         position: 'absolute', 

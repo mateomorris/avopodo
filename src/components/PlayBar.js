@@ -58,7 +58,6 @@ class PlayBar extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log(this.props.state.active)
         if (this.props.state.active && !this.state.visible) {
             this.setState({
                 visible : true
@@ -179,30 +178,24 @@ class PlayBar extends React.Component {
                 }
             }
         },
-        onPanResponderRelease : (e, gesture) => {
+        // onPanResponderRelease : (e, gesture) => {
 
-            console.log(gesture)
+        //     if (!this.state.expanded && gesture.dy > -15 && gesture.moveY < 620) { // If released too low, spring back
+        //         this._closeModal()
 
-            if (!this.state.expanded && gesture.dy > -15 && gesture.moveY < 620) { // If released too low, spring back
-                console.log('Putting the small playbar back')
-                this._closeModal()
+        //     } else if (!this.state.expanded && gesture.dy < -15 ) { // If it's dragged far enough
+        //         this._expandModal()
 
-            } else if (!this.state.expanded && gesture.dy < -15 ) { // If it's dragged far enough
-                console.log('Expanding playbar')
-                this._expandModal()
+        //     } else if (this.state.expanded && gesture.dy > 50 ) { // If it's expanded and gets dragged down
+        //         this._closeModal()
 
-            } else if (this.state.expanded && gesture.dy > 50 ) { // If it's expanded and gets dragged down
-                console.log('Unexpand modal')
-                this._closeModal()
+        //     } else if (this.state.expanded) { // If it's expanded and doesn't get dragged down far enough
+        //         this._expandModal()
+        //     } else {
+        //         console.log('No matching conditions')
+        //     }
 
-            } else if (this.state.expanded) { // If it's expanded and doesn't get dragged down far enough
-                console.log('Re-expand modal')
-                this._expandModal()
-            } else {
-                console.log('No matching conditions')
-            }
-
-        } 
+        // } 
     });
 
 
@@ -246,9 +239,10 @@ class PlayBar extends React.Component {
 
         return (
             <Animated.View 
-            {...this.panResponder.panHandlers} 
             style={[{ height: this.state.height, position: 'absolute', bottom: this.state.bottomSpacing, width: '100%', overflow: 'hidden' }]}>
-                <Animated.View style={{
+                <Animated.View 
+                {...this.panResponder.panHandlers} 
+                style={{
                     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, height: 50, zIndex: 1, backgroundColor: 'black', opacity: this.state.opacity
                 }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
                     <TouchableOpacity onPress={() => this._expandModal() }>

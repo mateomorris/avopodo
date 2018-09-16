@@ -8,7 +8,7 @@ import playlistIcons from '../assets/playlist-icons'
 const styles = StyleSheet.create({
     containerOuter: { 
         borderRadius: 4, 
-        backgroundColor: 'black',
+        backgroundColor: 'transparent',
         shadowColor: '#000000',
         shadowOffset: {
             width: 0,
@@ -140,13 +140,17 @@ export default class PlaylistThumbnail extends React.Component {
         return (
             <View style={{ overflow: 'hidden' }}>
                 <View style={[styles.containerOuter, { shadowOpacity: this.state.pressStatus ? 0.4 : 0.75 }]}>
-                    <View style={styles.containerInner}>
+                    <View style={[styles.containerInner, {
+                        borderRadius: 50
+                    }]}>
                         <TouchableHighlight
                         activeOpacity={0.5}
                         onPress={() => this._handleRightPress()}
                         style={{ 
                             width: '100%',
-                            position: 'absolute'
+                            position: 'absolute',
+                            borderRadius: 5,
+                            overflow: 'hidden'
                         }}
                         onHideUnderlay={this._onHideUnderlay.bind(this)}
                         onShowUnderlay={this._onShowUnderlay.bind(this)}
@@ -155,7 +159,7 @@ export default class PlaylistThumbnail extends React.Component {
                                 {
                                     episodes ? episodes.slice(0,3).map((episode, index) => {
                                         return (
-                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={styles.backgroundImage} key={index}/>
+                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { backgroundColor: episode.showColor}]} key={index}/>
                                         )
                                     }) : null
                                 }
@@ -170,7 +174,10 @@ export default class PlaylistThumbnail extends React.Component {
                                 }) : null
                             }
                         </TouchableOpacity> */}
-                        <LinearGradient style={[styles.infoContainer, {}]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
+                        <LinearGradient style={[styles.infoContainer, {
+                            borderRadius: 5,
+                            overflow: 'hidden'
+                        }]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
                             <TouchableOpacity 
                                 onPress={() => this._handleLeftPress()}
                                 style={{

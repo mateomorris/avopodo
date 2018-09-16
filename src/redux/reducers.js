@@ -56,12 +56,15 @@ function reducer(state = initialState, action) {
         case SYNC_QUEUE: 
             TrackPlayer.getCurrentTrack().then((track) => {
                 if (state.nowPlaying.id != track) {
+                    console.log('Track needs to be updated')
                     let newQueue = state.playQueue.slice(state.playQueue.findIndex(item => item.id == track))
                     return {
                         ...state,
-                        playQueue : newQueue
+                        playQueue : newQueue,
+                        nowPlaying : newQueue[0]
                     }
                 } else {
+                    console.log('Track doesnt need to be updated')
                     return state
                 }
             })

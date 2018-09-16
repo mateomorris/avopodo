@@ -1,9 +1,16 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native'; 
+import { View, Text, Dimensions, StyleSheet } from 'react-native'; 
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Bar } from 'react-native-progress';
+import Slider from "react-native-slider";
+// TODO: Replace progress component with slider
+// https://github.com/jeanregisser/react-native-slider
 
 export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
+
+    state = {
+        sliderValue : 0
+    }
 
     formatTime(seconds) {
         return seconds > 3600 
@@ -72,13 +79,49 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
         return (
             <View style={{ padding: 20, justifyContent: 'center', alignItems: 'center' }}>
-                <Bar
+                {/* <Bar
                     width={Dimensions.get('window').width - 100}
                     progress={trackProgress}
                     color={'white'}
                     unfilledColor={'rgb(34,28,28)'}
                     borderWidth={0}
                     height={3}
+                /> */}
+                {/* <Slider
+                style={{
+                    width: Dimensions.get('window').width - 50 ,
+                    backgroundColor: 'blue'
+                }}
+                value={this.state.sliderValue}
+                onValueChange={value => this.setState({ sliderValue : value })}
+                /> */}
+                <Slider
+                    style={{
+                        width: Dimensions.get('window').width - 100 ,
+                    }}
+                    trackStyle={[scrubber.track, {
+                        backgroundColor: 'rgba(250,250,250,0.1)'
+                    }]}
+                    thumbStyle={[scrubber.thumb, {
+                        backgroundColor: this.props.color,
+                        shadowColor: this.props.color,
+                        shadowOpacity: 0.5
+                    }]}
+                    minimumTrackTintColor={this.props.color}
+                    thumbTouchSize={{width: 50, height: 40}}
+                    value={trackProgress}
+                    onValueChange={value => this.setState({ sliderValue : value })}
+                    onSlidingComplete={() => {
+                        TrackPlayer.getPosition().then((position) => {
+                            // new position = total duration (in seconds) * new percentage / total percentage (1)
+                            let newPosition = Math.floor(duration * this.state.sliderValue) || null
+
+                            console.log(newPosition)
+                            if (newPosition) {
+                                TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
+                            } 
+                        })
+                    }}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width - 100, paddingTop: 10 }}>
                     <Text style={{ fontSize: 12, color: '#93A8B3' }}>{this.formatTime(position)}</Text>
@@ -89,3 +132,21 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
     }
     
 }
+
+
+var scrubber = StyleSheet.create({
+  container: {
+    height: 30,
+  },
+  track: {
+    height: 2
+  },
+  thumb: {
+    width: 10,
+    height: 10,
+    borderRadius: 10 / 2,
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 2,
+    shadowOpacity: 1,
+  }
+});

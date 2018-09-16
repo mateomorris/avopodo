@@ -224,7 +224,6 @@ class ShowDetailScreen extends React.Component {
         let thisShow = this.props.state.subscribedShows.find(show => show.id == this.props.id)
 
         this.props.actions.checkIfNewEpisode(thisShow).then((result) => {
-            console.log(result)
             if (result.newEpisodeAvailable) {
                 this.props.actions.getEpisodeListForShow(result.show.id).then(({ episodeList }) => {
                     this.setState({refreshing: false}, () => {

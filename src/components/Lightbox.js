@@ -21,8 +21,17 @@ export default class LightBox extends Component {
         ).start();
     }
 
-    componentWillMount() {
-
+    _closeLightbox = () => {
+        Animated.timing(            
+            this.state.opacity,         
+            {
+                toValue:0, 
+                duration: 200
+            }    
+        ).start(() => {
+            Navigation.dismissOverlay(this.props.componentId)
+        });
+    
     }
 
 
@@ -55,7 +64,9 @@ export default class LightBox extends Component {
                         paddingTop: 10,
                         paddingBottom: 10,
                         alignItems: 'flex-end'
-                    }} onPress={() => {Navigation.dismissOverlay(this.props.componentId)}}>
+                    }} onPress={() => {
+                        this._closeLightbox()
+                    }}>
                         <Image style={{ width: 25, height: 25 }} source={require('../assets/x.png')} />
                     </TouchableOpacity>
                     <ScrollView style={[{
@@ -73,7 +84,7 @@ export default class LightBox extends Component {
                         height: window.height,
                         zIndex: -1
                     }} onPress={() => {
-                        Navigation.dismissOverlay(this.props.componentId)
+                        this._closeLightbox()
                     }}>
                     </TouchableOpacity>
                 </View>

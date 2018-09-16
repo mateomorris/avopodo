@@ -148,9 +148,6 @@ class PlaylistsScreen extends React.Component {
   handleViewRef = ref => this.view = ref;
   
   bounce = () => this.view.bounce(800).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
-  
-
-
 
   render() {
 

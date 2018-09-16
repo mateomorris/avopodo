@@ -280,7 +280,7 @@ class HomeScreen extends React.Component {
     let { togglePlayback } = this.props.actions
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <ScrollView 
           contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 45 : 0 }]}
           refreshControl={

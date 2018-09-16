@@ -21,7 +21,6 @@ export function startPlayer() {
         });
 
             TrackPlayer.registerEventHandler(async (data) => {
-                console.log(data)
 
                 if (data.type === 'playback-track-changed') {
                     console.log('playback-track-changed')
