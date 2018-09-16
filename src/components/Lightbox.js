@@ -16,7 +16,8 @@ export default class LightBox extends Component {
             this.state.opacity,         
             {
                 toValue:1, 
-                duration: 200
+                duration: 200,
+                useNativeDriver: true
             }    
         ).start();
     }
@@ -26,7 +27,8 @@ export default class LightBox extends Component {
             this.state.opacity,         
             {
                 toValue:0, 
-                duration: 200
+                duration: 200,
+                useNativeDriver: true
             }    
         ).start(() => {
             Navigation.dismissOverlay(this.props.componentId)
