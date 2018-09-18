@@ -119,7 +119,12 @@ function reducer(state = initialState, action) {
                     return trackDetails(episode)
                 })
                 TrackPlayer.add(playQueue).then(() => {
-                    TrackPlayer.pause()
+                    TrackPlayer.play()
+                    TrackPlayer.setVolume(0)
+                    // TrackPlayer.play().then(() => {
+                    //                         TrackPlayer.pause()
+
+                    // })
 
                     // TrackPlayer.skip(state.nowPlaying.id).then(() => {
                     //     TrackPlayer.pause()
@@ -219,6 +224,7 @@ function reducer(state = initialState, action) {
                 }),
             };
         case SET_CURRENT_TRACK_POSITION:
+            console.log('Setting current track position')
             let retrievedTrackPosition = state.episodePlaybackPositions[action.episodeId];
             var track = trackDetails(state.nowPlaying);    
             // TrackPlayer.reset()
@@ -233,14 +239,26 @@ function reducer(state = initialState, action) {
             //     }
             // })
 
+            console.log(retrievedTrackPosition)
             if (retrievedTrackPosition) {
+                console.log('Seeking track position')
+                // TrackPlayer.play()
                 TrackPlayer.seekTo(retrievedTrackPosition);
-                TrackPlayer.play();
+
+
+
+                // TrackPlayer.getBufferedPosition().then((buffered) => {
+                //     console.log(buffered)
+                // })
+                // TrackPlayer.seekTo(retrievedTrackPosition);
             }
 
             if(!action.startPlaying) {
                 TrackPlayer.pause()
             }
+
+            // Ensure volume is full (gets set to zero in SETUP_PLAYER because .play() needs to get called in order for buffering to start)
+            TrackPlayer.setVolume(1)
 
             return {
                 ...state,
@@ -249,7 +267,13 @@ function reducer(state = initialState, action) {
             };
         case START_PLAYER: 
             TrackPlayer.reset();
-            TrackPlayer.setupPlayer();
+            TrackPlayer.setupPlayer({
+                // minBuffer : 0,	// Minimum time in seconds that needs to be buffered
+                // maxBuffer : 0,	// Maximum time in seconds that needs to be buffered
+                playBuffer : 10, // Minimum time in seconds that needs to be buffered to start playing
+                maxCacheFiles : 100, // Maximum amount of files cached
+                maxCacheSize : 100000 // Maximum cache size in kilobytes
+            });
 
             return state;
         case UPDATE_EPISODE_PLAYBACK_POSITION: 

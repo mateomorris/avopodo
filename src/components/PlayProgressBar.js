@@ -118,6 +118,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
                             console.log(newPosition)
                             if (newPosition) {
+                                console.log(`TrackPlayer seeking to `, position * this.state.sliderValue / trackProgress)
                                 TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
                             } 
                         })

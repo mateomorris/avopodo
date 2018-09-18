@@ -4,7 +4,7 @@ import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 export function startPlayer() {
     return (dispatch, getState) => {
         let state = getState().reducer;
-        let nowPlayingEpisodeId = state.playing ? state.nowPlaying.id : false;
+        let nowPlayingEpisodeId = state.active ? state.nowPlaying.id : false;
 
             // TrackPlayer.reset();
             TrackPlayer.setupPlayer().then(()=>{
@@ -41,12 +41,31 @@ export function startPlayer() {
                 //   dispatch(playNextItemInQueue())
                 } else if(data.type == 'remote-previous') {
                     console.log('Remote previous')
-                  TrackPlayer.skipToPrevious()
+                    TrackPlayer.skipToPrevious()
                 } else if (data.type === 'playback-state') {
-                    console.log('Playback state')
-                  PlayerStore.playbackState = data.state;
+                    console.log('Playback state', data, nowPlayingEpisodeId)
+                    // PlayerStore.playbackState = data.state;
+                    let storedTrackPosition = state.episodePlaybackPositions[nowPlayingEpisodeId];
+
+                    if (data.state == 'playing' && storedTrackPosition) {
+                        console.log('Done buffering')
+
+                        TrackPlayer.getPosition().then((actualPosition) => {
+                            console.log(actualPosition, storedTrackPosition)
+                            if (actualPosition < storedTrackPosition) {
+                                console.log('Playback position needs to be adjusted')
+                                dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
+                            }
+                        })
+
+                    }
+
+                    // if (data.state == 'paused' && storedTrackPosition) {
+                    //     console.log('Setting current track position')
+                    //     dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
+                    // }
                 } else {
-                    console.log(`No matching condition for ${data}`)
+                    console.log(`No matching condition for `, data)
                 }
 
 
@@ -84,8 +103,5 @@ export function startPlayer() {
             });
               
         dispatch(setupPlayer())
-        if (nowPlayingEpisodeId) {
-            dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
-        }
     }
 }

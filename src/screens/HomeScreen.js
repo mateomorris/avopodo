@@ -58,6 +58,7 @@ class HomeScreen extends React.Component {
   }
 
   _checkForPlaybackStatus = ( show, episode ) => {
+      console.log('Checking for playback status')
       if (this.props.state.initialPlay) {
           console.log('Playing initial episode');
           this._initialPlay(show, episode);
@@ -135,8 +136,9 @@ class HomeScreen extends React.Component {
 
 
     if ('id' in this.props.state.nowPlaying) {
+      console.log('An episode is currently playing')
       let currentTrackEpisodeId = this.props.state.nowPlaying.id;
-      this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
+      // this.props.actions.setCurrentTrackPosition(currentTrackEpisodeId);
     } else {
       console.log('No episode is currently playing')
     }
