@@ -165,7 +165,6 @@ class PlayBar extends React.Component {
     }
 
     _removePlayBar = (thing) => {
-        this.state.height.setValue(0)
         this.props.actions.resetQueue()
         this.setState({
             visible : false
