@@ -68,14 +68,15 @@ export default class EpisodeRow extends React.Component {
                         }} ellipsizeMode='tail' numberOfLines={1}>{info.title}</Text>
                     </View>
                     <TouchableOpacity style={{
-                        paddingLeft: 10,
+                        paddingLeft: 20,
                         position: 'absolute',
                         right: 5,
                         alignItems: 'center',
                         alignContent: 'center',
                         justifyContent: 'center',
                         bottom: 0,
-                        top: 0
+                        top: 0,
+                        zIndex: 9
                     }} onPress={() => {
                         this.props.onPlayPress()
                     }}>

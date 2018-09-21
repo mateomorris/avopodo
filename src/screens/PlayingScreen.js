@@ -82,7 +82,7 @@ class PlayingScreen extends React.Component {
 
   _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      this.props.actions.syncQueue()
+      this.props.actions.syncPlayer()
     } else {
       console.log('In background')
     }

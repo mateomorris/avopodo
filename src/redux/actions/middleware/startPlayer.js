@@ -3,25 +3,35 @@ import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 
 export function startPlayer() {
     return (dispatch, getState) => {
+        
         let state = getState().reducer;
         let nowPlayingEpisodeId = state.active ? state.nowPlaying.id : false;
 
-            // TrackPlayer.reset();
-            TrackPlayer.setupPlayer().then(()=>{
-                TrackPlayer.updateOptions({
-                    stopWithApp: false,
-                    capabilities: [
-                        TrackPlayer.CAPABILITY_PLAY,
-                        TrackPlayer.CAPABILITY_PAUSE,
-                        TrackPlayer.CAPABILITY_STOP,
-                        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
-                    ]
-                });
-        });
+            dispatch(setupPlayer())
+
+
+            let storedTrackPosition = state.episodePlaybackPositions[nowPlayingEpisodeId];
+
+            if (storedTrackPosition) {
+                TrackPlayer.getPosition().then((actualPosition) => {
+                    console.log(actualPosition, storedTrackPosition)
+                    if (actualPosition < storedTrackPosition) {
+                        console.log('Playback position needs to be adjusted')
+                        console.log(nowPlayingEpisodeId)
+                        dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
+
+                        // const trackPositionSetter = setInterval(function() {
+                        //     dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
+                        // }, 1000);
+                        // if (state.trackSynced) {
+                        //     clearInterval(trackPositionSetter)
+                        // }
+                    }
+                })            
+            }
 
             TrackPlayer.registerEventHandler(async (data) => {
-
+                console.log(data)
                 if (data.type === 'playback-track-changed') {
                     console.log('playback-track-changed')
                     // dispatch(playNextItemInQueue(1))
@@ -45,20 +55,7 @@ export function startPlayer() {
                 } else if (data.type === 'playback-state') {
                     console.log('Playback state', data, nowPlayingEpisodeId)
                     // PlayerStore.playbackState = data.state;
-                    let storedTrackPosition = state.episodePlaybackPositions[nowPlayingEpisodeId];
 
-                    if (data.state == 'playing' && storedTrackPosition) {
-                        console.log('Done buffering')
-
-                        TrackPlayer.getPosition().then((actualPosition) => {
-                            console.log(actualPosition, storedTrackPosition)
-                            if (actualPosition < storedTrackPosition) {
-                                console.log('Playback position needs to be adjusted')
-                                dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
-                            }
-                        })
-
-                    }
 
                     // if (data.state == 'paused' && storedTrackPosition) {
                     //     console.log('Setting current track position')
@@ -102,6 +99,5 @@ export function startPlayer() {
                 // }
             });
               
-        dispatch(setupPlayer())
     }
 }

@@ -21,7 +21,8 @@ import {
     EDIT_PLAYLIST,
     REMOVE_PLAYLIST,
     SYNC_QUEUE,
-    RESET_QUEUE
+    RESET_QUEUE,
+    SYNC_PLAY_STATUS
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -39,11 +40,18 @@ const initialState = {
   episodePlaybackPositions: {},
   currentTrackPosition: 0,
   playlists: [],
-  finishedEpisodes : []
+  finishedEpisodes : [],
+  trackSynced : false
 };
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case SYNC_PLAY_STATUS: 
+            console.log('playing STATUS')
+            return {
+                ...state,
+                playing: action.playing
+            }
         case RESET_QUEUE: 
             TrackPlayer.reset();
             return {
@@ -54,20 +62,17 @@ function reducer(state = initialState, action) {
                 active: false
             };
         case SYNC_QUEUE: 
-            TrackPlayer.getCurrentTrack().then((track) => {
-                if (state.nowPlaying.id != track) {
-                    console.log('Track needs to be updated')
-                    let newQueue = state.playQueue.slice(state.playQueue.findIndex(item => item.id == track))
-                    return {
-                        ...state,
-                        playQueue : newQueue,
-                        nowPlaying : newQueue[0]
-                    }
-                } else {
-                    console.log('Track doesnt need to be updated')
-                    return state
-                }
-            })
+
+            console.log('Setting the new queue', action.newQueue)
+
+            // return state
+
+            return {
+                ...state,
+                playQueue : action.newQueue,
+                nowPlaying : action.newQueue[0]
+            }
+
         case REMOVE_PLAYLIST: 
             return {
                 ...state,
@@ -112,6 +117,20 @@ function reducer(state = initialState, action) {
             }
         case SETUP_PLAYER:
 
+            // TrackPlayer.reset();
+            TrackPlayer.setupPlayer().then(()=>{
+                TrackPlayer.updateOptions({
+                    stopWithApp: false,
+                    capabilities: [
+                        TrackPlayer.CAPABILITY_PLAY,
+                        TrackPlayer.CAPABILITY_PAUSE,
+                        TrackPlayer.CAPABILITY_STOP,
+                        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+                    ]
+                });
+            });
+
             let currentEpisodePosition = state.playQueue.map(episode => episode.id).indexOf(state.nowPlaying.id)
 
             if ('id' in state.nowPlaying) {
@@ -120,7 +139,8 @@ function reducer(state = initialState, action) {
                 })
                 TrackPlayer.add(playQueue).then(() => {
                     TrackPlayer.play()
-                    TrackPlayer.setVolume(0)
+                    TrackPlayer.pause()
+                    // TrackPlayer.setVolume(0)
                     // TrackPlayer.play().then(() => {
                     //                         TrackPlayer.pause()
 
@@ -243,19 +263,29 @@ function reducer(state = initialState, action) {
             if (retrievedTrackPosition) {
                 console.log('Seeking track position')
                 // TrackPlayer.play()
-                TrackPlayer.seekTo(retrievedTrackPosition);
+                // TrackPlayer.seekTo(retrievedTrackPosition);
+
+
+                const trackPositionSetter = setInterval(function() {
+                    TrackPlayer.getBufferedPosition().then((buffered) => {
+                        console.log(buffered)
+                        if (buffered > 0) {
+                            TrackPlayer.seekTo(retrievedTrackPosition);
+                            clearInterval(trackPositionSetter)
+                        }
+                    })
+                }, 1000);
+
+                
 
 
 
-                // TrackPlayer.getBufferedPosition().then((buffered) => {
-                //     console.log(buffered)
-                // })
                 // TrackPlayer.seekTo(retrievedTrackPosition);
             }
 
-            if(!action.startPlaying) {
-                TrackPlayer.pause()
-            }
+            // if(!action.startPlaying) {
+            //     TrackPlayer.pause()
+            // }
 
             // Ensure volume is full (gets set to zero in SETUP_PLAYER because .play() needs to get called in order for buffering to start)
             TrackPlayer.setVolume(1)
@@ -263,16 +293,17 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 active: true,
-                playing: action.startPlaying
+                playing: action.startPlaying,
+                trackSynced : true
             };
         case START_PLAYER: 
             TrackPlayer.reset();
             TrackPlayer.setupPlayer({
                 // minBuffer : 0,	// Minimum time in seconds that needs to be buffered
                 // maxBuffer : 0,	// Maximum time in seconds that needs to be buffered
-                playBuffer : 10, // Minimum time in seconds that needs to be buffered to start playing
-                maxCacheFiles : 100, // Maximum amount of files cached
-                maxCacheSize : 100000 // Maximum cache size in kilobytes
+                // playBuffer : 10, // Minimum time in seconds that needs to be buffered to start playing
+                // maxCacheFiles : 100, // Maximum amount of files cached
+                // maxCacheSize : 100000 // Maximum cache size in kilobytes
             });
 
             return state;
