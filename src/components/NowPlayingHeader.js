@@ -66,7 +66,7 @@ class NowPlayingHeader extends React.Component {
               justifyContent: 'center',
               alignItems: 'flex-start'
             }}>
-                 <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
+                <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
                 <Text style={{
                     color: 'white',
                     fontWeight: '600',

@@ -15,6 +15,10 @@ import * as actions from '../redux/actions'
 
 class PlaylistsScreen extends React.Component {
 
+  componentDidMount() {
+    this.props.actions.syncPlaylists()
+  }
+
   _handleFavoritePress = () => {
 
   }
