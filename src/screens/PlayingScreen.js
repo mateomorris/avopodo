@@ -29,7 +29,7 @@ class PlayingScreen extends React.Component {
       1 : new Animated.Value(1), 
       2 : new Animated.Value(1)
     },
-    carouselActive : false
+    carouselActive : false,
   }
 
   _handleFavoritePress = () => {
@@ -67,7 +67,7 @@ class PlayingScreen extends React.Component {
   _openCarousel = () => {
     setTimeout(() => {
       this.setState({carouselActive: true}
-    )}, 500)
+    )}, 0)
   }
 
   _closeCarousel = () => {
@@ -116,7 +116,7 @@ class PlayingScreen extends React.Component {
               position: "absolute",
               top: 0, left: 0, bottom: 0, right: 0,
               zIndex: 9,
-              opacity: this.state.loadedImages[index]
+              opacity: index <= 2 ? this.state.loadedImages[index] : 0
           }}>
             <BlurView
               style={{ flex: 1 }}
@@ -127,18 +127,20 @@ class PlayingScreen extends React.Component {
         </Animated.View>
         <Image onLoad={() => {
           // Show Carousel
-          Animated.timing(this.state.loadedImages[index], {
-              toValue: 0,
-              duration: 500,
-              delay: 0,
-          }).start()
+          if (index <= 2) {
+            Animated.timing(this.state.loadedImages[index], {
+                toValue: 0,
+                duration: 500,
+                delay: 0,
+            }).start()
+          }
         }} source={{ uri: item.showImage, cache: 'force-cache' }} style={{ height: '100%', width: '100%' }} resizeMode={'contain'} />
       </Animated.View>
     );
   }
 
   _playNextItemInQueue = (index) => {
-    this.props.actions.playNextItemInQueue(index);
+    this.props.actions.playNextItemInQueue(index)
   }
 
   _markEpisodeAsPlayed = (episodeId, carousel) => {
@@ -147,8 +149,6 @@ class PlayingScreen extends React.Component {
       this.setState({
         playingNextEpisode : true
       })
-
-      console.log(this.props.state)
   }
 
   _startNewTrack = () => {
@@ -216,13 +216,13 @@ class PlayingScreen extends React.Component {
               onBeforeSnapToItem={(index) => {
                 this._playNextItemInQueue(index)}}
                 // NEXT: Set state playingNextEpisode back to false
-              data={playQueue.slice(0,3)}
+              data={this.props.state.playQueue}
               renderItem={this._renderItem.bind(this)}
               sliderWidth={Dimensions.get('window').width}
               // sliderHeight={}
               itemWidth={Dimensions.get('window').width - 100 }
               itemHeight={Dimensions.get('window').width - 50 }
-              firstItem={activeQueueItem}
+              // firstItem={activeQueueItem}
             />
           }
         </GestureRecognizer>
