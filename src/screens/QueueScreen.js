@@ -38,18 +38,18 @@ class QueueScreen extends Component {
             <View style={{
                 flexDirection : 'column',
                 alignItems : 'flex-start',
-                justifyContent : 'flex-start'
+                justifyContent : 'flex-start',
+                width: 225
             }}>
                 <Text style={{
                     color: 'white',
-                    fontSize: 17,
-                    height: 20
-                }}>{ item.title }</Text>
+                    fontSize: 17
+                }} ellipsizeMode={'tail'} numberOfLines={1}>{ item.title }</Text>
                 <View style={{
                     // borderBottomColor: item.showColor,
                     // borderBottomWidth: 2
                 }}>
-                    <Text style={{
+                    <Text ellipsizeMode={'tail'} numberOfLines={1} style={{
                         fontSize: 14,
                         color: '#FAFAFA',
                         fontWeight: '700',

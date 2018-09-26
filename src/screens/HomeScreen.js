@@ -16,12 +16,6 @@ import TrackPlayer from 'react-native-track-player';
 
 import * as specialActions from '../redux/actions'
 
-import {
-  Player,
-  Recorder,
-  MediaStates
-} from 'react-native-audio-toolkit';
-
 import { WebView } from 'react-native';
 import { LoadingIndicator } from '../components/SimpleComponents';
 

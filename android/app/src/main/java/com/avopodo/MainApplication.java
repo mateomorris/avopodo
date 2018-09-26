@@ -3,6 +3,7 @@ package com.avopodo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.horcrux.svg.SvgPackage;
 import com.zmxv.RNSound.RNSoundPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new TrackPlayer(),
             new SvgPackage(),
             new RNSoundPackage(),

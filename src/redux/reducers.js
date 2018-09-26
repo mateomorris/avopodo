@@ -26,6 +26,7 @@ import {
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
+import firebase from 'react-native-firebase';
 
 import TrackPlayer from 'react-native-track-player';
 import trackDetails from '../utilities/tracks';
@@ -261,7 +262,6 @@ function reducer(state = initialState, action) {
 
             console.log(retrievedTrackPosition)
             if (retrievedTrackPosition) {
-                console.log('Seeking track position')
                 // TrackPlayer.play()
                 // TrackPlayer.seekTo(retrievedTrackPosition);
 
@@ -391,6 +391,11 @@ function reducer(state = initialState, action) {
                 searchResults: 'This should be some search results'
             }
         case 'Subscribe to show': 
+
+            firebase.analytics().logEvent('show_subscribe', {
+                title: action.title
+            }) 
+            
             let newShow = {
                 id: action.id,
                 title: action.title,
