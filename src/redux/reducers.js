@@ -166,10 +166,12 @@ function reducer(state = initialState, action) {
             TrackPlayer.add(action.trackPlayerQueue[0]).then(() => {
                 TrackPlayer.play()
                 TrackPlayer.add(action.trackPlayerQueue.slice(1))
-                // TrackPlayer.getQueue().then((queue) => {
-                //     TrackPlayer.play()
-                // })
             })
+
+            firebase.analytics().logEvent('play_playlist', {
+                playlist: action.playlist.name,
+                details: action.playlist
+            }) 
 
             return {
                 ...state, 
@@ -219,7 +221,14 @@ function reducer(state = initialState, action) {
             };
 
         case CREATE_PLAYLIST: 
+
             let { playlistId, playlistName, shows, releaseRange, episodeLength, playFirst, selectedPlaylistIcon } = action.playlist;
+
+            firebase.analytics().logEvent('create_playlist', {
+                name: playlistName,
+                details: action.playlist
+            }) 
+
             return {
                 ...state, 
                 playlists: [{
@@ -410,7 +419,15 @@ function reducer(state = initialState, action) {
                 subscribedShows: [newShow, ...state.subscribedShows]
             }
         case 'Unsubscribe from show': 
+
             let updatedSubscribedShows = state.subscribedShows.filter(show => show.id !== action.id)
+
+            firebase.analytics().logEvent('unsubscribe_from_show', {
+                show: show.title,
+                subscribedShows: updatedSubscribedShows
+            }) 
+
+
             return {
                 ...state, 
                 subscribedShows: updatedSubscribedShows
@@ -424,6 +441,11 @@ function reducer(state = initialState, action) {
                     TrackPlayer.play();
                 })
             });
+            
+            firebase.analytics().logEvent('play_episode', {
+                episode: action.episode.title,
+                show: action.episode.showTitle
+            }) 
 
             return {
                 ...state, 

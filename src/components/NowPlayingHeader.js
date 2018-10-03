@@ -46,7 +46,8 @@ class NowPlayingHeader extends React.Component {
     return (
         <View style={{
             padding: 20,
-            paddingTop: 30
+            paddingTop: 30,
+            paddingBottom: 0
         }}>
           <View style={{
               flexDirection: 'row',

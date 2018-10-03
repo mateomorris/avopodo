@@ -78,7 +78,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
         }
 
         return (
-            <View style={{ padding: 20, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ padding: 20, paddingTop: 10, paddingBottom: 10, justifyContent: 'center', alignItems: 'center' }}>
                 {/* <Bar
                     width={Dimensions.get('window').width - 100}
                     progress={trackProgress}

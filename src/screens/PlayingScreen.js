@@ -9,6 +9,7 @@ import Carousel from 'react-native-snap-carousel';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import MarqueeText from 'react-native-marquee';
 import { Navigation } from "react-native-navigation";
+import firebase from 'react-native-firebase';
 
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlayProgressBar from '../components/PlayProgressBar';
@@ -38,6 +39,11 @@ class PlayingScreen extends React.Component {
 
   _handlePlaybackStep = async (change) => {
     await TrackPlayer.getPosition().then((position) => {
+
+      firebase.analytics().logEvent('seek_15', {
+          direction: change > 0 ? 'forward' : 'backward'
+      }) 
+
       TrackPlayer.seekTo(position + change);
     })
   }
@@ -204,7 +210,9 @@ class PlayingScreen extends React.Component {
          }}
         config={config}
         style={{
-          flex: 1
+          flex: 1,
+          paddingTop: 10,
+          paddingBottom: 25
         }}>
           {
             this.props.expanded &&
@@ -219,7 +227,6 @@ class PlayingScreen extends React.Component {
               data={this.props.state.playQueue}
               renderItem={this._renderItem.bind(this)}
               sliderWidth={Dimensions.get('window').width}
-              // sliderHeight={}
               itemWidth={Dimensions.get('window').width - 100 }
               itemHeight={Dimensions.get('window').width - 50 }
               // firstItem={activeQueueItem}
@@ -228,8 +235,7 @@ class PlayingScreen extends React.Component {
         </GestureRecognizer>
 
         <View style={{
-          flex: 1,
-          paddingTop: 30
+          flex: 1
         }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
             <View style={{ flex: 1, marginLeft: 20, marginRight: 20, justifyContent: 'center', alignItems: 'center'}}>
