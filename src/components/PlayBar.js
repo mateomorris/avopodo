@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated, PanResponder, Dimensions } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated, PanResponder, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         width: 120, 
         height: 120, 
         borderRadius: 4
-    }
+    },
 });
 
 class PlayBar extends React.Component {
@@ -53,8 +53,9 @@ class PlayBar extends React.Component {
         initialPlay: null,
         opacity: new Animated.Value(1),
         height : new Animated.Value(Dimensions.get('window').height + 50),
-        bottomSpacing : new Animated.Value(-47),
-        expanded: false
+        bottomSpacing : new Animated.Value(0),
+        expanded: false,
+        tabHeight: 0
     }
 
     componentDidUpdate() {
@@ -66,6 +67,13 @@ class PlayBar extends React.Component {
     }
 
     componentDidMount() {
+
+        this.setState({
+            tabHeight: this._getTabHeight()
+        }, () => {
+            console.log(this.state.tabHeight)
+        })
+
         TrackPlayer.getState().then((state) => {
             if (state == 'paused' && this.props.state.playing) {
                 // TODO: Ensure the app knows that the track is paused
@@ -80,7 +88,44 @@ class PlayBar extends React.Component {
         }
     }
 
+    _getTabHeight = () => {
+        const isIphoneX = () => {
+            let dimensions;
+            if (Platform.OS !== 'ios') {
+                return false;
+            }
+            if (Platform.isPad || Platform.isTVOS) {
+                return false;
+            }
+            dimensions = Dimensions.get('window');
+            if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
+                return true;
+            }
+            if (dimensions.height === 896 || dimensions.width === 896) { 
+                return true;
+            }
+            return false;
+        }
+
+        if (isIphoneX()) {
+            // Tab height is 84
+            return 82 * -1
+        } else {
+            // Tab height is 50
+            return 48 * -1
+        }
+    }
+
     _becomeVisible = () => {
+
+
+        // iPhone X: 375, 812
+        // iPhone 8 Plus: 414, 736
+        // iPhone 8: 667, 375
+
+        this.state.bottomSpacing.setValue(this.state.tabHeight)
+
+
         // Show PlayBar 
         Animated.timing(this.state.height, {
             toValue: Dimensions.get('window').height,
@@ -109,7 +154,7 @@ class PlayBar extends React.Component {
         Animated.spring(            
             this.state.bottomSpacing,         
             {
-                toValue: -47, 
+                toValue: this.state.tabHeight, 
                 tension: 0,
                 useNativeDriver: true
             }    
@@ -164,7 +209,7 @@ class PlayBar extends React.Component {
         })
     }
 
-    _removePlayBar = (thing) => {
+    _removePlayBar = () => {
         this.props.actions.resetQueue()
         this.setState({
             visible : false
@@ -238,6 +283,7 @@ class PlayBar extends React.Component {
     bounce = () => this.view.transitionTo({ height: 200 })
     
     render() {
+
 
         // this.state.height.setOffset(50)
 
