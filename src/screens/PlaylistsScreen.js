@@ -127,7 +127,7 @@ class PlaylistsScreen extends React.Component {
 
   _handleNewPlaylistsPress = (subscribedShows) => {
 
-    if (subscribedShows.length >= 5) {
+    if (subscribedShows.length >= 2) {
 
       Navigation.showOverlay({
         component: {
@@ -144,7 +144,7 @@ class PlaylistsScreen extends React.Component {
       });
       
     } else {
-      Alert.alert(`You must subscribe to at least five shows before creating a playlist`, `otherwise like, what's the point`);
+      Alert.alert(`You must subscribe to at least three shows before creating a playlist`, `otherwise like, what's the point`);
     }
   }
 
