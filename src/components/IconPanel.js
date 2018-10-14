@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 
 const styles = StyleSheet.create({
@@ -38,7 +38,10 @@ export default class IconPanel extends React.Component {
                                         selectedIcon : icon
                                     })
                                 }}>
-                                    <SvgUri width="100%" height="100%" source={icons[icon]} fill={'white'} fillAll={true}/>
+                                    {/* {
+                                        Platform.OS == 'ios' &&
+                                        <SvgUri width="100%" height="100%" source={icons[icon]} fill={'white'} fillAll={true}/>
+                                    } */}
                                 </TouchableOpacity>
                             </View>
                         )

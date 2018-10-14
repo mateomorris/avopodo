@@ -300,7 +300,10 @@ class PlaylistDetailScreen extends Component {
                         alignItems: 'center',
                         justifyContent: 'flex-start'
                     }}>
-                        <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
+                        {/* {
+                            Platform.OS == 'ios' &&
+                            <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
+                        } */}
                         <Text style={{
                             fontSize: 30, 
                             fontWeight: '700',
@@ -585,8 +588,8 @@ class PlaylistDetailScreen extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-        state : state.reducer,
-		playlists : state.reducer.playlists
+        state : state,
+		playlists : state.playlists
 	};
 }
 

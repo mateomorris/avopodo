@@ -77,7 +77,7 @@ class HomeScreen extends React.Component {
       imageHighRes: episode.showImageHighRes
     }
     
-    this.props.actions.addToQueueFrontAndPlayEpisode(show, episode);
+    this.props.actions.addToQueueFrontAndPlayEpisode(show, episode); // reactivate
 
   }
 
@@ -93,7 +93,7 @@ class HomeScreen extends React.Component {
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
-            interceptTouchOutside: true
+            interceptTouchOutside: false
           }
         }
       }
@@ -103,7 +103,7 @@ class HomeScreen extends React.Component {
 
   componentWillMount = () => {
 
-    this.props.actions.startPlayer();
+    this.props.actions.startPlayer(); // reactivate
         
     // this.setState({
     //     nowPlaying: this.props.state.nowPlaying,
@@ -117,16 +117,16 @@ class HomeScreen extends React.Component {
     // this.props.actions.setupPlayer();
 
     // Activate playbar
-    Navigation.showOverlay({
-        component: {
-            name: 'example.PlayBar',
-            options: {
-                overlay: {
-                    interceptTouchOutside: false
-                }
-            }
-        }
-    });
+    // Navigation.showOverlay({
+    //     component: {
+    //         name: 'example.PlayBar',
+    //         options: {
+    //             overlay: {
+    //                 interceptTouchOutside: false
+    //             }
+    //         }
+    //     }
+    // });
 
 
     if ('id' in this.props.state.nowPlaying) {
@@ -150,7 +150,7 @@ class HomeScreen extends React.Component {
   }
 
   _getNewestFromSubscribed = () => {
-    this.props.actions.getNewestFromSubscribed()
+    // this.props.actions.getNewestFromSubscribed() // reactivate
     this.props.actions.getNewestFromSubscribed().then((results) => {
       let episodeList = results.map((episodeList) => {
         // console.log(episodeList.episodeList[0].showId, this.props.state)
@@ -168,7 +168,7 @@ class HomeScreen extends React.Component {
         homeFeed : episodeList,
         refreshing: addToQueueFrontAndPlayEpisode
       })
-    })
+    }) // reactivate
   }
 
 
@@ -190,7 +190,7 @@ class HomeScreen extends React.Component {
         //   Alert.alert('Buffered');
         // });
         Alert.alert('Buffered');
-        this.props.actions.toggleBufferingStatus(true);
+        this.props.actions.toggleBufferingStatus(true); // reactivate
       }
     })
   })
@@ -301,8 +301,9 @@ class HomeScreen extends React.Component {
 
 
 function mapStateToProps(state, ownProps) {
+  console.log(state)
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

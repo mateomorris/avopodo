@@ -40,7 +40,7 @@ class PlaylistsScreen extends React.Component {
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
-            interceptTouchOutside: true
+            interceptTouchOutside: false
           }
         }
       }
@@ -137,7 +137,7 @@ class PlaylistsScreen extends React.Component {
           }, // simple serializable object that will pass as props to the lightbox (optional)
           options: {
             overlay: {
-              interceptTouchOutside: true
+              interceptTouchOutside: false
             }
           }
         }
@@ -215,9 +215,9 @@ class PlaylistsScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-    subscribedShows: state.reducer.subscribedShows,
-    playlists: state.reducer.playlists,
-    nowPlaying: state.reducer.nowPlaying,
+    subscribedShows: state.subscribedShows,
+    playlists: state.playlists,
+    nowPlaying: state.nowPlaying,
 	};
 }
 

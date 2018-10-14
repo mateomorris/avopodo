@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert, Animated } from 'react-native';
+import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert, Animated, Platform } from 'react-native';
 import { Navigation } from "react-native-navigation";
 import { BlurView } from 'react-native-blur';
 import * as Animatable from 'react-native-animatable';
@@ -45,8 +45,10 @@ export default class LightBox extends Component {
             <Animated.View style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(0,0,0,.5)',
+                backgroundColor: Platform.OS == 'ios' ?  'rgba(0,0,0,.5)' : 'rgba(0,0,0,.85)',
                 padding: 10,
+                paddingTop: 37.5,
+                paddingBottom: 37.5,
                 alignItems: 'center',
                 opacity: this.state.opacity
             }}>

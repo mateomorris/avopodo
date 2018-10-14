@@ -23,7 +23,10 @@ const styles = StyleSheet.create({
 export default class EpisodeSnippet extends React.Component {
 
     state = {
-        titleHeight : null
+        titleHeight : null,
+        SVGs : {
+            play : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>button-play</title><path fill="black" d="M12,24A12,12,0,1,0,0,12,12.013,12.013,0,0,0,12,24Zm4.812-11.5a.939.939,0,0,1-.587.824L10.14,16.366a1.185,1.185,0,0,1-.531.133.919.919,0,0,1-.488-.136,1.032,1.032,0,0,1-.459-.911V9.546a.974.974,0,0,1,1.478-.914l6.085,3.043A.939.939,0,0,1,16.812,12.5Z"/></svg>`,
+        }
     }
 
     _handlePress = () => {
@@ -59,17 +62,20 @@ export default class EpisodeSnippet extends React.Component {
 
         const { title, showImage, showImageHighRes, duration, description, publishDate, showColor } = this.props.data; 
 
+
         return (
             <TouchableOpacity style={{ flexDirection: 'row', marginBottom: 10, marginTop: 5, height: 130, overflow: 'hidden' }} onPress={() => {this.props.onPress()}}>
                 <TouchableOpacity style={styles.container} onPress={() => { this.props.onThumbnailPress() }}>
                     <Image source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: showColor}]} />
-                    <SvgUri style={{
-                            height: 20,
-                            width: 20,
-                            position: 'absolute',
-                            right: 5,
-                            bottom: 5
-                        }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                    {
+                        <SvgUri style={{
+                                height: 20,
+                                width: 20,
+                                position: 'absolute',
+                                right: 5,
+                                bottom: 5
+                            }} width="20" height="20" svgXmlData={this.state.SVGs.play} fill={'#EEE'} fillAll={true}/>
+                    }
                     <View 
                         style={{ 
                             backgroundColor: 'black', 

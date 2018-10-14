@@ -10,7 +10,7 @@ export function getEpisodeListForShow(showId, ageLimit = 0, nextEpisodeDate = ne
           .then((response) => response.json())
           .then((show) => {
 
-            let showColor = getState().reducer.subscribedShows.find((subscribedShow) => {
+            let showColor = getState().subscribedShows.find((subscribedShow) => {
                 return subscribedShow.id == show.id
             }).color
 

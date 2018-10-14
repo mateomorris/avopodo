@@ -378,7 +378,10 @@ class PlaylistCreationScreen extends Component {
                                 })
                             }}
                             >
-                            <SvgUri width="30" height="30" source={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                            {/* {
+                                Platform.OS == 'ios' &&
+                                <SvgUri width="30" height="30" source={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                            } */}
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -425,8 +428,8 @@ class PlaylistCreationScreen extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-        state : state.reducer,
-		playlists : state.reducer.playlists
+        state : state,
+		playlists : state.playlists
 	};
 }
 

@@ -159,7 +159,7 @@ class ShowPreviewScreen extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		details: state.reducer
+		details: state
 	};
 }
 

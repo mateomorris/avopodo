@@ -60,14 +60,20 @@ class NowPlayingHeader extends React.Component {
               this.props.onPress()
             }}>
                 {/* <Image source={require('../assets/down-arrow.png')}/> */}
-                <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                {/* {
+                  Platform.OS == 'ios' &&
+                  <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                } */}
             </TouchableOpacity>
             { this.props.playlist && <View style={{
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'flex-start'
             }}>
-                <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
+                {/* {
+                  Platform.OS == 'ios' &&
+                  <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
+                } */}
                 <Text style={{
                     color: 'white',
                     fontWeight: '600',
@@ -85,7 +91,10 @@ class NowPlayingHeader extends React.Component {
                 paddingTop: 0
               }}>
                 {/* <Image source={require('../assets/playlist.png')} style={{ height: 20, width: 20 }}/> */}
-                <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('../assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
+                {/* {
+                  Platform.OS == 'ios' &&
+                  <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('../assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
+                } */}
               </TouchableOpacity>
             </View>
           </View>
@@ -101,7 +110,7 @@ NowPlayingHeader.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

@@ -4,7 +4,7 @@ import { setPlaylistQueue } from '../finalware'
 
 export function syncPlaylists(playing) {
     return (dispatch, getState) => {
-        let state = getState().reducer
+        let state = getState()
 
         state.playlists.forEach((playlist) => {
             console.log(playlist)

@@ -57,6 +57,8 @@ class SubscribedScreen extends React.Component {
       playlists: [],
       homeFeed: []
     };
+
+    console.log(this.props.state)
     
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
@@ -71,7 +73,7 @@ class SubscribedScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

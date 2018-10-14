@@ -75,7 +75,7 @@ class QueueScreen extends Component {
                 paddingRight: 25, 
             }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'flex-start', paddingTop: 25 }}>
-                    { playlist && <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/> }
+                    {/* { Platform.OS == 'ios' && playlist && <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/> } */}
                     <Text style={{
                         fontSize: 30, 
                         fontWeight: '700',
@@ -103,8 +103,8 @@ class QueueScreen extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-        state : state.reducer,
-		playlists : state.reducer.playlists
+        state : state,
+		playlists : state.playlists
 	};
 }
 

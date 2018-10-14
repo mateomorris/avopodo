@@ -4,7 +4,7 @@ import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 export function syncPlayer() {
     return (dispatch, getState) => {
 
-        const state = getState().reducer
+        const state = getState()
 
         TrackPlayer.getState().then((theNewState) => {
             console.log(theNewState)

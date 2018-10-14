@@ -298,14 +298,15 @@ class PlayBar extends React.Component {
                 width: '100%',
                 justifyContent: 'flex-end',
                 overflow: 'hidden',
+                backgroundColor: 'rgba(0,0,0,.5)',
                 transform: [
                     {
                         translateY: this.state.bottomSpacing
                     }
                 ]
-                }} pointerEvents="box-none">
+                }} pointerEvents={'box-none'}>
                 <Animated.View 
-                pointerEvents="box-none"
+                pointerEvents={'box-none'}
                 style={[{ 
                     width: '100%', 
                     overflow: 'hidden',
@@ -323,7 +324,10 @@ class PlayBar extends React.Component {
                     }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
                         <TouchableOpacity onPress={() => this._expandModal() }>
                             {/* <Image style={{height: 20, width: 20}} source={require('../assets/up-caret.png')} /> */}
+                        {/* {
+                            Platform.OS == 'ios' &&
                             <SvgUri style={{ width: 20, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                        } */}
                         </TouchableOpacity>
                         {/* <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}> */}
                         <View style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
@@ -335,7 +339,10 @@ class PlayBar extends React.Component {
                         {/* </TouchableOpacity> */}
                         <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9}}>
                             <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={35} animationDuration={2000} />
-                            <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 3 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                            {/* {
+                                Platform.OS == 'ios' &&
+                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 3 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                            } */}
                             {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/> */}
                         </TouchableOpacity>
                     </Animated.View>
@@ -358,7 +365,7 @@ class PlayBar extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

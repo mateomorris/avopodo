@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "815467311147",
+    "firebase_url": "https://avopodo-8f35c.firebaseio.com",
+    "project_id": "avopodo-8f35c",
+    "storage_bucket": "avopodo-8f35c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815467311147:android:d7f3923d4a8262b9",
+        "android_client_info": {
+          "package_name": "com.avopodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815467311147-6o4tn32lpt5rq0h6v52g3v35blj6p0p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGhnvM8jrJUI8G2Xn0WfYXpmGm9uQYYPw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

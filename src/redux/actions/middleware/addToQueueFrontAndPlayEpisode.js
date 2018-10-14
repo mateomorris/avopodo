@@ -9,7 +9,7 @@ import {
 
 export function addToQueueFrontAndPlayEpisode(show, episode) {
     return (dispatch, getState) => {
-        let state = getState().reducer;
+        let state = getState();
         // dispatch(addEpisodeToQueue(show, episode))
         dispatch(toggleBufferingStatus(true))
         this.interval = setInterval(() => { 

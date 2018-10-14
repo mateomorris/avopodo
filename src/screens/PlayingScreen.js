@@ -174,7 +174,7 @@ class PlayingScreen extends React.Component {
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
-            interceptTouchOutside: true
+            interceptTouchOutside: false
           }
         }
       }
@@ -295,7 +295,7 @@ class PlayingScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

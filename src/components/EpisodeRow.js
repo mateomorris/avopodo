@@ -64,7 +64,8 @@ export default class EpisodeRow extends React.Component {
                         }}>{theDate}</Text>
                         <Text style={{
                             fontSize: 16,
-                            fontWeight: "600"
+                            fontWeight: "600",
+                            color: '#222'
                         }} ellipsizeMode='tail' numberOfLines={1}>{info.title}</Text>
                     </View>
                     <TouchableOpacity style={{

@@ -25,7 +25,7 @@ class BlankScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state.reducer
+		state: state
 	};
 }
 

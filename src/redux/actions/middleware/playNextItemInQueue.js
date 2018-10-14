@@ -2,7 +2,7 @@ import { playQueueItem } from '../finalware'
 
 export function playNextItemInQueue(index) {
     return (dispatch, getState) => {
-        let state = getState().reducer;
+        let state = getState();
 
         if (index) {
             dispatch(playQueueItem(index))

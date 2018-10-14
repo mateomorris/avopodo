@@ -188,7 +188,10 @@ export default class PlaylistThumbnail extends React.Component {
                                 <View style={{
                                     paddingRight: 10
                                 }}>
+                                {/* {
+                                    Platform.OS == 'ios' &&
                                     <SvgUri width="30" height="30" source={icon} fill={'white'} fillAll={true}/>
+                                } */}
                                 </View>
                                 <View>
                                     <Text style={ styles.title }>{ title.toUpperCase() }</Text>
@@ -208,14 +211,17 @@ export default class PlaylistThumbnail extends React.Component {
                                     zIndex: 99999
                                 }}
                             /> */}
-                            <SvgUri style={{
-                                    height: 20,
-                                    width: 20,
-                                    position: 'absolute',
-                                    right: 5,
-                                    bottom: 5,
-                                    zIndex: 99999
-                            }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                            {/* {
+                                Platform.OS == 'ios' &&
+                                <SvgUri style={{
+                                        height: 20,
+                                        width: 20,
+                                        position: 'absolute',
+                                        right: 5,
+                                        bottom: 5,
+                                        zIndex: 99999
+                                }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                            } */}
                         </View>
                     </View>
                 </View>

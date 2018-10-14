@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList, 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
+import Search from 'react-native-search-box';
 
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
@@ -21,26 +22,7 @@ class DiscoverScreen extends React.Component {
     showSearchResults: false,
     searching: false,
     search: '',
-    searchResults: [
-      // {
-      //   id: 1,
-      //   title: 'This American Life',
-      //   image: 'https://media.npr.org/images/podcasts/primary/icon_381444650-04c1bad8586e69edf04b78ea319846614c4a6a6b-s800-c15.png',
-      //   description: `From WBEZ Chicago Public Radio, This American Life podcast gives listeners touching, humorous and often unexpected vignettes of life in America. Hosted by Ira Glass, these weekly short stories are an on demand version of the popular radio show and available in Stitcher's Society & Culture station.`
-      // },
-      // {
-      //   id: 2,
-      //   title: 'Planet Money',
-      //   image: 'https://secureimg.stitcher.com/feedimagesplain328/7668.jpg',
-      //   description: `From WBEZ Chicago Public Radio, This American Life podcast gives listeners touching, humorous and often unexpected vignettes of life in America. Hosted by Ira Glass, these weekly short stories are an on demand version of the popular radio show and available in Stitcher's Society & Culture station.`
-      // },
-      // {
-      //   id: 3,
-      //   title: 'Pod Save America',
-      //   image: 'https://secureimg.stitcher.com/feedimagesplain328/127661.jpg',
-      //   description: `From WBEZ Chicago Public Radio, This American Life podcast gives listeners touching, humorous and often unexpected vignettes of life in America. Hosted by Ira Glass, these weekly short stories are an on demand version of the popular radio show and available in Stitcher's Society & Culture station.`
-      // }
-    ],
+    searchResults: [],
     subscribedShows: this.props.details.subscribedShows.map((show) => {
       return show.id
     })
@@ -112,7 +94,7 @@ class DiscoverScreen extends React.Component {
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
-            interceptTouchOutside: true
+            interceptTouchOutside: false
           }
         }
       }
@@ -168,9 +150,9 @@ class DiscoverScreen extends React.Component {
     })
   }
 
-  _searchForTerm = async (term) => {
+  _searchForTerm = (term) => {
 
-    this.searchBar.blur();
+    // this.searchBar.blur();
 
     this.setState({searching: true, showSearchResults: false });
     this._getSearchResults(term);
@@ -178,21 +160,42 @@ class DiscoverScreen extends React.Component {
 
   componentDidMount() {
     // console.log(this.props.details);
-    // this.props.actions.getSearchResults('Revisionist History');
   }
 
   render() {
 
     return (
       <View style={{ flex: 1 }}>
-        <SearchBar
+        <Search
+          ref="search_box"
+          // placeholder='Search by name, description, or author'
+          onChangeText={(text) => {
+            return new Promise((resolve, reject) => {
+                this.setState({ search: text });
+                resolve();
+            });
+          }}
+          onSearch={() => {
+            return new Promise((resolve, reject) => {
+              this._searchForTerm(this.state.search);
+              resolve();
+            });
+          }}
+          onCancel={()=>{ 
+            return new Promise((resolve, reject) => {
+              this.setState({showSearchResults: false})
+              resolve();
+            });
+          }}
+        />
+        {/* <SearchBar
           ref={ ref => (this.searchBar = ref) }
           placeholder='Search by name, description, or author'
           text={this.state.search}
           onChangeText={ text => this.setState({ search: text}) }
           onSearchButtonPress={() => this._searchForTerm(this.state.search) }
           onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
-        />
+        /> */}
         <ScrollView contentContainerStyle={styles.container}>
           { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
           { this.state.searching && <LoadingIndicator /> }
@@ -207,7 +210,7 @@ class DiscoverScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		details: state.reducer
+		details: state
 	};
 }
 

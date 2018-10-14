@@ -4,7 +4,7 @@ export function checkIfNewEpisode (show) {
     return (dispatch, getState) => {
         return dispatch(fetchRecentReleaseDate(show.itunesId)).then((releaseDateInMs) => {
 
-            let state = getState().reducer
+            let state = getState()
 
             let thisShow = state.subscribedShows.find((subscribedShow) => {
                 return subscribedShow.id == show.id
