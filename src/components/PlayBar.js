@@ -113,7 +113,7 @@ class PlayBar extends React.Component {
             return 82 * -1
         } else {
             // Tab height is 50
-            return 48 * -1
+            return 55 * -1
         }
     }
 

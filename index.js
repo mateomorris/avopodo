@@ -21,6 +21,7 @@ import QueueScreen from './src/screens/QueueScreen';
 import EpisodeDetailScreen from './src/screens/EpisodeDetailScreen';
 import PlaylistDetailScreen from './src/screens/PlaylistDetailScreen';
 import PlayBar from './src/components/PlayBar';
+import TopBar from './src/components/TopBar';
 
 // import reducers from './src/redux/reducers' // where reducers is an object of reducers
 
@@ -63,6 +64,7 @@ const config = {
       Navigation.registerComponentWithRedux('example.EpisodeDetailScreen', () => EpisodeDetailScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.PlaylistDetailScreen', () => PlaylistDetailScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.PlayBar', () => PlayBar, Provider, store);
+      Navigation.registerComponentWithRedux('example.TopBar', () => TopBar, Provider, store);
 
       Navigation.setRoot({
           root: {
@@ -90,6 +92,10 @@ const config = {
                         topBar: {
                           title: {
                             text: 'Home',
+                            // component: {
+                            //   name: 'example.TopBar',
+                            //   alignment: 'center'
+                            // }
                           },
                         }
                       }
