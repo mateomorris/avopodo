@@ -117,16 +117,16 @@ class HomeScreen extends React.Component {
     // this.props.actions.setupPlayer();
 
     // Activate playbar
-    // Navigation.showOverlay({
-    //     component: {
-    //         name: 'example.PlayBar',
-    //         options: {
-    //             overlay: {
-    //                 interceptTouchOutside: false
-    //             }
-    //         }
-    //     }
-    // });
+    Navigation.showOverlay({
+        component: {
+            name: 'example.PlayBar',
+            options: {
+                overlay: {
+                    interceptTouchOutside: false
+                }
+            }
+        }
+    });
 
 
     if ('id' in this.props.state.nowPlaying) {

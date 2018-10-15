@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 class PlayBar extends React.Component {
 
     state = {
+        triggered: false, 
         visible : false,
         active: false,
         playing: false, 
@@ -140,6 +141,7 @@ class PlayBar extends React.Component {
     }
 
     _closeModal = () => {
+        
         // Shrink to normal
         Animated.spring(            
             this.state.height,         
@@ -168,13 +170,18 @@ class PlayBar extends React.Component {
             useNativeDriver: true
         }).start(() => {
         this.setState({
-            expanded: false
+            expanded: false,
+            triggered: false
         })
     })
 
     }
 
     _expandModal = () => {
+        this.setState({
+            triggered: true
+        });
+
         // Grow to full height
         Animated.spring(            
             this.state.height,         
@@ -294,19 +301,18 @@ class PlayBar extends React.Component {
             <Animated.View style={{ 
                 position: 'absolute', 
                 bottom: 0, 
-                top: 0,
+                top: active ? (this.state.triggered ? 0 : Dimensions.get('window').height - (75)) : Dimensions.get('window').height,
                 width: '100%',
                 justifyContent: 'flex-end',
                 overflow: 'hidden',
-                backgroundColor: 'rgba(0,0,0,.5)',
+                // backgroundColor: 'rgba(0,0,0,.5)',
                 transform: [
                     {
                         translateY: this.state.bottomSpacing
                     }
                 ]
-                }} pointerEvents={'box-none'}>
+                }}>
                 <Animated.View 
-                pointerEvents={'box-none'}
                 style={[{ 
                     width: '100%', 
                     overflow: 'hidden',
@@ -318,31 +324,30 @@ class PlayBar extends React.Component {
                     ]
                 }]}>
                     <Animated.View 
-                    {...this.panResponder.panHandlers} 
                     style={{
-                        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, height: 50, zIndex: 1, backgroundColor: 'black'
+                        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, paddingTop: 0, paddingBottom: 0, height: 50, zIndex: 1, backgroundColor: 'black'
                     }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
-                        <TouchableOpacity onPress={() => this._expandModal() }>
+                        <TouchableOpacity onPress={() => this._expandModal() } style={{ backgroundColor: 'transparent', paddingTop: 10 }}>
                             {/* <Image style={{height: 20, width: 20}} source={require('../assets/up-caret.png')} /> */}
-                        {/* {
-                            Platform.OS == 'ios' &&
-                            <SvgUri style={{ width: 20, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
-                        } */}
+                        {
+                            <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                        }
                         </TouchableOpacity>
                         {/* <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}> */}
-                        <View style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}>
-                            <View style={{ alignItems: 'center' }}>
+                        <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
+                            {...this.panResponder.panHandlers} 
+                        >
+                            <View style={{ alignItems: 'center', flex: 1 }}>
                                 <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
                                 <Text style={{ color: 'white', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
                             </View>
                         </View>
                         {/* </TouchableOpacity> */}
-                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9}}>
+                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
                             <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={35} animationDuration={2000} />
-                            {/* {
-                                Platform.OS == 'ios' &&
-                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 3 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
-                            } */}
+                            {
+                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 13 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                            }
                             {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/> */}
                         </TouchableOpacity>
                     </Animated.View>

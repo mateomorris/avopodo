@@ -21,7 +21,6 @@ module.exports = async (data) => {
         console.log('Remote previous')
         TrackPlayer.skipToPrevious()
     } else if (data.type === 'playback-state') {
-        console.log('Playback state', data, nowPlayingEpisodeId)
         // PlayerStore.playbackState = data.state;
 
 
