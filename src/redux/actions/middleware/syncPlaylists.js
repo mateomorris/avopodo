@@ -9,6 +9,7 @@ export function syncPlaylists(playing) {
         state.playlists.forEach((playlist) => {
             console.log(playlist)
             let { episodeQueue } = playlist
+            let { episodeList } = episodeQueue
 
             let releaseDateInMS = {
                 'week' : Date.now() + -7*24*3600*1000, // date 7 days ago in milliseconds,
@@ -21,11 +22,11 @@ export function syncPlaylists(playing) {
             let nowInSeconds = d.getTime();
 
             // First: Get rid of any out of date episodes
-            const newQueue = episodeQueue.filter((episode) => {
+            const newQueue = episodeList.filter((episode) => {
                 return episode.publishDate > releaseDateInMS
             })
 
-            if (episodeQueue.length !== newQueue.length && episodeQueue.length !== 0) {
+            if (episodeList.length !== newQueue.length && episodeList.length !== 0) {
                 
                 let queueDuration = newQueue.map((episode) => {
                     return episode.duration
@@ -33,6 +34,7 @@ export function syncPlaylists(playing) {
                     return accumulator + currentValue
                 })
                 
+                console.log(newQueue, queueDuration)
                 dispatch(setPlaylistQueue(playlist.id, newQueue, queueDuration))
             }
 
@@ -84,6 +86,7 @@ export function syncPlaylists(playing) {
                                 }).reduce((accumulator, currentValue) => {
                                     return accumulator + currentValue
                                 })
+                                console.log(newPlaylistQueue, newQueueDuration)
                                 dispatch(setPlaylistQueue(playlist.id, newPlaylistQueue, newQueueDuration))
                         })
                     }

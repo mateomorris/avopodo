@@ -41,6 +41,10 @@ export default class LightBox extends Component {
 
         let window = Dimensions.get('window');
 
+        // if (!this.props.open) {
+        //     this._closeLightbox()
+        // }
+
         return(
             <Animated.View style={{
                 width: '100%',

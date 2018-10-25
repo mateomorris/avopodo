@@ -20,11 +20,12 @@ export default class PlaybackButton extends Component {
 
         return(
             <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
-                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', width: 100, height: 100, marginTop: 20 }} onPress={() => {this.props.onJumpBack()}}>
-                    <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, right: 40 }}>15</Text>
-                    {
+                <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center', width: 100, height: 100, marginTop: 20 }} onPress={() => {this.props.onJumpBack()}}>
+                    {/* <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, right: 40 }}>15</Text> */}
+                    <Image style={{ height: 40, width: 40 }} source={require('../assets/skip-back.png')} />
+                    {/* {
                         <SvgUri  style={{transform: [{ rotate: '90deg'}] }} width="50" height="50" source={require('../assets/interface-icons/seek.svg')} fill={'#EEE'} fillAll={true}/>
-                    }
+                    } */}
                 </TouchableOpacity>
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: 150, height: 150 }} onPress={() => {this.props.onPlayPause()}}>
                     <MaterialIndicator color={ buffering ? color : 'transparent' } size={150} animationDuration={3000} style={{
@@ -55,12 +56,12 @@ export default class PlaybackButton extends Component {
                         }
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ alignItems: 'center', paddingLeft: 40, justifyContent: 'center', width: 100, height: 100, paddingRight: 30, marginTop: 20 }} onPress={() => {this.props.onJumpForward()}}>
-                    {
+                <TouchableOpacity style={{ alignItems: 'flex-start', justifyContent: 'center', width: 100, height: 100, paddingRight: 30, marginTop: 20 }} onPress={() => {this.props.onJumpForward()}}>
+                    {/* {
                         <SvgUri style={{transform: [{ rotateX: '-180deg' },{ rotate: '-90deg' }] }} width="50" height="50" source={require('../assets/interface-icons/seek.svg')} fill={'#EEE'} fillAll={true}/>
-                    }
-                    <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, left: 44 }}>15</Text>
-                    {/* <Image style={{ height: 45, width: 45 }} source={require('../assets/skip-ahead.png')}  resizeMode={'center'} /> */}
+                    } */}
+                    {/* <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, left: 44 }}>15</Text> */}
+                    <Image style={{ height: 40, width: 40 }} source={require('../assets/skip-ahead.png')} />
                 </TouchableOpacity>
             </View>
         ) 

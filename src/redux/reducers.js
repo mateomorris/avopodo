@@ -152,7 +152,7 @@ function reducer(state = initialState, action) {
                     // })
                 })
             }
-            
+
             return {
                 ...state,
                 playQueue : state.playQueue.slice(currentEpisodePosition),
@@ -179,8 +179,8 @@ function reducer(state = initialState, action) {
                 active: true,
                 activePlaylist: action.playlist,
                 bufferingStatus: false, 
-                nowPlaying: action.playlist.episodeQueue[0],
-                playQueue: action.playlist.episodeQueue
+                nowPlaying: action.playlist.episodeQueue.episodeList[0],
+                playQueue: action.playlist.episodeQueue.episodeList
             }
         case SET_EPISODE_LIST_FOR_SHOW: 
             return {
@@ -209,10 +209,10 @@ function reducer(state = initialState, action) {
             };
         case SET_PLAYLIST_QUEUE: 
 
-            let { existingPlaylistId, queue, queueDuration } = action 
+            let { existingPlaylistId, queue } = action 
             let newestPlaylist = state.playlists.find(playlist => playlist.id == existingPlaylistId)
 
-            newestPlaylist.duration = Number.parseFloat(queueDuration / (60 * 60)).toFixed(1) // convert to hours  
+            newestPlaylist.duration = Number.parseFloat(queue.queueDuration / (60 * 60)).toFixed(1) // convert to hours  
             newestPlaylist.episodeQueue = queue
 
             return {
@@ -240,7 +240,10 @@ function reducer(state = initialState, action) {
                     length: episodeLength,
                     playFirst,
                     duration: null,
-                    episodeQueue: null
+                    episodeQueue: {
+                        episodeList: [],
+                        episodeListDuration: 0
+                    }
                 }].concat(state.playlists)
             }
         case MOVE_QUEUE_ITEM_TO_FRONT: 
@@ -421,9 +424,10 @@ function reducer(state = initialState, action) {
         case 'Unsubscribe from show': 
 
             let updatedSubscribedShows = state.subscribedShows.filter(show => show.id !== action.id)
+            let showTitle = state.subscribedShows.find(show => show.id == action.id);
 
             firebase.analytics().logEvent('unsubscribe_from_show', {
-                show: show.title,
+                show: showTitle,
                 subscribedShows: updatedSubscribedShows
             }) 
 

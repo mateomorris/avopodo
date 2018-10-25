@@ -111,8 +111,10 @@ class PlayBar extends React.Component {
         if (isIphoneX()) {
             // Tab height is 84
             return 82 * -1
-        } else {
+        } else if (Platform.OS === 'ios') {
             // Tab height is 50
+            return 48 * -1
+        } else {
             return 55 * -1
         }
     }

@@ -25,7 +25,7 @@ export function addToQueueFrontAndPlayEpisode(show, episode) {
 
         // If a playlist is currently playing and this episode isn't in it, remove the playlist
         if (typeof state.activePlaylist.episodeQueue !== 'undefined') {
-            if (!state.activePlaylist.episodeQueue.find((activePlaylistEpisode) => {
+            if (!state.activePlaylist.episodeQueue.episodeList.find((activePlaylistEpisode) => {
                 return activePlaylistEpisode.id == episode.id
             })) {
                 dispatch(resetQueue())

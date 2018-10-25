@@ -4,7 +4,9 @@ export function setPlaylistQueue(existingPlaylistId, queue, queueDuration) {
     return {
         type: SET_PLAYLIST_QUEUE,
         existingPlaylistId,
-        queue,
-        queueDuration
+        queue: {
+            episodeList: queue, 
+            episodeListDuration: queueDuration
+        }
     }
 }

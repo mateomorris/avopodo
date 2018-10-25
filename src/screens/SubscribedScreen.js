@@ -57,8 +57,6 @@ class SubscribedScreen extends React.Component {
       playlists: [],
       homeFeed: []
     };
-
-    console.log(this.props.state)
     
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>

@@ -3,8 +3,6 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Bar } from 'react-native-progress';
 import Slider from "react-native-slider";
-// TODO: Replace progress component with slider
-// https://github.com/jeanregisser/react-native-slider
 
 export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 

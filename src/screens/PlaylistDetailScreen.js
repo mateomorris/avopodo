@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList, KeyboardAvoidingView } from 'react-native';
+import { Platform, View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList, KeyboardAvoidingView } from 'react-native';
 import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -300,10 +300,10 @@ class PlaylistDetailScreen extends Component {
                         alignItems: 'center',
                         justifyContent: 'flex-start'
                     }}>
-                        {/* {
+                        {
                             Platform.OS == 'ios' &&
                             <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
-                        } */}
+                        }
                         <Text style={{
                             fontSize: 30, 
                             fontWeight: '700',
@@ -322,7 +322,7 @@ class PlaylistDetailScreen extends Component {
                         }}
                     ></View> */}
                     <FlatList
-                    data={playlist.episodeQueue}
+                    data={playlist.episodeQueue.episodeList}
                     renderItem={this._renderPlaylistItem}
                     style={{
                         paddingLeft: 25, 

@@ -1,7 +1,7 @@
 import { ADD_PLAYLIST_TO_QUEUE } from '../actionTypes'
 
 export function addPlaylistToQueue(playlist) {
-    let trackPlayerQueue = playlist.episodeQueue.map((episode) => {
+    let trackPlayerQueue = playlist.episodeQueue.episodeList.map((episode) => {
         return {
         id: episode.id,
         title: episode.title,

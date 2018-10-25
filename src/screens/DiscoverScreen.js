@@ -165,7 +165,7 @@ class DiscoverScreen extends React.Component {
   render() {
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <Search
           ref="search_box"
           // placeholder='Search by name, description, or author'

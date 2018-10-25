@@ -1,5 +1,5 @@
-import { Navigation, NativeEventsReceiver } from "react-native-navigation";
-import { AppRegistry } from 'react-native';
+import { Navigation, NativeEventsReceiver } from 'react-native-navigation';
+import { Platform, AppRegistry } from 'react-native';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 import { Provider, connect, bindActionCreators } from 'react-redux';
@@ -25,10 +25,10 @@ import TopBar from './src/components/TopBar';
 
 // import reducers from './src/redux/reducers' // where reducers is an object of reducers
 
-const config = {
-  key: 'root',
-  storage,
-}
+// const config = {
+//   key: 'root',
+//   storage,
+// }
 
 // const finalReducer = persistCombineReducers(config, reducers)
 // export function configureStore () {
@@ -187,7 +187,7 @@ const config = {
 
 AppRegistry.registerHeadlessTask('TrackPlayer', () => require('./player-handler.js'));
 
-
+Platform.OS == 'android' &&
 Navigation.setDefaultOptions({
   bottomTabs: {
     titleDisplayMode: 'alwaysShow'

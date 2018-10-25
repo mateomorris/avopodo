@@ -78,8 +78,8 @@ class PlaylistsScreen extends React.Component {
     );
   }
 
-  _getMostRecentPlaylistItemIndex = (episodeQueue, nowPlaying) => {
-    if (episodeQueue[0].id == nowPlaying.id) {
+  _getMostRecentPlaylistItemIndex = (episodeList, nowPlaying) => {
+    if (nowPlaying && nowPlaying.hasOwnProperty('id') && episodeList[0].id == nowPlaying.id) {
       return 1
     } else {
       return 0
@@ -94,9 +94,9 @@ class PlaylistsScreen extends React.Component {
             <PlaylistThumbnail 
               key={index} 
               title={item.name} 
-              duration={item.duration} 
+              duration={item.episodeQueue.episodeListDuration} 
               icon={playlistIcons[item.icon]} 
-              episodes={item.episodeQueue ? item.episodeQueue.slice(this._getMostRecentPlaylistItemIndex(item.episodeQueue, nowPlaying)) : null} 
+              episodes={item.episodeQueue.episodeList.length > 0 ? item.episodeQueue.episodeList.slice(this._getMostRecentPlaylistItemIndex(item.episodeQueue.episodeList, nowPlaying)) : null} 
               onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
               onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />
@@ -161,10 +161,10 @@ class PlaylistsScreen extends React.Component {
       homeFeed: []
     };
 
-    let { subscribedShows }= this.props;
+    let { subscribedShows } = this.props;
 
     return (
-      <View style={{flex:1, overflow: 'visible', paddingTop: 10}}>
+      <View style={{flex:1, overflow: 'visible', paddingTop: 10, backgroundColor: '#fafafa'}}>
         <ScrollView contentContainerStyle={styles.container}>
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 10, paddingRight: 10 }}>

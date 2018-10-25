@@ -11,7 +11,8 @@ import * as specialActions from '../redux/actions';
 class ShowPreviewScreen extends Component {
 
     state = {
-        playing : this.props.playing
+        playing : this.props.playing,
+        lightBoxOpen: true
     }
 
     render() {
@@ -23,7 +24,7 @@ class ShowPreviewScreen extends Component {
 
         return(
             
-            <Lightbox componentId={this.props.componentId} height={'auto'}>
+            <Lightbox componentId={this.props.componentId} height={'auto'} open={this.state.lightBoxOpen}>
                 <View style={{
                     flexDirection : 'row'
                 }}>
@@ -99,7 +100,8 @@ class ShowPreviewScreen extends Component {
                         }} 
                         onPress={() => { 
                             this.setState({
-                                playing : this.state.playing ? false : true
+                                playing : this.state.playing ? false : true,
+                                lightBoxOpen: false
                             })
                             this.props.onPlayPress() 
                         }}>

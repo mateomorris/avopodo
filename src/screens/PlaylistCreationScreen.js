@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { Platform, View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList, Dimensions, KeyboardAvoidingView } from 'react-native';
 import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
+import PlaylistPicker from '../components/PlaylistPicker'
 import IconPanel from '../components/IconPanel'
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions';
@@ -32,7 +33,7 @@ class PlaylistCreationScreen extends Component {
         shows: [],
         releaseRange: 'week',
         episodeLength: 'ten-minutes',
-        playFirst: 'oldest'
+        playFirst: null
     }
 
 
@@ -136,7 +137,6 @@ class PlaylistCreationScreen extends Component {
             }
         })
     }
-    
 
     render() {
 
@@ -179,7 +179,7 @@ class PlaylistCreationScreen extends Component {
                         data={this.props.subscribedShows}
                         extraData={this.state}
                         renderItem={({item, separators}) => (
-                            <TouchableOpacity onPress={() => { this._addShowToNewPlaylist(item.id) }}>
+                            <TouchableOpacity style={{ borderRadius: 10 }}  onPress={() => { this._addShowToNewPlaylist(item.id) }}>
                                 <ImageBackground source={{uri: item.image, cache: 'force-cache'}} style={{
                                     height: 100, 
                                     width: 100,
@@ -197,104 +197,60 @@ class PlaylistCreationScreen extends Component {
                         )}
                         />
                     </ScrollView>
-                    <Text style={{
-                        fontSize: 20,
-                        color: 'white',
-                        paddingLeft: 25, 
-                    }}>Released when?</Text>
-                    <View style={{ 
-                        backgroundColor: 'rgba(0,0,0,.3)', 
-                        flexDirection: 'row',
-                        marginTop: 10,
-                        marginBottom: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        paddingLeft: 30,
-                        paddingRight: 30
-                    }}>
-                        <View style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingRight: 2.5
-                        }}>
-                            <Text style={{
-                                color: 'white',
-                                fontWeight: '700',
-                                fontSize: 20
-                            }}>
-                                Within the past
-                            </Text>
-                        </View>
-                        <Picker
-                        style={{ 
-                            flex: 1,
-                            paddingLeft: 2.5,
-                            marginLeft: 2.5,
-                            borderLeftColor: 'rgba(0,0,0,.5)',
-                            borderLeftWidth: 3
+                    <PlaylistPicker 
+                        title={'Released when?'}
+                        label={'Within the past'}
+                        items={[
+                            {
+                                label: 'week',
+                                value: 'week'
+                            },
+                            {
+                                label: 'two weeks',
+                                value: 'two-weeks'
+                            },
+                            {
+                                label: 'month',
+                                value: 'month'
+                            },
+                            {
+                                label: 'eternity',
+                                value: 'eternity'
+                            }
+                        ]}
+                        updateValue={(releaseRange) => {
+                            this.setState({
+                                releaseRange
+                            })
                         }}
-                        selectedValue={this.state.releaseRange}
-                        itemStyle={{
-                            height: 100, 
-                            textAlign: 'left',
-                            color: '#eee',
+                    />
+                    <PlaylistPicker 
+                        title={'How long?'}
+                        label={'No longer than'}
+                        items={[
+                            {
+                                label: '15 minutes',
+                                value: 'fifteen-minutes'
+                            },
+                            {
+                                label: '30 minutes',
+                                value: 'thirty-minutes'
+                            },
+                            {
+                                label: 'One hour',
+                                value: 'an-hour'
+                            },
+                            {
+                                label: 'An eternity',
+                                value: 'an-eternity'
+                            }
+                        ]}
+                        updateValue={(episodeLength) => {
+                            this.setState({
+                                episodeLength
+                            })
                         }}
-                        onValueChange={(value) => { this.setState({ releaseRange: value }) }}>
-                            <Picker.Item label="week" value="week" />
-                            <Picker.Item label="two weeks" value="two-weeks" />
-                            <Picker.Item label="month" value="month" />
-                            <Picker.Item label="eternity" value="eternity" />
-                        </Picker>
-                    </View>
-                    <Text style={{
-                        fontSize: 20,
-                        color: 'white',
-                        paddingLeft: 25, 
-                    }}>How long?</Text>
-                    <View style={{ 
-                        backgroundColor: 'rgba(0,0,0,.3)', 
-                        flexDirection: 'row',
-                        marginTop: 10,
-                        marginBottom: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        paddingLeft: 30,
-                        paddingRight: 30
-                    }}>
-                        <View style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingRight: 2.5
-                        }}>
-                            <Text style={{
-                                color: 'white',
-                                fontWeight: '700',
-                                fontSize: 20
-                            }}>
-                                No longer than
-                            </Text>
-                        </View>
-                        <Picker
-                        style={{ 
-                            flex: 1,
-                            paddingLeft: 2.5,
-                            marginLeft: 2.5,
-                            borderLeftColor: 'rgba(0,0,0,.5)',
-                            borderLeftWidth: 3
-                        }}
-                        selectedValue={this.state.episodeLength}
-                        itemStyle={{
-                            height: 100, 
-                            textAlign: 'left',
-                            color: '#eee',
-                        }}
-                        onValueChange={(value) => { this.setState({ episodeLength: value }) }}>
-                            <Picker.Item label="10 minutes" value="ten-minutes" />
-                            <Picker.Item label="30 minutes" value="thirty-minutes" />
-                            <Picker.Item label="an hour" value="an-hour" />
-                            <Picker.Item label="an eternity" value="an-eternity" />
-                        </Picker>
-                    </View>
+                    />
                     <Text style={{
                         fontSize: 20,
                         color: 'white',
@@ -362,27 +318,27 @@ class PlaylistCreationScreen extends Component {
                             onChangeText={(text) => this.setState({playlistName : text})}
                             value={ this.state.playlistName }
                         />
-                        <TouchableOpacity 
-                            style={{
-                                width: 40,
-                                height: 40,
-                                backgroundColor: 'rgba(0,0,0,.3)',
-                                borderRadius: 5,
-                                padding: 5,
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}
-                            onPress={() => {
-                                this.setState({
-                                    iconPanelExpanded : this.state.iconPanelExpanded ? false : true
-                                })
-                            }}
-                            >
-                            {/* {
+                            {
                                 Platform.OS == 'ios' &&
-                                <SvgUri width="30" height="30" source={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
-                            } */}
-                        </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        backgroundColor: 'rgba(0,0,0,.3)',
+                                        borderRadius: 5,
+                                        padding: 5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                    onPress={() => {
+                                        this.setState({
+                                            iconPanelExpanded : this.state.iconPanelExpanded ? false : true
+                                        })
+                                    }}
+                                    >
+                                    <SvgUri width="30" height="30" source={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                                </TouchableOpacity>
+                            }
                     </View>
                     <View style={{
                         padding: 20,
@@ -414,6 +370,7 @@ class PlaylistCreationScreen extends Component {
                     }}>
                         <Button onClick={() => {
                             this._createPlaylist()
+                            console.log(this.state)
                             }}>
                             <Text>
                                 Create Playlist
