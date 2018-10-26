@@ -11,6 +11,7 @@
     "antd-mobile-rn": "^2.2.0",
     "expo": "^26.0.0",
     "howler": "^2.0.9",
+    "native-base": "^2.8.1",
     "rapidapi-connect": "0.0.6",
     "react": "16.4.1",
     "react-native": "0.56.0",

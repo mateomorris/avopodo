@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList } from 'react-native';
-import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";

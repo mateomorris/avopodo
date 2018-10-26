@@ -3,6 +3,13 @@ package com.avopodo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import guichaguri.trackplayer.TrackPlayer;
+import com.horcrux.svg.SvgPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import io.palette.RNPalettePackage;
+import com.tanguyantoine.react.MusicControl;
+import com.BV.LinearGradient.LinearGradientPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.horcrux.svg.SvgPackage;
@@ -42,6 +49,13 @@ import java.util.List;
 //       return Arrays.<ReactPackage>asList(
 //             new TrackPlayer(),
 //             new MainReactPackage(),
+            new TrackPlayer(),
+            new SvgPackage(),
+            new RNSoundPackage(),
+            new RNPalettePackage(),
+            new MusicControl(),
+            new LinearGradientPackage(),
+            new RNFirebasePackage(),
 //            new BlurViewPackage(),
 //             new RNSoundPackage(),
 //             new RNPalettePackage(),

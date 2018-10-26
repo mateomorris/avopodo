@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import Search from 'react-native-search-box';
+import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
 import EpisodeSnippet from '../components/EpisodeSnippet';
 import PlayBar from '../components/PlayBar';
 import { LoadingIndicator } from '../components/SimpleComponents'
-
 
 import * as specialActions from '../redux/actions';
 
@@ -19,6 +19,7 @@ import SearchBar from 'react-native-search-bar';
 class DiscoverScreen extends React.Component {
 
   state = {
+    genres: ['blue','red'],
     showSearchResults: false,
     searching: false,
     search: '',
@@ -160,6 +161,10 @@ class DiscoverScreen extends React.Component {
 
   componentDidMount() {
     // console.log(this.props.details);
+    this.props.actions.getGenres().then(({ genres }) => {
+      console.log(genres)
+      this.setState({ genres });
+    })
   }
 
   render() {
@@ -199,6 +204,38 @@ class DiscoverScreen extends React.Component {
         <ScrollView contentContainerStyle={styles.container}>
           { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
           { this.state.searching && <LoadingIndicator /> }
+          <FlatList
+            data={this.state.genres.filter((genre) => {
+              if (!genre.parent_id && genre.id !== '67' || genre.parent_id == '67') {
+                return genre
+              }
+            })}
+            onPress={() => {
+              
+            }}
+            renderItem={({item, separators}) => (
+                <TouchableOpacity onPress={() => { Alert.alert('yeah') }}>
+                  <Card>
+                    <CardItem>
+                      <Body style={{
+                        paddingTop: 10,
+                        paddingBottom: 10
+                      }}>
+                        <Text style={{
+                          fontSize: 18,
+                          fontWeight: '600'
+                        }}>
+                          { item.name }
+                        </Text>
+                      </Body>
+                    </CardItem>
+                  </Card>
+                </TouchableOpacity>
+            )}
+          />
+
+
+
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Trending Shows</Text>
           { this._renderFavorites(this.state.favorites) }
           { this._renderPlaylists(this.state.playlists) } */}
