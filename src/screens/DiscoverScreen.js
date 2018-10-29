@@ -10,6 +10,7 @@ import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
 import EpisodeSnippet from '../components/EpisodeSnippet';
 import PlayBar from '../components/PlayBar';
+import ShowRow from '../components/ShowRow';
 import { LoadingIndicator } from '../components/SimpleComponents'
 
 import * as specialActions from '../redux/actions';
@@ -47,6 +48,7 @@ class DiscoverScreen extends React.Component {
     // let alreadySubscribed = this.props.details.subscribedShows.find((subscribedShow) => {
     //   return subscribedShow.id == show.id
     // })
+    
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
       return subscribedShowId == show.id
     })
@@ -68,19 +70,7 @@ class DiscoverScreen extends React.Component {
   }
 
   _checkIfSubscribed = (id) => {
-    if (this.state.subscribedShows.find(item => item == id)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  // _getHighResArtwork = ( itunesId ) => {
-  //   return getHighResArtwork( itunesId );
-  // }
-
-  _testSubscribe = () => {
-    Alert.alert('test');
+    return this.props.actions.checkIfSubscribed(id)
   }
 
   _onSearchResultPress = (item) => {
@@ -108,23 +98,17 @@ class DiscoverScreen extends React.Component {
       return (
         items.map((item, index) => {
           return (
-            <TouchableOpacity style={{ flexDirection: 'row', paddingTop: 15, paddingBottom: 15, borderBottomColor: '#DDD', borderBottomWidth: 1, height: 100, overflow: 'hidden' }} key={index} onPress={() => {this._onSearchResultPress(item)}}>
-              <View style={{ marginRight: 10 }}>
-                <Image source={{ uri: item.image }} style={{ width: 75, height: 75, borderRadius: 5, backgroundColor: '#EEEEEE' }}/>
-              </View>
-              <View style={{flex: 1}}>
-                <Text style={{ fontSize: 15, fontWeight: '700' }} ellipsizeMode={'tail'} numberOfLines={1}>{item.title}</Text>
-                <Text style={{ fontSize: 12, color: 'gray' }} ellipsizeMode={'tail'} numberOfLines={4}>{item.description}</Text>
-              </View>
-              <TouchableOpacity style={{ justifyContent: 'center'}} onPress={() => {
-                this._subscribeToShow(item)
-              }}>
-                <Image 
-                  source={ (this._checkIfSubscribed(item.id) ? require('../assets/bookmark-black.png'): require('../assets/bookmark.png')) } 
-                  style={{ width: 25, height: 25 }}
-                />
-              </TouchableOpacity>
-            </TouchableOpacity>
+            <ShowRow 
+                index={index}
+                item={item}
+                subscribed={this._checkIfSubscribed(item.id)}
+                subscribeToShow={() => {
+                  this._subscribeToShow(item)
+                }}
+                onSearchResultPress={() => {
+                  this._onSearchResultPress(item)
+                }}
+              />
           );
         })
       );
@@ -159,10 +143,25 @@ class DiscoverScreen extends React.Component {
     this._getSearchResults(term);
   }
 
+  _getChildGenres = (parentGenre) => {
+    return this.state.genres.filter((genre) => {
+      if (genre.parent_id == parentGenre.id) {
+        return genre
+      }
+    })
+  }
+
+  _getShowsInGenre = (genre) => {
+    // NEXT: 
+    // - Middleware to retrieve shows in genre
+    return this.props.actions.getShowsInGenre(genre.id).then((shows) => {
+      return shows
+    })
+  }
+
   componentDidMount() {
     // console.log(this.props.details);
     this.props.actions.getGenres().then(({ genres }) => {
-      console.log(genres)
       this.setState({ genres });
     })
   }
@@ -206,15 +205,45 @@ class DiscoverScreen extends React.Component {
           { this.state.searching && <LoadingIndicator /> }
           <FlatList
             data={this.state.genres.filter((genre) => {
-              if (!genre.parent_id && genre.id !== '67' || genre.parent_id == '67') {
+              if (genre.id !== 67) {
                 return genre
               }
             })}
-            onPress={() => {
-              
-            }}
             renderItem={({item, separators}) => (
-                <TouchableOpacity onPress={() => { Alert.alert('yeah') }}>
+                <TouchableOpacity onPress={() => {
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: 'example.GenreDetailScreen',
+                      passProps: {
+                        genre: item
+                      },
+                      options: {
+                        topBar: {
+                          title: {
+                            text: item.name
+                          }
+                        }
+                      }
+                    }
+                  });
+
+                  // Navigation.push(this.props.componentId, {
+                  //   component: {
+                  //     name: 'example.GenreListScreen',
+                  //     passProps: {
+                  //       parentGenre: item,
+                  //       childGenres: this._getChildGenres(item)
+                  //     },
+                  //     options: {
+                  //       topBar: {
+                  //         title: {
+                  //           text: item.name
+                  //         }
+                  //       }
+                  //     }
+                  //   }
+                  // });
+                }}>
                   <Card>
                     <CardItem>
                       <Body style={{
@@ -267,6 +296,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     padding: 10,
-    paddingTop: 0
+    paddingTop: 10
   },
 });
