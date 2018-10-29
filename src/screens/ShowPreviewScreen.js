@@ -11,7 +11,7 @@ import * as specialActions from '../redux/actions';
 class ShowPreviewScreen extends Component {
 
     state = {
-        artwork: '',
+        artwork: this.props.item.image,
         artworkColor: 'transparent',
         subscribed: this.props.subscribed
     }
@@ -23,9 +23,9 @@ class ShowPreviewScreen extends Component {
             })
         }) 
 
-        this.props.actions.getHighResArtwork(this.props.item.itunesId).then((artwork) => {
-            this.setState({ artwork });
-        })
+        // this.props.actions.getHighResArtwork(this.props.item.itunesId).then((artwork) => {
+        //     this.setState({ artwork });
+        // })
     }
 
     
@@ -59,7 +59,7 @@ class ShowPreviewScreen extends Component {
         return(
             
             <Lightbox componentId={this.props.componentId}>
-                <Image source={{ uri: this.state.artwork }} 
+                <Image source={{ uri: image }} 
                     style={{
                         width: screenWidth - 90, // Parent padding + width
                         height: screenWidth - 90, 
