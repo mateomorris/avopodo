@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, Animated } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BlurView } from 'react-native-blur';
@@ -76,6 +76,24 @@ class PlayingScreen extends React.Component {
     )}, 0)
   }
 
+  _isIphoneX = () => {
+      let dimensions;
+      if (Platform.OS !== 'ios') {
+          return false;
+      }
+      if (Platform.isPad || Platform.isTVOS) {
+          return false;
+      }
+      dimensions = Dimensions.get('window');
+      if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
+          return true;
+      }
+      if (dimensions.height === 896 || dimensions.width === 896) { 
+          return true;
+      }
+      return false;
+  }
+
   _closeCarousel = () => {
     this.state.loadedImages[0].setValue(1)
     this.state.loadedImages[1].setValue(1)
@@ -116,7 +134,7 @@ class PlayingScreen extends React.Component {
 
   _renderItem ({item, index}) {
     return (
-      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden', borderRadius: 5, backgroundColor: item.showColor}}>
+      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden', borderRadius: 5, height: Dimensions.get('window').width - 100, width: Dimensions.get('window').width - 100, backgroundColor: item.showColor}}>
         <Animated.View
           style={{
               position: "absolute",
@@ -196,7 +214,8 @@ class PlayingScreen extends React.Component {
       active &&
       <View style={{
           backgroundColor: 'black',
-          flex: 1
+          flex: 1,
+          paddingTop: this._isIphoneX() ? 50 : 0
       }}>
         <NowPlayingHeader 
           componentId={this.props.componentId} 
@@ -228,7 +247,7 @@ class PlayingScreen extends React.Component {
               renderItem={this._renderItem.bind(this)}
               sliderWidth={Dimensions.get('window').width}
               itemWidth={Dimensions.get('window').width - 100 }
-              itemHeight={Dimensions.get('window').width - 50 }
+              itemHeight={Dimensions.get('window').width - 100 }
               // firstItem={activeQueueItem}
             />
           }
