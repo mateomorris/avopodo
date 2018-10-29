@@ -78,11 +78,26 @@ export default class LightBox extends Component {
                         <Image style={{ width: 25, height: 25 }} source={require('../assets/x.png')} />
                     </TouchableOpacity>
                     <ScrollView style={[{
-                        backgroundColor: 'rgba(0,0,0,.5)',
                         width: window.width - 40,
                         borderRadius: 5
-                    }, this.props.style]}>
-                        { this.props.children }
+                    }]}>
+                        <View style={[{
+                            backgroundColor: 'rgba(0,0,0,.5)',
+                            height: 'auto',
+                            width: window.width - 40,
+                            borderRadius: 5
+                        }, this.props.style]}>
+                            { this.props.children }
+                        </View>
+                        <TouchableOpacity 
+                            style={{
+                                flex: 1,
+                                height: window.height
+                            }}
+                            onPress={() => {
+                                this._closeLightbox()
+                            }}>
+                        </TouchableOpacity>
                     </ScrollView>
                     <TouchableOpacity 
                     style={{

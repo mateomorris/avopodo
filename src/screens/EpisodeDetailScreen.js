@@ -11,8 +11,7 @@ import * as specialActions from '../redux/actions';
 class ShowPreviewScreen extends Component {
 
     state = {
-        playing : this.props.playing,
-        lightBoxOpen: true
+        playing : this.props.playing
     }
 
     render() {
@@ -24,9 +23,9 @@ class ShowPreviewScreen extends Component {
 
         return(
             
-            <Lightbox componentId={this.props.componentId} height={'auto'} open={this.state.lightBoxOpen}>
+            <Lightbox componentId={this.props.componentId} height={'auto'}>
                 <View style={{
-                    flexDirection : 'row'
+                    flexDirection : 'row',
                 }}>
                     <Image source={{ uri : showImage }} 
                         style={{
@@ -96,13 +95,13 @@ class ShowPreviewScreen extends Component {
                             borderWidth: 2,
                             borderRadius: 35,
                             flexDirection: 'row',
-                            marginBottom: 40
+                            marginBottom: 10
                         }} 
                         onPress={() => { 
                             this.setState({
-                                playing : this.state.playing ? false : true,
-                                lightBoxOpen: false
+                                playing : this.state.playing ? false : true
                             })
+                            Navigation.dismissOverlay(this.props.componentId)
                             this.props.onPlayPress() 
                         }}>
                             <Text style={{
