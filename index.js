@@ -11,6 +11,8 @@ import store from './src/redux/store';
 import App from "./App";
 import HomeScreen from './src/screens/HomeScreen';
 import DiscoverScreen from './src/screens/DiscoverScreen';
+import GenreListScreen from './src/screens/GenreListScreen';
+import GenreDetailScreen from './src/screens/GenreDetailScreen';
 import PlaylistsScreen from './src/screens/PlaylistsScreen';
 import SubscribedScreen from './src/screens/SubscribedScreen';
 import ShowDetailScreen from './src/screens/ShowDetailScreen';
@@ -54,6 +56,8 @@ import TopBar from './src/components/TopBar';
 
       Navigation.registerComponentWithRedux('example.HomeScreen', () => HomeScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.DiscoverScreen', () => DiscoverScreen, Provider, store);
+      Navigation.registerComponentWithRedux('example.GenreListScreen', () => GenreListScreen, Provider, store);
+      Navigation.registerComponentWithRedux('example.GenreDetailScreen', () => GenreDetailScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.PlaylistsScreen', () => PlaylistsScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.SubscribedScreen', () => SubscribedScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.ShowDetailScreen', () => ShowDetailScreen, Provider, store);
@@ -113,17 +117,17 @@ import TopBar from './src/components/TopBar';
                           }
                       }],
                       options: {
+                        topBar: {
+                          title: {
+                            text: 'Search',
+                          },
+                        },
                         bottomTab: {
                           text: 'Search',
                           icon: require('./src/assets/tab-icons/discover.png'),
                           selectedIcon: require('./src/assets/tab-icons/discover-active.png'),
                           testID: 'SECOND_TAB_BAR_BUTTON'
                         },
-                        topBar: {
-                          title: {
-                            text: 'Search',
-                          },
-                        }
                       }
                     }
                   },
