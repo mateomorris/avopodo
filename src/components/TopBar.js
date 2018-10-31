@@ -28,7 +28,7 @@ export default class TopBar extends React.Component {
                     fontWeight: '700',
                     fontSize: 18,
                     color: 'black'
-                }}>Home</Text>
+                }}>{ this.props.title }</Text>
             </View>
         );
 

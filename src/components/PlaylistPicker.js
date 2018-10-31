@@ -56,8 +56,8 @@ export default class PlaylistPicker extends React.Component {
                         this.setState({ value }) 
                     }}>
                         {
-                            this.props.items.map((item) => {
-                                return <Picker.Item label={item.label} value={item.value} />
+                            this.props.items.map((item, index) => {
+                                return <Picker.Item label={item.label} value={item.value} key={index}/>
                             })
                         }  
                     </Picker>

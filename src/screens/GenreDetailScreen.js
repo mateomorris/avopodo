@@ -170,14 +170,11 @@ class GenreDetailScreen extends React.Component {
 
   componentWillMount() {
     this.props.actions.getShowsInGenre(this.props.genre.id).then((shows) => {
-      console.log(shows)
       this.setState({ shows })
     })
   }
 
   render() {
-
-    console.log(this.props.genre)
 
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>

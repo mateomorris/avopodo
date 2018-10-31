@@ -51,7 +51,7 @@ class ShowPreviewScreen extends Component {
     }
 
     render() {
-        const { title, publisher, description, image } = this.props.item;
+        const { title, publisher, description, image, imageHighRes } = this.props.item;
 
         const screenWidth = Dimensions.get('window').width;
         const screenHeight = Dimensions.get('window').height;
@@ -59,7 +59,7 @@ class ShowPreviewScreen extends Component {
         return(
             
             <Lightbox componentId={this.props.componentId}>
-                <Image source={{ uri: image }} 
+                <Image source={{ uri: imageHighRes }} 
                     style={{
                         width: screenWidth - 90, // Parent padding + width
                         height: screenWidth - 90, 

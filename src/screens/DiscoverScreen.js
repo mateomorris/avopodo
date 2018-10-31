@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import Search from 'react-native-search-box';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import GridView from 'react-native-super-grid';
+import SvgUri from 'react-native-svg-uri';
 
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
@@ -12,6 +14,8 @@ import EpisodeSnippet from '../components/EpisodeSnippet';
 import PlayBar from '../components/PlayBar';
 import ShowRow from '../components/ShowRow';
 import { LoadingIndicator } from '../components/SimpleComponents'
+
+import icons from '../assets/genre-icons';
 
 import * as specialActions from '../redux/actions';
 
@@ -27,7 +31,7 @@ class DiscoverScreen extends React.Component {
     searchResults: [],
     subscribedShows: this.props.details.subscribedShows.map((show) => {
       return show.id
-    })
+    }),
   };
 
   // _subscribeToShow = async (id, title, image, description, itunesId) => {
@@ -159,6 +163,29 @@ class DiscoverScreen extends React.Component {
     })
   }
 
+  _getIcon (genre) {
+    let name = genre.name.toLowerCase()
+    return {
+      'arts' : icons.arts, 
+      'business' : icons.business,
+      'comedy' : icons.comedy,
+      'education' : icons.education,
+      'games & hobbies' : icons.games,
+      'government & organizations' : icons.government,
+      'health' : icons.health,
+      'kids & family' : icons.family,
+      'music' : icons.music,
+      'news & politics' : icons.news,
+      'personal finance' : icons.finance,
+      'religion & spirituality' : icons.religion,
+      'science & medicine' : icons.science,
+      'society & culture' : icons.society,
+      'sports & recreation' : icons.sports,
+      'tv & film' : icons.tv,
+      'technology' : icons.technology
+    }[name] || icons.default
+  }
+
   componentDidMount() {
     // console.log(this.props.details);
     this.props.actions.getGenres().then(({ genres }) => {
@@ -203,7 +230,69 @@ class DiscoverScreen extends React.Component {
         <ScrollView contentContainerStyle={styles.container}>
           { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
           { this.state.searching && <LoadingIndicator /> }
-          <FlatList
+          <GridView
+            spacing={20}
+            itemDimension={130}
+            items={this.state.genres.filter((genre) => {
+              if (genre.id !== 67 && genre.parent_id == 67 && genre.id !== 151) {
+                return genre
+              }
+            }).sort(function(a, b){
+                if(a.name < b.name) { return -1; }
+                if(a.name > b.name) { return 1; }
+                return 0;
+            })}
+            renderItem={genre => (
+              <TouchableOpacity style={{
+                backgroundColor: 'black',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 100,
+                paddingLeft: 10,
+                paddingRight: 10,
+                borderRadius: 5,
+              }} onPress={() => {
+                Navigation.push(this.props.componentId, {
+                  component: {
+                    name: 'example.GenreDetailScreen',
+                    passProps: {
+                      genre
+                    },
+                    noBorder: false,
+                    options: {
+                      topBar: {
+                        // background : {
+                        //   color : '#000000'
+                        // },
+                        title: {
+                          text: genre.name,
+                          // color: 'white',
+                          // component: {
+                          //   name: 'example.TopBar',
+                          //   alignment: 'center',
+                          //   passProps : {
+                          //     title : genre.name
+                          //   }
+                          // }
+                        }
+                      }
+                    }
+                  }
+                });
+              }}>
+                <SvgUri style={{
+                  paddingBottom: 5,
+                }} width="20" height="20" svgXmlData={this._getIcon(genre)} fill={'#EEE'} fillAll={true}/>
+                <Text style={{
+                  fontSize: 15,
+                  color: 'white',
+                  fontWeight: '600',
+                  textAlign: 'center'
+                }}>{ genre.name }</Text>
+              </TouchableOpacity>
+            )}
+          />
+          {/* <FlatList
             data={this.state.genres.filter((genre) => {
               if (genre.id !== 67) {
                 return genre
@@ -226,42 +315,10 @@ class DiscoverScreen extends React.Component {
                       }
                     }
                   });
-
-                  // Navigation.push(this.props.componentId, {
-                  //   component: {
-                  //     name: 'example.GenreListScreen',
-                  //     passProps: {
-                  //       parentGenre: item,
-                  //       childGenres: this._getChildGenres(item)
-                  //     },
-                  //     options: {
-                  //       topBar: {
-                  //         title: {
-                  //           text: item.name
-                  //         }
-                  //       }
-                  //     }
-                  //   }
-                  // });
                 }}>
-                  <Card>
-                    <CardItem>
-                      <Body style={{
-                        paddingTop: 10,
-                        paddingBottom: 10
-                      }}>
-                        <Text style={{
-                          fontSize: 18,
-                          fontWeight: '600'
-                        }}>
-                          { item.name }
-                        </Text>
-                      </Body>
-                    </CardItem>
-                  </Card>
                 </TouchableOpacity>
             )}
-          />
+          /> */}
 
 
 
@@ -295,7 +352,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     alignItems: 'stretch',
     justifyContent: 'flex-start',
-    padding: 10,
-    paddingTop: 10
   },
 });

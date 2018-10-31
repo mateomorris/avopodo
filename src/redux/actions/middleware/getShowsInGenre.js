@@ -9,9 +9,7 @@ export function getShowsInGenre (genreId) {
           .then((response) => response.json())
           .then((responseJson) => {
             responseJson.channels.map((show) => {
-              console.log(show)
               show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
-              console.log(show)
               return show
             })
             return responseJson.channels;
