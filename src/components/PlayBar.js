@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 class PlayBar extends React.Component {
 
     state = {
+        window: {},
         triggered: false, 
         visible : false,
         active: false,
@@ -70,7 +71,8 @@ class PlayBar extends React.Component {
     componentDidMount() {
 
         this.setState({
-            tabHeight: this._getTabHeight()
+            tabHeight: this._getTabHeight(),
+            window: Dimensions.get('window')
         }, () => {
             console.log(this.state.tabHeight)
         })
@@ -131,7 +133,7 @@ class PlayBar extends React.Component {
 
         // Show PlayBar 
         Animated.timing(this.state.height, {
-            toValue: Dimensions.get('window').height,
+            toValue: this.state.window.height,
             duration: 300,
             delay: 200,
             useNativeDriver: true
@@ -148,7 +150,7 @@ class PlayBar extends React.Component {
         Animated.spring(            
             this.state.height,         
             {
-                toValue: Dimensions.get('window').height, 
+                toValue: this.state.window.height, 
                 tension: 0,
                 useNativeDriver: true
             }    
@@ -230,18 +232,17 @@ class PlayBar extends React.Component {
         onPanResponderMove : (e, gesture) => {
             if (this.state.expanded) {
                 console.log('EXPANDED', gesture)
-                gesture.dy > 0 && this.state.height.setValue(Dimensions.get('window').height - gesture.dy) // If swiping down, set `height` 
+                gesture.dy > 0 && this.state.height.setValue(this.state.window.height - gesture.dy) // If swiping down, set `height` 
             } else {
-                console.log('unexpanded', gesture)
-                this.state.height.setValue((Dimensions.get('window').height + gesture.dy))
-                if (gesture.moveY >= 620) {
-                   this._removePlayBar(gesture)
-                }
+                console.log('unexpanded', gesture.dy)
+                this.state.height.setValue((this.state.window.height + gesture.dy))
             }
         },
         onPanResponderRelease : (e, gesture) => {
 
-            if (!this.state.expanded && gesture.dy > -15 && gesture.moveY < 620) { // If released too low, spring back
+            if (!this.state.expanded && gesture.dy > 0 && gesture.dy < 50) { // If released too low, spring back
+                this._closeModal()
+            } else if (!this.state.expanded && gesture.dy > -15 ) { // If it's dragged far enough
                 this._closeModal()
 
             } else if (!this.state.expanded && gesture.dy < -15 ) { // If it's dragged far enough
@@ -253,7 +254,11 @@ class PlayBar extends React.Component {
             } else if (this.state.expanded) { // If it's expanded and doesn't get dragged down far enough
                 this._expandModal()
             } else {
-                console.log('No matching conditions')
+                console.log('No matching conditions', gesture.dy)
+               if (gesture.dy >= 50) {
+                    console.log('removing play bar', gesture)
+                //    this._removePlayBar(gesture)
+                }
             }
 
         } 
