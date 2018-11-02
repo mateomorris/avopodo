@@ -7,6 +7,8 @@ import * as Animatable from 'react-native-animatable';
 export default class LightBox extends Component {
 
     state = {
+        containerHeight : 0, // used to calculate how tall the touchable area under the content is
+        viewHeight : 0, // this also
         opacity : new Animated.Value(0)
     }
 
@@ -65,9 +67,16 @@ export default class LightBox extends Component {
                     blurType="dark"
                     blurAmount={10}
                 />
-                <View style={{
+                <View 
+                style={{
                     maxHeight: window.height - 30
-                }}>
+                }}
+                onLayout={(e) => {
+                    this.setState({
+                        containerHeight : e.nativeEvent.layout.height
+                    })
+                }}
+                >
                     <TouchableOpacity style={{
                         paddingTop: 10,
                         paddingBottom: 10,
@@ -81,18 +90,26 @@ export default class LightBox extends Component {
                         width: window.width - 40,
                         borderRadius: 5
                     }]}>
-                        <View style={[{
+                        <View 
+                        style={[{
                             backgroundColor: 'rgba(0,0,0,.5)',
                             height: 'auto',
                             width: window.width - 40,
                             borderRadius: 5
-                        }, this.props.style]}>
+                        }, this.props.style]}
+                        onLayout={(e) => {
+                            console.log(e.nativeEvent.layout.height)
+                            this.setState({
+                                viewHeight : e.nativeEvent.layout.height
+                            })
+                        }}
+                        >
                             { this.props.children }
                         </View>
                         <TouchableOpacity 
                             style={{
                                 flex: 1,
-                                height: window.height
+                                height: this.state.containerHeight - this.state.viewHeight - 30
                             }}
                             onPress={() => {
                                 this._closeLightbox()
