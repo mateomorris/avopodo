@@ -9,8 +9,8 @@ export default class PlaybackButton extends Component {
     state = {
         playing: null,
         SVGs: {
-            pause: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>button-pause-1</title><path fill="black" d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm5,16a1,1,0,0,1-1,1H14a1,1,0,0,1-1-1V8a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1ZM11,8v8a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8A1,1,0,0,1,8,7h2A1,1,0,0,1,11,8Z"/></svg>`,
-            play: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>button-play</title><path fill="black" d="M12,24A12,12,0,1,0,0,12,12.013,12.013,0,0,0,12,24Zm4.812-11.5a.939.939,0,0,1-.587.824L10.14,16.366a1.185,1.185,0,0,1-.531.133.919.919,0,0,1-.488-.136,1.032,1.032,0,0,1-.459-.911V9.546a.974.974,0,0,1,1.478-.914l6.085,3.043A.939.939,0,0,1,16.812,12.5Z"/></svg>`
+            pause: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="#ffffff"><path d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M14,19c0,0.552-0.448,1-1,1 s-1-0.448-1-1v-8c0-0.552,0.448-1,1-1s1,0.448,1,1V19z M18,19c0,0.552-0.448,1-1,1s-1-0.448-1-1v-8c0-0.552,0.448-1,1-1s1,0.448,1,1 V19z" fill="#ffffff"/></svg>`,
+            play: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="#ffffff"><path d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M20.304,15.402l-7.608,4.392 C12.313,20.015,12,19.834,12,19.392v-8.785c0-0.442,0.313-0.623,0.696-0.402l7.608,4.392C20.687,14.819,20.687,15.181,20.304,15.402 z" fill="#ffffff"/></svg>`
         }
     }
 
@@ -29,9 +29,9 @@ export default class PlaybackButton extends Component {
                     } */}
                 </TouchableOpacity>
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: 150, height: 150 }} onPress={() => {this.props.onPlayPause()}}>
-                    <MaterialIndicator color={ buffering ? color : 'transparent' } size={150} animationDuration={3000} style={{
+                    <MaterialIndicator color={ buffering ? color : 'transparent' } size={110} animationDuration={3000} style={{
                         position: 'absolute',
-                        top: 0,
+                        top: 20,
                     }}/>
                     <View style={{ 
                         borderRadius: 500,
@@ -53,7 +53,7 @@ export default class PlaybackButton extends Component {
                                 alignItems: 'center', 
                                 borderRadius: 500,
                                 zIndex: 0,
-                            }} width="90" height="90" svgXmlData={this.props.playbackStatus ? this.state.SVGs.pause : this.state.SVGs.play } fill={color} fillAll={true}/>
+                            }} width="110" height="110" svgXmlData={this.props.playbackStatus ? this.state.SVGs.pause : this.state.SVGs.play } fill={color} fillAll={true}/>
                         }
                     </View>
                 </TouchableOpacity>
