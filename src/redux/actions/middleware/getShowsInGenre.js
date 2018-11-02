@@ -1,6 +1,6 @@
-export function getShowsInGenre (genreId) {
+export function getShowsInGenre (genreId, page = 1) {
     return dispatch => {
-        return fetch(`https://listennotes.p.mashape.com/api/v1/best_podcasts?genre_id=${genreId}`, 
+        return fetch(`https://listennotes.p.mashape.com/api/v1/best_podcasts?genre_id=${genreId}&page=${page}`, 
         {
           headers: {
             'X-Mashape-Key' : 'xGqxpKDt1rmshDkDCHU7rUGMqWxqp1oEyY5jsnYTD6AGzqmQlb',

@@ -10,7 +10,7 @@ export default class ShowRow extends React.Component {
     render() {
 
         return (
-            <TouchableOpacity style={{ flexDirection: 'row', paddingTop: 15, paddingBottom: 15, borderBottomColor: '#DDD', borderBottomWidth: 1, height: 100, overflow: 'hidden' }} key={this.props.index} onPress={() => {this.props.onSearchResultPress()}}>
+            <TouchableOpacity key={this.props.key} style={{ flexDirection: 'row', paddingTop: 15, paddingBottom: 15, borderBottomColor: '#DDD', borderBottomWidth: 1, height: 100, overflow: 'hidden' }} key={this.props.index} onPress={() => {this.props.onSearchResultPress()}}>
               <View style={{ marginRight: 10 }}>
                 <Image source={{ uri: this.props.item.image }} style={{ width: 75, height: 75, borderRadius: 5, backgroundColor: '#EEEEEE' }}/>
               </View>

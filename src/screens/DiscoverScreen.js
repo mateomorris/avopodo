@@ -24,7 +24,7 @@ import SearchBar from 'react-native-search-bar';
 class DiscoverScreen extends React.Component {
 
   state = {
-    genres: ['blue','red'],
+    genres: [],
     showSearchResults: false,
     searching: false,
     search: '',
@@ -189,7 +189,16 @@ class DiscoverScreen extends React.Component {
   componentDidMount() {
     // console.log(this.props.details);
     this.props.actions.getGenres().then(({ genres }) => {
-      this.setState({ genres });
+      const filteredGenres = genres.filter((genre) => {
+          if (genre.id !== 67 && genre.parent_id == 67 && genre.id !== 151) {
+            return genre
+          }
+        }).sort(function(a, b){
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+        })
+      this.setState({ genres : filteredGenres });
     })
   }
 
@@ -227,24 +236,19 @@ class DiscoverScreen extends React.Component {
           onSearchButtonPress={() => this._searchForTerm(this.state.search) }
           onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
         /> */}
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={[styles.container, 
+        {
+          paddingBottom: this.props.details.active ? 30 : 0
+        }]}>
           { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
           { this.state.searching && <LoadingIndicator /> }
           <GridView
             spacing={20}
             itemDimension={130}
-            items={this.state.genres.filter((genre) => {
-              if (genre.id !== 67 && genre.parent_id == 67 && genre.id !== 151) {
-                return genre
-              }
-            }).sort(function(a, b){
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1; }
-                return 0;
-            })}
+            items={this.state.genres}
             renderItem={genre => (
               <TouchableOpacity style={{
-                backgroundColor: 'black',
+                backgroundColor: '#111',
                 alignItems: 'center',
                 justifyContent: 'center',
                 height: 100,
@@ -351,6 +355,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fafafa',
     alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
 });

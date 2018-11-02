@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList, Dimensions, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList, Dimensions, Alert, RefreshControl } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
@@ -12,6 +12,7 @@ import EpisodeSnippet from '../components/EpisodeSnippet';
 import PlayBar from '../components/PlayBar';
 import { LoadingIndicator } from '../components/SimpleComponents'
 import ShowRow from '../components/ShowRow';
+import { SmallLoadingIndicator } from '../components/SimpleComponents'
 
 import * as specialActions from '../redux/actions';
 
@@ -20,6 +21,7 @@ import SearchBar from 'react-native-search-bar';
 class GenreDetailScreen extends React.Component {
 
   state = {
+    loading : true,
     shows: [],
     genres: ['blue','red'],
     showSearchResults: false,
@@ -28,7 +30,35 @@ class GenreDetailScreen extends React.Component {
     searchResults: [],
     subscribedShows: this.props.details.subscribedShows.map((show) => {
       return show.id
-    })
+    }),
+    genreShowsPage : 2,
+    refreshing : false,
+    firstEpisodeReached: false,
+    bufferedPosition: null,
+    playingPosition: null,
+    episodes: [
+        {
+            title: 'Episode Title',
+            description: 'Epsidode',
+            duration: '',
+            publishDate: '4/29',
+            listenedTo: 0
+        },
+        {
+            title: 'Episode Title',
+            description: 'Epsidode',
+            duration: '',
+            publishDate: '',
+            listenedTo: 0
+        },
+        {
+            title: 'Episode Title',
+            description: 'Epsidode',
+            duration: '',
+            publishDate: '',
+            listenedTo: 0
+        }
+    ]
   };
 
   // _subscribeToShow = async (id, title, image, description, itunesId) => {
@@ -148,7 +178,7 @@ class GenreDetailScreen extends React.Component {
       this.setState({
         searchResults,
         searching: false,
-        showSearchResults: true
+        showSearchResults: true,
       });
     })
   }
@@ -161,23 +191,46 @@ class GenreDetailScreen extends React.Component {
     this._getSearchResults(term);
   }
 
-  componentDidMount() {
-    // console.log(this.props.details);
-    this.props.actions.getGenres().then(({ genres }) => {
-      this.setState({ genres });
-    })
+
+  _checkIfBottomReached = (e) => {
+      let paddingToBottom = 0;
+      paddingToBottom += e.nativeEvent.layoutMeasurement.height;
+      if(e.nativeEvent.contentOffset.y >= e.nativeEvent.contentSize.height - paddingToBottom) {
+          if (!this.state.firstEpisodeReached) {
+              this.setState({loadingAdditionalEpisodes : true})
+              this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then((moreShows) => {
+                console.log(this.state)
+                this.setState({ 
+                  shows : this.state.shows.concat(moreShows),
+                  genreShowsPage : this.state.genreShowsPage + 1
+                })
+              })
+          }
+      }
   }
+
+  // componentDidMount() {
+  //   // console.log(this.props.details);
+  //   this.props.actions.getGenres().then(({ genres }) => {
+  //     this.setState({ genres });
+  //   })
+  // }
 
   componentWillMount() {
     this.props.actions.getShowsInGenre(this.props.genre.id).then((shows) => {
-      this.setState({ shows })
+      this.setState({ 
+        shows,
+        loading: false
+      })
     })
   }
 
   render() {
 
+
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
+        { this.state.loading && <LoadingIndicator /> }
         {/* <Search
           ref="search_box"
           // placeholder='Search by name, description, or author'
@@ -208,7 +261,10 @@ class GenreDetailScreen extends React.Component {
           onSearchButtonPress={() => this._searchForTerm(this.state.search) }
           onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
         /> */}
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView 
+          contentContainerStyle={styles.container}
+          onScroll={(e) => this._checkIfBottomReached(e)}
+        >
           { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
           { this.state.searching && <LoadingIndicator /> }
           <FlatList
@@ -218,7 +274,7 @@ class GenreDetailScreen extends React.Component {
             }}
             renderItem={({item, separators}) => (
               <ShowRow 
-                // index={index}
+                key={item.id}
                 item={item}
                 subscribed={this._checkIfSubscribed(item.id)}
                 subscribeToShow={() => {
@@ -230,6 +286,7 @@ class GenreDetailScreen extends React.Component {
               />
             )}
           />
+          { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
 
 
 
