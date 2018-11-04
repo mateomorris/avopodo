@@ -319,7 +319,7 @@ class PlayBar extends React.Component {
                 width: '100%',
                 justifyContent: 'flex-end',
                 overflow: 'hidden',
-                backgroundColor: 'rgba(0,0,0,.5)',
+                // backgroundColor: 'rgba(0,0,0,.5)',
                 transform: [
                     {
                         translateY: this.state.bottomSpacing
