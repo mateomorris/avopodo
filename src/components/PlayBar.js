@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 class PlayBar extends React.Component {
 
     state = {
+        draggingBar : false,
         window: {},
         triggered: false, 
         visible : false,
@@ -230,6 +231,11 @@ class PlayBar extends React.Component {
 
     panResponder = PanResponder.create({    
         onStartShouldSetPanResponder : () => true,
+        onPanResponderGrant: (evt, gestureState) => {
+          this.setState({
+            draggingBar : true
+          })
+        },
         onPanResponderMove : (e, gesture) => {
             if (this.state.expanded) {
                 gesture.dy > 0 && this.state.height.setValue(this.state.window.height - gesture.dy) // If swiping down, set `height` 
@@ -239,26 +245,29 @@ class PlayBar extends React.Component {
         },
         onPanResponderRelease : (e, gesture) => {
 
-            if (!this.state.expanded) { // Unexpanded modal
+            this.setState({
+                draggingBar : false
+            }, () => {
+                if (!this.state.expanded) { // Unexpanded modal
+                    
+                    if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15 ) { // Detect touch OR release high enough
+                        this._expandModal()
+                    } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
+                        this._closeModal()
+                    } else if (gesture.dy >= 50) { // If dragged down far enough
+                        this._removePlayBar()
+                    }
 
-                // Detect touch
-                if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15 ) {
-                    this._expandModal()
-                } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
-                    this._closeModal()
-                } else if (gesture.dy >= 50) { // If dragged down far enough
-                   this._removePlayBar()
-                }
+                } else if (this.state.expanded) { // Expanded modal
 
-            } else if (this.state.expanded) { // Expanded modal
+                    if (gesture.dy > 50 ) { // If dragged down far enough
+                        this._closeModal()
+                    } else { 
+                        this._expandModal()
+                    }
 
-                if (gesture.dy > 50 ) { // If dragged down far enough
-                    this._closeModal()
-                } else { 
-                    this._expandModal()
-                }
-
-            } 
+                } 
+            })
         } 
     });
 
@@ -306,11 +315,11 @@ class PlayBar extends React.Component {
             <Animated.View style={{ 
                 position: 'absolute', 
                 bottom: 0, 
-                top: active ? (this.state.triggered ? 0 : Dimensions.get('window').height - (75)) : Dimensions.get('window').height,
+                top: this.state.draggingBar || this.state.triggered ? 0 : Dimensions.get('window').height - (60),
                 width: '100%',
                 justifyContent: 'flex-end',
                 overflow: 'hidden',
-                // backgroundColor: 'rgba(0,0,0,.5)',
+                backgroundColor: 'rgba(0,0,0,.5)',
                 transform: [
                     {
                         translateY: this.state.bottomSpacing

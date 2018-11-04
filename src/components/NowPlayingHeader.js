@@ -81,6 +81,8 @@ class NowPlayingHeader extends React.Component {
             <View style={{
                 paddingTop: 0,
             }}>
+            {
+              this.props.state.playQueue.length > 1 &&
               <TouchableOpacity onPress={() => {
                 this.props.onPlaylistPress()
               }} style={{
@@ -93,6 +95,7 @@ class NowPlayingHeader extends React.Component {
                   <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('../assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
                 }
               </TouchableOpacity>
+            }
             </View>
           </View>
         </View>
