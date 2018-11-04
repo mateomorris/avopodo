@@ -240,8 +240,13 @@ class DiscoverScreen extends React.Component {
         {
           paddingBottom: this.props.details.active ? 30 : 0
         }]}>
-          { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
-          { this.state.searching && <LoadingIndicator /> }
+          <View style={{
+            paddingLeft: 10,
+            paddingRight: 10
+          }}>
+            { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
+            { this.state.searching && <LoadingIndicator /> }
+          </View>
           <GridView
             spacing={20}
             itemDimension={130}
