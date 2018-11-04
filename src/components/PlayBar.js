@@ -227,40 +227,38 @@ class PlayBar extends React.Component {
         })
     }
 
+
     panResponder = PanResponder.create({    
         onStartShouldSetPanResponder : () => true,
         onPanResponderMove : (e, gesture) => {
             if (this.state.expanded) {
-                console.log('EXPANDED', gesture)
                 gesture.dy > 0 && this.state.height.setValue(this.state.window.height - gesture.dy) // If swiping down, set `height` 
             } else {
-                console.log('unexpanded', gesture.dy)
                 this.state.height.setValue((this.state.window.height + gesture.dy))
             }
         },
         onPanResponderRelease : (e, gesture) => {
 
-            if (!this.state.expanded && gesture.dy > 0 && gesture.dy < 50) { // If released too low, spring back
-                this._closeModal()
-            } else if (!this.state.expanded && gesture.dy > -15 ) { // If it's dragged far enough
-                this._closeModal()
+            if (!this.state.expanded) { // Unexpanded modal
 
-            } else if (!this.state.expanded && gesture.dy < -15 ) { // If it's dragged far enough
-                this._expandModal()
-
-            } else if (this.state.expanded && gesture.dy > 50 ) { // If it's expanded and gets dragged down
-                this._closeModal()
-
-            } else if (this.state.expanded) { // If it's expanded and doesn't get dragged down far enough
-                this._expandModal()
-            } else {
-                console.log('No matching conditions', gesture.dy)
-               if (gesture.dy >= 50) {
-                    console.log('removing play bar', gesture)
-                //    this._removePlayBar(gesture)
+                // Detect touch
+                if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15 ) {
+                    this._expandModal()
+                } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
+                    this._closeModal()
+                } else if (gesture.dy >= 50) { // If dragged down far enough
+                   this._removePlayBar()
                 }
-            }
 
+            } else if (this.state.expanded) { // Expanded modal
+
+                if (gesture.dy > 50 ) { // If dragged down far enough
+                    this._closeModal()
+                } else { 
+                    this._expandModal()
+                }
+
+            } 
         } 
     });
 
@@ -334,12 +332,18 @@ class PlayBar extends React.Component {
                     style={{
                         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, paddingTop: 0, paddingBottom: 0, height: 50, zIndex: 1, backgroundColor: 'black'
                     }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
-                        <TouchableOpacity onPress={() => this._expandModal() } style={{ backgroundColor: 'transparent', paddingTop: 10 }}>
-                            {/* <Image style={{height: 20, width: 20}} source={require('../assets/up-caret.png')} /> */}
-                        {
-                            <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
-                        }
-                        </TouchableOpacity>
+                        <View
+                            style={{
+                                height: '100%'
+                            }}
+                            {...this.panResponder.panHandlers} 
+                        >
+                            <View style={{ backgroundColor: 'transparent', paddingTop: 10 }}>
+                            {
+                                <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                            }
+                            </View>
+                        </View>
                         {/* <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}> */}
                         <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
                             {...this.panResponder.panHandlers} 
