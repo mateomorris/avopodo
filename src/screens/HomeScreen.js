@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, NetInfo, RefreshControl } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import SvgUri from 'react-native-svg-uri';
 
 import { Navigation } from "react-native-navigation";
 
@@ -277,6 +278,32 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      {
+        this.props.state.subscribedShows.length == 0 &&
+        <View style={{
+          position: 'absolute',
+          top: 0, bottom: 0, left: 0, right: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 50,
+          paddingTop: 0
+        }}>
+          <Image 
+            source={require('../assets/avopodo.png')}
+            style={{
+              width: 150,
+              height: 150
+            }}
+          />
+          <Text style={{
+            fontWeight: '700',
+            fontSize: 18,
+            textAlign: 'center'
+          }}>Press 'Discover' to find your old favorites and new favorites</Text>
+        </View>
+      }
+      {
+        this.props.state.subscribedShows.length > 0 &&
         <ScrollView 
           contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 45 : 0 }]}
           refreshControl={
@@ -289,6 +316,7 @@ class HomeScreen extends React.Component {
           {/* { this._renderPlaylists(this.state.playlists) } */}
           { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
         </ScrollView>
+      }
         {/* <PlayBar nav={Navigation}/> */}
       </View>
     );

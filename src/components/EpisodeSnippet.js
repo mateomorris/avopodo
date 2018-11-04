@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     thumbnail: { 
         width: 120, 
         height: 120, 
-        borderRadius: 4
+        borderRadius: 5
     }
 });
 

@@ -443,9 +443,11 @@ function reducer(state = initialState, action) {
             // #NEXT: Add the track at the current spot in the queue (as opposed to at the beginning)
             TrackPlayer.add([track]).then(function() {
                 TrackPlayer.skip(track.id).then(() => {
-                    TrackPlayer.play();
+                    TrackPlayer.play()
                 })
-            });
+            }).catch((error) => {
+                console.log(error)
+            })
             
             firebase.analytics().logEvent('play_episode', {
                 episode: action.episode.title,
