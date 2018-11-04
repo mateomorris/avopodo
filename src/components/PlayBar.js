@@ -5,8 +5,9 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
 import * as Animatable from 'react-native-animatable';
-
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
+import PlayProgressIndicator from './PlayProgressIndicator';
 import { MaterialIndicator } from 'react-native-indicators';
 import MarqueeText from 'react-native-marquee';
 
@@ -245,9 +246,10 @@ class PlayBar extends React.Component {
         },
         onPanResponderRelease : (e, gesture) => {
 
-            this.setState({
-                draggingBar : false
-            }, () => {
+                this.setState({
+                    draggingBar : false
+                })
+
                 if (!this.state.expanded) { // Unexpanded modal
                     
                     if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15 ) { // Detect touch OR release high enough
@@ -267,7 +269,6 @@ class PlayBar extends React.Component {
                     }
 
                 } 
-            })
         } 
     });
 
@@ -305,7 +306,6 @@ class PlayBar extends React.Component {
     
     render() {
 
-
         // this.state.height.setOffset(50)
 
         let { nowPlaying, playing, active, bufferingStatus } = this.props.state
@@ -337,6 +337,9 @@ class PlayBar extends React.Component {
                         }
                     ]
                 }]}>
+                    <PlayProgressIndicator 
+                        color={nowPlaying.showColor}
+                    />
                     <Animated.View 
                     style={{
                         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, paddingTop: 0, paddingBottom: 0, height: 50, zIndex: 1, backgroundColor: 'black'
