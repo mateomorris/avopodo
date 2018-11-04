@@ -24,6 +24,7 @@ import SearchBar from 'react-native-search-bar';
 class DiscoverScreen extends React.Component {
 
   state = {
+    noResultsFound : false,
     genres: [],
     showSearchResults: false,
     searching: false,
@@ -122,6 +123,7 @@ class DiscoverScreen extends React.Component {
 
   _getSearchResults = (term) => {
     return this.props.actions.getSearchResults(term).then((searchResults) => {
+
       let perfectMatch = searchResults.find((result) => {
           return result.title.toLowerCase() == term.toLowerCase()
       })
@@ -131,11 +133,24 @@ class DiscoverScreen extends React.Component {
           searchResults.unshift(perfectMatch);
       }
 
-      this.setState({
-        searchResults,
-        searching: false,
-        showSearchResults: true
-      });
+      if (searchResults.length > 0) {
+        this.setState({
+          searchResults,
+          searching: false,
+          showSearchResults: true
+        });
+      } else {
+        this.setState({
+          noResultsFound : true,
+          searching: false,
+          showSearchResults: false
+        }); 
+
+        setTimeout(() => {
+            this.setState({noResultsFound: false}
+        )}, 5000)
+      }
+
     })
   }
 
@@ -236,6 +251,25 @@ class DiscoverScreen extends React.Component {
           onSearchButtonPress={() => this._searchForTerm(this.state.search) }
           onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
         /> */}
+        {
+          this.state.noResultsFound &&
+          <View
+          style={{
+            width: '100%',
+            backgroundColor: 'red',
+            paddingTop: 10,
+            paddingBottom: 10,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text style={{
+              alignItems: 'center',
+              color: '#EEE',
+              fontWeight: '600'
+            }}>No results found</Text>
+          </View>
+        }
+
         <ScrollView contentContainerStyle={[styles.container, 
         {
           paddingBottom: this.props.details.active ? 30 : 0
