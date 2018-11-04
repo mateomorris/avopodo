@@ -276,18 +276,31 @@ class PlaylistCreationScreen extends Component {
                         }}>
                             <Text style={{
                                 color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
-                            }}>Oldest First</Text>
+                            }}>Oldest</Text>
                         </Button>
+                        {/* <Button style={{
+                            flex: 1,
+                            marginRight: 10,
+                            fontSize: 10,
+                            backgroundColor: this.state.playFirst ==  'oldest' ? '#222' : 'white'
+                        }} onClick={() => {
+                            this.setState({ playFirst: 'random' })
+                        }}>
+                            <Text style={{
+                                color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
+                            }}>Random</Text>
+                        </Button> */}
                         <Button style={{
                             flex: 1,
                             fontSize: 10,
+                            marginRight: 10,
                             backgroundColor: this.state.playFirst ==  'newest' ? '#222' : 'white'
                         }} onClick={() => {
                             this.setState({ playFirst: 'newest' })
                         }}>
                             <Text style={{
                                 color: this.state.playFirst ==  'newest' ? 'white' : '#222'
-                            }}>Newest First</Text>
+                            }}>Newest</Text>
                         </Button>
                     </View>
                     <Text style={{

@@ -214,8 +214,10 @@ class PlaylistDetailScreen extends Component {
                 this.props.actions.editPlaylist({
                     id : this.state.playlistId,
                     duration : this.state.episodeLength,
-                    episodeQueue : response.episodeQueue,
-                    length : response.episodeQueueDuration,
+                    episodeQueue : {
+                        episodeList : response.episodeQueue,
+                        episodeListDuration : response.episodeQueueDuration
+                    },
                     name : this.state.playlistName,
                     playFirst : this.state.playFirst,
                     released : this.state.releaseRange,

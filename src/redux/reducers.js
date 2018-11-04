@@ -84,6 +84,7 @@ function reducer(state = initialState, action) {
         case EDIT_PLAYLIST: 
             return {
                 ...state,
+                // playlists: state.playlists,
                 playlists: state.playlists.map((playlist) => {
                     if (playlist.id == action.playlist.id) {
                         return {
