@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView ,
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BlurView } from 'react-native-blur';
+import SvgUri from 'react-native-svg-uri';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Carousel from 'react-native-snap-carousel';
@@ -135,6 +136,32 @@ class PlayingScreen extends React.Component {
   _renderItem ({item, index}) {
     return (
       <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden', borderRadius: 5, height: Dimensions.get('window').width - 100, width: Dimensions.get('window').width - 100, backgroundColor: item.showColor}}>
+        {/* <TouchableOpacity
+          onPress={() => {
+            Alert.alert('yeah')
+          }}
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            padding: 20,
+            paddingTop: 10,
+            paddingRight: 10,
+            zIndex: 9
+          }}
+        >
+          <SvgUri 
+            style={{
+              height: 20,
+              width: 20,
+            }} 
+            width="20" 
+            height="20" 
+            svgXmlData={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="#ffffff"><path d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M16,21h-2v-7h2V21z M15,11.5 c-0.828,0-1.5-0.672-1.5-1.5s0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5S15.828,11.5,15,11.5z" fill="#ffffff"/></svg>`} 
+            fill={'#EEE'} 
+            fillAll={true}
+          />
+        </TouchableOpacity> */}
         <Animated.View
           style={{
               position: "absolute",
@@ -200,6 +227,27 @@ class PlayingScreen extends React.Component {
 
   }
 
+  _handleEpisodeDetailPress = (episode) => {
+
+    Navigation.showOverlay({
+      component: {
+        name: 'example.EpisodeDetailScreen',
+        passProps: { 
+          episode,
+          playing : this.props.state.nowPlaying.id == episode.id ? true : false,
+          onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)}
+        }, // simple serializable object that will pass as props to the lightbox (optional)
+        options: {
+          overlay: {
+            interceptTouchOutside: false
+          }
+        }
+      }
+    });
+
+  }
+
+
   render() {
 
     let { nowPlaying, playing, active, activePlaylist, playQueue, bufferingStatus, activeQueueItem } = this.props.state
@@ -257,7 +305,12 @@ class PlayingScreen extends React.Component {
           flex: 1
         }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
-            <View style={{ flex: 1, marginLeft: 20, marginRight: 20, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity 
+              style={{ flex: 1, marginLeft: 20, marginRight: 20, justifyContent: 'center', alignItems: 'center'}}
+              onPress={() => {
+                this._handleEpisodeDetailPress(nowPlaying)
+              }}
+            >
               {/* <Text style={{color:'white', fontSize: 20, fontWeight: '700', textAlign: 'center', height: 25, marginLeft: 10, marginRight: 10}}>{nowPlaying.title}</Text> */}
               <MarqueeText
               style={{ color:'white', fontSize: 20, fontWeight: '700', textAlign: 'center', height: 25 }}
@@ -269,10 +322,7 @@ class PlayingScreen extends React.Component {
                 {nowPlaying.title}
               </MarqueeText>
               <Text style={{color:'#93A8B3', textAlign: 'center'}}>{nowPlaying.showTitle}</Text>
-            </View>
-            {/* <TouchableOpacity style={{ position: 'absolute', right: 30 }}>
-              <Text style={{ color: 'gray', fontSize: 30 }}>...</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
           <PlayProgressBar 
             color={nowPlaying.showColor}
