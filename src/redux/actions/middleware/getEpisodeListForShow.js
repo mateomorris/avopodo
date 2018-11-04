@@ -22,7 +22,7 @@ export function getEpisodeListForShow(showId, ageLimit = 0, nextEpisodeDate = ne
                     description: episode.description.replace(/(<([^>]+)>)/ig,""), // strip html
                     duration: episode.audio_length, 
                     publishDate: episode.pub_date_ms,
-                    audio: episode.audio,
+                    audio: episode.audio.replace('http://', 'https://'), // Doesn't load if the url isn't safe
                     showId: show.id,
                     showTitle: show.title,
                     showImage: show.image,
