@@ -351,7 +351,7 @@ class PlayBar extends React.Component {
                         </View>
                         {/* </TouchableOpacity> */}
                         <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
-                            <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={35} animationDuration={2000} />
+                            <MaterialIndicator color={ true ? nowPlaying.showColor : 'transparent' } size={30} animationDuration={2000} />
                             {
                                 <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 13 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
                             }
