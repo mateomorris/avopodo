@@ -62,13 +62,8 @@ class SubscribedScreen extends React.Component {
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <ScrollView contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 50 : 5 }]}>
           {/* { this._renderFavorites(this.props.state.subscribedShows) } */}
-          <FlatList contentContainerStyle={{
-              flexDirection: 'row', 
-              alignItems: 'center', 
-              justifyContent: 'flex-start', 
-              flexWrap: 'wrap', 
-              flex: 1 
-            }} 
+          <FlatList 
+            numColumns={3}
             data={this.props.state.subscribedShows}
             initialNumToRender={15}
             renderItem={({item}) => {
