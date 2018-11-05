@@ -59,14 +59,13 @@ export default class PlayProgressIndicator extends TrackPlayer.ProgressComponent
         };
     })();
 
-    _
 
     render() {
 
         const { position, duration } = this.state;
 
         let trackProgress = this.getTrackProgress(position, duration)
-        
+
         return (
             <View style={{
                 width: '100%',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, NetInfo, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, NetInfo, RefreshControl, FlatList } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import SvgUri from 'react-native-svg-uri';
@@ -228,7 +228,28 @@ class HomeScreen extends React.Component {
       return (
         <View style={{flex: 1}}>
           <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Newest from Subscribed</Text>
-          {
+          <FlatList 
+            data={
+              episodes.filter((episode) => {
+                if (episode && !this.props.state.finishedEpisodes.find(matchingEpisode => matchingEpisode == episode.id)) {
+                  return episode
+                }
+              })
+            }
+            extraData={this.props.state}
+            keyExtractor={(item, index) => item.id}
+            initialNumToRender={5}
+            renderItem={({item}) => {
+              return (
+                <EpisodeSnippet 
+                  data={item}
+                  onThumbnailPress={() => this._handleEpisodeThumbnailPress(item)}
+                  onDetailPress={() => this._handleitemDetailPress(episode)}
+                />
+              )
+            }}
+          />
+          {/* {
             episodes.filter((episode) => {
               if (episode && !this.props.state.finishedEpisodes.find(matchingEpisode => matchingEpisode == episode.id)) {
                 return episode
@@ -243,7 +264,7 @@ class HomeScreen extends React.Component {
                 />
               )
             })
-          }
+          } */}
         </View>
       );
     } else {

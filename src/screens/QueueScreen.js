@@ -94,6 +94,7 @@ class QueueScreen extends Component {
                 <FlatList
                 data={queue}
                 renderItem={this._renderPlaylistItem}
+                initialNumToRender={11}
                 />
             </Lightbox>
         )

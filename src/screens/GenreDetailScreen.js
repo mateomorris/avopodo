@@ -272,6 +272,7 @@ class GenreDetailScreen extends React.Component {
             onPress={() => {
               
             }}
+            initialNumToRender={7}
             renderItem={({item, separators}) => (
               <ShowRow 
                 key={item.id}
