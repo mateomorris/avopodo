@@ -244,7 +244,7 @@ class HomeScreen extends React.Component {
                 <EpisodeSnippet 
                   data={item}
                   onThumbnailPress={() => this._handleEpisodeThumbnailPress(item)}
-                  onDetailPress={() => this._handleitemDetailPress(episode)}
+                  onDetailPress={() => this._handleEpisodeDetailPress(item)}
                 />
               )
             }}
