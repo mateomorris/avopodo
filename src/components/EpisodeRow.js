@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import * as Progress from 'react-native-progress';
+import SvgUri from 'react-native-svg-uri';
 
 const styles = StyleSheet.create({
     container: {
@@ -49,13 +51,15 @@ export default class EpisodeRow extends React.Component {
                     borderBottomWidth: 1,
                     borderBottomColor: '#CCC',
                     padding: 20,
+                    paddingRight: 10,
                     marginLeft: 10, 
-                    marginRight: 10,
                     flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: '100%',
                     height: 75
                 }} onPress={this.props.onDetailPress}>
                     <View style={{
-                        paddingRight: 10
+                        paddingRight: 35
                     }}>
                         <Text style={{
                             fontSize: 14,
@@ -69,24 +73,55 @@ export default class EpisodeRow extends React.Component {
                         }} ellipsizeMode='tail' numberOfLines={1}>{info.title}</Text>
                     </View>
                     <TouchableOpacity style={{
-                        paddingLeft: 20,
+                        paddingLeft: 10,
+                        paddingRight: 30,
                         position: 'absolute',
-                        right: 5,
+                        right: 15,
                         alignItems: 'center',
                         alignContent: 'center',
                         justifyContent: 'center',
                         bottom: 0,
                         top: 0,
-                        zIndex: 9
+                        zIndex: 9,
                     }} onPress={() => {
                         this.props.onPlayPress()
                     }}>
-                        <Image 
+                        {/* <Image
                             source={require('../assets/play-gray.png')}
+                            resizeMode={'center'}
                             style={{
+                                position: 'absolute',
                                 width: 20,
-                                height: 20
+                                height: 20,
+                                padding: 10
                             }}
+                        /> */}
+                        <SvgUri 
+                            style={{ 
+                                position: 'absolute',
+                                // width: 20,
+                                // height: 20,
+                                // padding: 10
+                            }} 
+                            width="20" 
+                            height="20" 
+                            source={require('../assets/interface-icons/play.svg')} 
+                            fill={info.showColor} 
+                            fillAll={true}
+                        />
+                        <Progress.Circle 
+                            style={{
+                                position: 'absolute',
+                                opacity: 0.5
+                                // top: -2,
+                                // bottom: 0,
+                                // left: -2,
+                                // right: 0
+                            }}
+                            borderWidth={0}
+                            size={24} 
+                            color={info.showColor} 
+                            progress={this.props.playProgress}
                         />
                     </TouchableOpacity>
                 </TouchableOpacity>

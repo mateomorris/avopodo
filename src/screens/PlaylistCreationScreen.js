@@ -178,6 +178,7 @@ class PlaylistCreationScreen extends Component {
                         horizontal={true}
                         data={this.props.subscribedShows}
                         extraData={this.state}
+                        initialNumToRender={4}
                         renderItem={({item, separators}) => (
                             <TouchableOpacity style={{ borderRadius: 5 }}  onPress={() => { this._addShowToNewPlaylist(item.id) }}>
                                 <ImageBackground source={{uri: item.image, cache: 'force-cache'}} style={{

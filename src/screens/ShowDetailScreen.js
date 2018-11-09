@@ -116,6 +116,17 @@ class ShowDetailScreen extends React.Component {
 
       }
 
+    _getPlayProgress = (episode) => {
+
+        const playProgressInSeconds = this.props.state.episodePlaybackPositions[episode.id];
+
+        if (playProgressInSeconds) {
+            return playProgressInSeconds / episode.duration
+        } else {
+            return 0
+        }
+    }
+
     _renderEpisodeList = (title, image, imageHighRes, description, color, episodes) => {
         if (this.state.loadingEpisodes) {
             return <LoadingIndicator />
@@ -127,6 +138,7 @@ class ShowDetailScreen extends React.Component {
                         onDetailPress={() => { this._handleEpisodeDetailPress(episode) } } 
                         onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, episode) }}
                         finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
+                        playProgress={this._getPlayProgress(episode)}
                     />  
                 );
             })
