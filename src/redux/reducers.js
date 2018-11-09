@@ -461,9 +461,10 @@ function reducer(state = initialState, action) {
                 playing: true,
                 active: true,
                 activeQueueItem : 0,
-                playQueue: [
-                    action.episode
-                ].concat(state.playQueue)
+                playQueue: [ action.episode ]
+                // playQueue: [
+                //     action.episode
+                // ].concat(state.playQueue)
             }
         case 'Toggle playback':
             if (state.playing) {
