@@ -72,6 +72,7 @@ class SubscribedScreen extends React.Component {
                   style={{
 
                   }}
+                  name={item.title}
                   art={item.imageHighRes} 
                   color={item.color} 
                   // key={index} 
