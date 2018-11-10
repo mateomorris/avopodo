@@ -300,11 +300,25 @@ class PlayBar extends React.Component {
     }
 
 
+    _getHeight = () => {
+        if (this.state.draggingBar) {
+            return this.state.draggingBar
+        } else if (this.state.triggered) {
+            return 0
+        } else if (!this.props.state.active) {
+            return Dimensions.get('window').height
+        } else {
+            return Dimensions.get('window').height - (60);
+        }
+    }
+
 
     handleViewRef = ref => this.view = ref;
     bounce = () => this.view.transitionTo({ height: 200 })
     
     render() {
+
+        console.log(this.props.state)
 
         // this.state.height.setOffset(50)
 
@@ -315,7 +329,7 @@ class PlayBar extends React.Component {
             <Animated.View style={{ 
                 position: 'absolute', 
                 bottom: 0, 
-                top: this.state.draggingBar || this.state.triggered ? 0 : Dimensions.get('window').height - (60),
+                top: this._getHeight(),
                 width: '100%',
                 justifyContent: 'flex-end',
                 overflow: 'hidden',
