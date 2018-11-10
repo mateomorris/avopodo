@@ -10,7 +10,8 @@ import IconPanel from '../components/IconPanel'
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions';
 
-import playlistIcons from '../assets/playlist-icons'
+// import playlistIcons from '../assets/playlist-icons'
+import playlistIcons from '../assets/newPlaylistIcons'
 
 import SvgUri from 'react-native-svg-uri';
 
@@ -328,7 +329,9 @@ class PlaylistCreationScreen extends Component {
                                 fontSize: 18,
                                 fontWeight: '700',
                                 fontSize: 20,
-                                textDecorationLine: 'underline'
+                                textDecorationLine: 'underline',
+                                overflow: 'visible',
+                                flex: 1
                             }} 
                             onChangeText={(text) => this.setState({playlistName : text})}
                             value={ this.state.playlistName }
@@ -351,7 +354,7 @@ class PlaylistCreationScreen extends Component {
                                         })
                                     }}
                                     >
-                                    <SvgUri width="30" height="30" source={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                                    <SvgUri width="30" height="30" svgXmlData={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
                                 </TouchableOpacity>
                             }
                     </View>
@@ -370,7 +373,8 @@ class PlaylistCreationScreen extends Component {
                                         selectedPlaylistIcon : icon,
                                         iconPanelExpanded : this.state.iconPanelExpanded ? false : true
                                     })
-                                }}/>
+                                }}
+                            />
                         }
                     </View>
                     {/* <Text style={{

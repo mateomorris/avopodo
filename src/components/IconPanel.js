@@ -40,7 +40,7 @@ export default class IconPanel extends React.Component {
                                 }}>
                                     {
                                         Platform.OS == 'ios' &&
-                                        <SvgUri width="100%" height="100%" source={icons[icon]} fill={'white'} fillAll={true}/>
+                                        <SvgUri width="100%" height="100%" svgXmlData={icons[icon]} fill={'white'} fillAll={true}/>
                                     }
                                 </TouchableOpacity>
                             </View>
