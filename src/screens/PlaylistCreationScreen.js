@@ -405,8 +405,11 @@ class PlaylistCreationScreen extends Component {
                         padding: 20
                     }}>
                         <Button onClick={() => {
-                            this._createPlaylist()
-                            console.log(this.state)
+                            if (this.state.shows.length > 0) {
+                                this._createPlaylist() 
+                            } else {
+                                Alert.alert('Add at least one show to the playlist')
+                            }
                             }}>
                             <Text>
                                 Create Playlist

@@ -24,9 +24,9 @@ export default class IconPanel extends React.Component {
                 justifyContent: 'flex-start'
             }}>
                 {
-                    Object.keys(icons).map((icon) => {
+                    Object.keys(icons).map((icon, index) => {
                         return (
-                            <View opacity={this.state.selectedIcon == icon ? 0.5 : 1}>
+                            <View opacity={this.state.selectedIcon == icon ? 0.5 : 1} key={index}>
                                 <TouchableOpacity style={{
                                     margin: 10,
                                     width: iconsWidth,
