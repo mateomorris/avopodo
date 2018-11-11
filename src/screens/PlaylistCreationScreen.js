@@ -181,15 +181,32 @@ class PlaylistCreationScreen extends Component {
                         extraData={this.state}
                         initialNumToRender={4}
                         renderItem={({item, separators}) => (
-                            <TouchableOpacity style={{ borderRadius: 5 }}  onPress={() => { this._addShowToNewPlaylist(item.id) }}>
-                                <ImageBackground source={{uri: item.image, cache: 'force-cache'}} style={{
-                                    height: 100, 
-                                    width: 100,
-                                    margin: 10,
-                                    marginRight: 0,
-                                    borderRadius: 5,
-                                    overflow: 'hidden',
-                                    backgroundColor: item.color
+                            <TouchableOpacity style={{ 
+                                borderRadius: 5,
+                                height: 100, 
+                                width: 100,
+                                margin: 10,
+                                marginRight: 0,
+                                borderRadius: 5,
+                                overflow: 'hidden',
+                                backgroundColor: item.color,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}  onPress={() => { this._addShowToNewPlaylist(item.id) }}>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 16,
+                                    fontWeight: '800',
+                                    padding: 10,
+                                    textAlign: 'center',
+                                }}
+                                ellipsizeMode='tail' 
+                                numberOfLines={3}>
+                                { item.title }</Text>
+                                <ImageBackground source={{uri: item.imageHighRes, cache: 'force-cache'}} style={{
+                                    height: '100%', 
+                                    width: '100%',
+                                    position: 'absolute',
                                 }}>
                                     { 
                                         this.state.shows.includes(item.id) &&
@@ -271,12 +288,12 @@ class PlaylistCreationScreen extends Component {
                         <Button style={{
                             flex: 1,
                             marginRight: 10,
-                            fontSize: 10,
                             backgroundColor: this.state.playFirst ==  'oldest' ? '#222' : 'white'
                         }} onClick={() => {
                             this.setState({ playFirst: 'oldest' })
                         }}>
                             <Text style={{
+                                fontSize: 15,
                                 color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
                             }}>Oldest</Text>
                         </Button>
@@ -294,13 +311,13 @@ class PlaylistCreationScreen extends Component {
                         </Button> */}
                         <Button style={{
                             flex: 1,
-                            fontSize: 10,
                             marginRight: 10,
                             backgroundColor: this.state.playFirst ==  'newest' ? '#222' : 'white'
                         }} onClick={() => {
                             this.setState({ playFirst: 'newest' })
                         }}>
                             <Text style={{
+                                fontSize: 15,
                                 color: this.state.playFirst ==  'newest' ? 'white' : '#222'
                             }}>Newest</Text>
                         </Button>
