@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, TextInput, ScrollView, TouchableOpacity, Picker, Alert, FlatList } from 'react-native';
+import { View, Text, Image, ImageBackground, TextInput, ScrollView, Platform, TouchableOpacity, Picker, Alert, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
+import playlistIcons from '../assets/newPlaylistIcons'
 
-import playlistIcons from '../assets/playlist-icons'
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions'
 
@@ -74,7 +74,7 @@ class QueueScreen extends Component {
                 paddingRight: 25, 
             }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', justifyContent: 'flex-start', paddingTop: 25 }}>
-                    {/* { Platform.OS == 'ios' && playlist && <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/> } */}
+                    { playlist && <SvgUri width="30" height="30" svgXmlData={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/> }
                     <Text style={{
                         fontSize: 30, 
                         fontWeight: '700',

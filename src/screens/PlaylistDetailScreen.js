@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import SvgUri from 'react-native-svg-uri';
 import { Navigation } from 'react-native-navigation';
 
-import playlistIcons from '../assets/playlist-icons'
+import playlistIcons from '../assets/newPlaylistIcons'
 
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions'
@@ -304,7 +304,7 @@ class PlaylistDetailScreen extends Component {
                     }}>
                         {
                             Platform.OS == 'ios' &&
-                            <SvgUri width="30" height="30" source={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
+                            <SvgUri width="30" height="30" svgXmlData={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
                         }
                         <Text style={{
                             fontSize: 30, 

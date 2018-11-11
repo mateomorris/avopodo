@@ -8,7 +8,7 @@ import SvgUri from 'react-native-svg-uri';
 import ShowThumbnail from '../components/ShowThumbnail';
 import PlaylistThumbnail from '../components/PlaylistThumbnail';
 import EpisodeSnippet from '../components/EpisodeSnippet';
-import playlistIcons from '../assets/playlist-icons'
+import playlistIcons from '../assets/newPlaylistIcons'
 
 import * as actions from '../redux/actions'
 
@@ -71,7 +71,7 @@ class NowPlayingHeader extends React.Component {
             }}>
                 {
                   this.props.playlist.name &&
-                  <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" source={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
+                  <SvgUri style={{ width: 15, height: 15, marginRight: 5, marginTop: 3 }}  width="15" height="15" svgXmlData={playlistIcons[this.props.playlist.icon]} fill={'#EEE'} fillAll={true}/>
                 }
                 <Text style={{
                     color: 'white',

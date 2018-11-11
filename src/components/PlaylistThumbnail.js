@@ -3,8 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TouchableHighli
 import LinearGradient from 'react-native-linear-gradient';
 import SvgUri from 'react-native-svg-uri';
 
-import playlistIcons from '../assets/playlist-icons'
-
 const styles = StyleSheet.create({
     containerOuter: { 
         borderRadius: 4, 
@@ -190,7 +188,7 @@ export default class PlaylistThumbnail extends React.Component {
                                 }}>
                                 {
                                     // Platform.OS == 'ios' &&
-                                    <SvgUri width="30" height="30" source={icon} fill={'white'} fillAll={true}/>
+                                    <SvgUri width="30" height="30" svgXmlData={icon} fill={'white'} fillAll={true}/>
                                 }
                                 </View>
                                 <View>
