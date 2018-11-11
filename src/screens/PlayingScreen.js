@@ -327,7 +327,7 @@ class PlayingScreen extends React.Component {
           <PlayProgressBar 
             color={nowPlaying.showColor}
             onProgressUpdate={(position) => {
-              updateEpisodePlaybackPosition(nowPlaying.id, position);
+              // updateEpisodePlaybackPosition(nowPlaying.id, position);
             }} 
             onFinishTrack={() => { 
               // Dispatch action to mark the track as played

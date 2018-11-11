@@ -324,6 +324,7 @@ class PlaylistDetailScreen extends Component {
                         }}
                     ></View> */}
                     <FlatList
+                    keyExtractor={(item, index) => item.id}
                     data={playlist.episodeQueue.episodeList}
                     renderItem={this._renderPlaylistItem}
                     style={{
@@ -540,7 +541,7 @@ class PlaylistDetailScreen extends Component {
                             <Button 
                             onClick={() => {
                                     Alert.alert(
-                                        'Are you sure you want to delete this playlist?',
+                                        'Are you sure you want to delete this station?',
                                         '(no take-backs)',
                                         [
                                             {text: 'No', onPress: () => {}},
@@ -578,7 +579,7 @@ class PlaylistDetailScreen extends Component {
                             flex: 1
                         }}>
                             <Text>
-                                { this.state.showPlaylistDetails ? 'Save' : 'Edit' } Playlist
+                                { this.state.showPlaylistDetails ? 'Save' : 'Edit' } Station
                             </Text>
                         </Button>
                     </View>

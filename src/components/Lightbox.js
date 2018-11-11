@@ -98,7 +98,6 @@ export default class LightBox extends Component {
                             borderRadius: 5
                         }, this.props.style]}
                         onLayout={(e) => {
-                            console.log(e.nativeEvent.layout.height)
                             this.setState({
                                 viewHeight : e.nativeEvent.layout.height
                             })

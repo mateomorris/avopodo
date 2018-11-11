@@ -103,9 +103,9 @@ export default class PlaylistThumbnail extends React.Component {
 
     _durationLabel = (duration) => {
         if (duration > 40) {
-            return `a millennium`;
+            return `40+ hours`;
         } else if (duration > 24) {
-            return `over a day`;
+            return `24+ hours`;
         } else if (duration > 10) {
             return `10+ hours`
         } else {

@@ -360,10 +360,54 @@ function reducer(state = initialState, action) {
             // Removing the skipped item from the queue for now
             // TODO: Always keep the most recently skipped item in the queue so it can be returned to
 
-
             TrackPlayer.skip(track.id).then(() => {
                 TrackPlayer.play()
             })
+
+            if (state.activePlaylist) {
+                console.log('A playlist is active')
+                console.log(state, action.index)
+
+                const trackPositionInQueue = state.playlists.find((playlist) => {
+                    return playlist.id == state.activePlaylist.id
+                }).episodeQueue.episodeList.findIndex((track) => {
+                    return track.id == trackToPlay.id
+                })
+
+                const newPlaylistEpisodeList = state.playlists.find((playlist) => {
+                    return playlist.id == state.activePlaylist.id
+                }).episodeQueue.episodeList.slice(trackPositionInQueue)
+
+                // NEXT: Get index of the next item, update the playlist appropriately
+
+                console.log(action.index, newPlaylistEpisodeList)
+
+                return {
+                    ...state,
+                    playing: true,
+                    active: true,
+                    nowPlaying: state.playQueue[action.index],
+                    activeQueueItem: action.index,
+                    // playQueue : newPlaylistEpisodeList,
+                    playlists: state.playlists.map((playlist) => {
+                        if (state.activePlaylist.id == playlist.id) {
+                            return {
+                                ...playlist,
+                                episodeQueue : {
+                                    episodeList : newPlaylistEpisodeList,
+                                    episodeListDuration : playlist.episodeQueue.episodeListDuration
+                                }
+                            }
+                        } else {
+                            return playlist
+                        }
+                    })
+                }
+                
+            } else {
+                console.log('No playlist is active')
+                return state
+            }
 
             // TrackPlayer.add([track]).then(() => {
             //     TrackPlayer.remove(state.playQueue[0].id).then(() => {

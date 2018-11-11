@@ -26,7 +26,7 @@ class PlaylistsScreen extends React.Component {
   _playAudio = (playlist) => {
     
     this.props.actions.addPlaylistToQueue(playlist)
-    this.props.actions.toggleBufferingStatus(false)
+    // this.props.actions.toggleBufferingStatus(false)
 
   }
 
@@ -78,14 +78,6 @@ class PlaylistsScreen extends React.Component {
     );
   }
 
-  _getMostRecentPlaylistItemIndex = (episodeList, nowPlaying) => {
-    if (nowPlaying && nowPlaying.hasOwnProperty('id') && episodeList[0].id == nowPlaying.id) {
-      return 1
-    } else {
-      return 0
-    }
-  }
-
   _renderPlaylists = (playlists, nowPlaying) => {
     return (
       <View>
@@ -96,7 +88,7 @@ class PlaylistsScreen extends React.Component {
               title={item.name} 
               duration={item.episodeQueue.episodeListDuration} 
               icon={playlistIcons[item.icon]} 
-              episodes={item.episodeQueue.episodeList.length > 0 ? item.episodeQueue.episodeList.slice(this._getMostRecentPlaylistItemIndex(item.episodeQueue.episodeList, nowPlaying)) : null} 
+              episodes={item.episodeQueue.episodeList.length > 0 ? item.episodeQueue.episodeList : null} 
               onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
               onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />
@@ -172,9 +164,10 @@ class PlaylistsScreen extends React.Component {
             <View style={{
               backgroundColor: 'black',
               marginTop: 10,
-              marginRight: 10,
-              marginLeft: 10,
-              borderRadius: 5
+              marginRight: 5,
+              marginLeft: 5,
+              borderRadius: 5,
+              backgroundColor: '#D8D8D8',
             }}>
             <TouchableOpacity style={{
                 backgroundColor: '#D8D8D8',
@@ -188,7 +181,8 @@ class PlaylistsScreen extends React.Component {
             }}>
               <View style={{
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
+                backgroundColor: '#D8D8D8',
               }}>
                 <Image source={require('../assets/plus.png')} style={{
                   marginRight: 10,
@@ -200,7 +194,7 @@ class PlaylistsScreen extends React.Component {
                   fontSize: 17,
                   color: '#666666'
                 }}>
-                  Add a New Playlist
+                  Add a New Station
                 </Text>
               </View>
             </TouchableOpacity>
@@ -218,6 +212,7 @@ function mapStateToProps(state, ownProps) {
     subscribedShows: state.subscribedShows,
     playlists: state.playlists,
     nowPlaying: state.nowPlaying,
+    state
 	};
 }
 

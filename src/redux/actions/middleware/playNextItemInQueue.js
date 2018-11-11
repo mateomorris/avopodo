@@ -5,12 +5,12 @@ export function playNextItemInQueue(index) {
         let state = getState();
 
         if (index) {
+            console.log('Playing specific queue item', index)
             dispatch(playQueueItem(index))
         } else {
-
-            let { id } = state.nowPlaying
+            console.log('Playing next item in queue')
             let nextQueueItem = state.playQueue.findIndex((item) => {
-                return item.id == id
+                return item.id == state.nowPlaying.id
             })
             
             dispatch(playQueueItem(nextQueueItem))

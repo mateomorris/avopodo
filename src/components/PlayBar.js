@@ -318,8 +318,6 @@ class PlayBar extends React.Component {
     
     render() {
 
-        console.log(this.props.state)
-
         // this.state.height.setOffset(50)
 
         let { nowPlaying, playing, active, bufferingStatus } = this.props.state
