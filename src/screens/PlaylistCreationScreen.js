@@ -152,7 +152,7 @@ class PlaylistCreationScreen extends Component {
                         color: 'white',
                         paddingTop: 25,
                         paddingLeft: 25, 
-                    }}>Create a Playlist</Text>
+                    }}>Create a Station</Text>
                     <View
                         style={{
                             backgroundColor: 'white',
@@ -408,11 +408,11 @@ class PlaylistCreationScreen extends Component {
                             if (this.state.shows.length > 0) {
                                 this._createPlaylist() 
                             } else {
-                                Alert.alert('Add at least one show to the playlist')
+                                Alert.alert('Add at least one show to the station')
                             }
                             }}>
                             <Text>
-                                Create Playlist
+                                Create Station
                             </Text>
                         </Button>
                     </View>

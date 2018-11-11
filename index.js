@@ -144,14 +144,14 @@ import TopBar from './src/components/TopBar';
                       }],
                       options: {
                         bottomTab: {
-                          text: 'Playlists',
-                          icon: require('./src/assets/tab-icons/playlists.png'),
-                          selectedIcon: require('./src/assets/tab-icons/playlists-active.png'),
+                          text: 'Stations',
+                          icon: require('./src/assets/tab-icons/stations.png'),
+                          selectedIcon: require('./src/assets/tab-icons/stations-active.png'),
                           testID: 'SECOND_TAB_BAR_BUTTON'
                         },
                         topBar: {
                           title: {
-                            text: 'Playlists',
+                            text: 'Stations',
                           },
                         }
                       }
