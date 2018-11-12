@@ -59,15 +59,21 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
         };
     })();
 
+    componentDidUpdate () {
+        if (this.state.position > 0) {
+            this.props.onProgressUpdate(Math.floor(this.state.position));
+        }
+    }
+
     render() {
 
         const { position, duration } = this.state;
 
         let trackProgress = this.getTrackProgress(position, duration)
 
-        if (position) {
-            this.props.onProgressUpdate(Math.floor(position));
-        } 
+        // if (position) {
+        //     this.props.onProgressUpdate(Math.floor(position));
+        // } 
 
         if (trackProgress >= 0.999) {
             this.playNextEpisode(this.props.playingNextEpisode); // "do something" happens
