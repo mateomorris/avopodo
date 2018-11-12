@@ -15,7 +15,10 @@ export function getEpisodeListForShow(showId, ageLimit = 0, nextEpisodeDate = ne
             }).color
 
             // Cut the list off at the point where an episode pub_date_ms is smaller than episodeRange        
-            let episodeList = show.episodes.map((episode) => {
+            let episodeList = show.episodes.filter((episode) => {
+                return episode.audio ? episode : null // ensure audio exists
+            }).map((episode) => {
+                console.log(episode)
                 return {
                     id: episode.id,
                     title: episode.title,
