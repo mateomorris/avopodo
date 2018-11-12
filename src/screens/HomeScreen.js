@@ -281,16 +281,16 @@ class HomeScreen extends React.Component {
     )
   }
 
-    _onRefresh = () => {
-        this.setState({refreshing: true});
-        this.props.actions.getNewestFromSubscribed().then((fetchSuccessful) => {
-          if (fetchSuccessful) {
-            setTimeout(() => {
-                this.setState({refreshing: false}
-            )}, 1000)
-          } 
-        })
-    }
+  _onRefresh = () => {
+      this.setState({refreshing: true});
+      this.props.actions.getNewestFromSubscribed().then((fetchSuccessful) => {
+        if (fetchSuccessful) {
+          setTimeout(() => {
+              this.setState({refreshing: false}
+          )}, 1000)
+        } 
+      })
+  }
 
   render() {
 
