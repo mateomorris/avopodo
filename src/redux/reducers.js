@@ -211,14 +211,19 @@ function reducer(state = initialState, action) {
         case SET_PLAYLIST_QUEUE: 
 
             let { existingPlaylistId, queue } = action 
-            let newestPlaylist = state.playlists.find(playlist => playlist.id == existingPlaylistId)
+            let existingPlaylist = state.playlists.find(playlist => playlist.id == existingPlaylistId)
 
-            newestPlaylist.duration = Number.parseFloat(queue.queueDuration / (60 * 60)).toFixed(1) // convert to hours  
-            newestPlaylist.episodeQueue = queue
+            let updatedPlaylist = {
+                ...existingPlaylist,
+                episodeQueue : {
+                    episodeList : queue.episodeList,
+                    episodeListDuration : Number.parseFloat(queue.episodeListDuration / (60 * 60)).toFixed(1) // convert to hours 
+                }
+            }
 
             return {
                 ...state,
-                playlists: [newestPlaylist].concat(state.playlists.filter(playlist => playlist.id != existingPlaylistId))
+                playlists: [updatedPlaylist].concat(state.playlists.filter(playlist => playlist.id != existingPlaylistId))
             };
 
         case CREATE_PLAYLIST: 
@@ -364,9 +369,9 @@ function reducer(state = initialState, action) {
                 TrackPlayer.play()
             })
 
-            if (state.activePlaylist) {
-                console.log('A playlist is active')
-                console.log(state, action.index)
+            if (state.activePlaylist) { // Playing a playlist
+
+                // Remove the skipped episodes from the playlist play queue 
 
                 const trackPositionInQueue = state.playlists.find((playlist) => {
                     return playlist.id == state.activePlaylist.id
@@ -377,10 +382,17 @@ function reducer(state = initialState, action) {
                 const newPlaylistEpisodeList = state.playlists.find((playlist) => {
                     return playlist.id == state.activePlaylist.id
                 }).episodeQueue.episodeList.slice(trackPositionInQueue)
+                
 
-                // NEXT: Get index of the next item, update the playlist appropriately
+                // Calculate the new length of the playlist 
 
-                console.log(action.index, newPlaylistEpisodeList)
+                const newEpisodeListDuration = newPlaylistEpisodeList.map((episode) => {
+                    return episode.duration
+                }).reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue
+                })
+
+
 
                 return {
                     ...state,
@@ -395,7 +407,7 @@ function reducer(state = initialState, action) {
                                 ...playlist,
                                 episodeQueue : {
                                     episodeList : newPlaylistEpisodeList,
-                                    episodeListDuration : playlist.episodeQueue.episodeListDuration
+                                    episodeListDuration : Number.parseFloat(newEpisodeListDuration / (60 * 60)).toFixed(1)
                                 }
                             }
                         } else {

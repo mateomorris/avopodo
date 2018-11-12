@@ -139,7 +139,8 @@ export default class PlaylistThumbnail extends React.Component {
             <View style={{ overflow: 'hidden' }}>
                 <View style={[styles.containerOuter, { shadowOpacity: this.state.pressStatus ? 0.4 : 0.75 }]}>
                     <View style={[styles.containerInner, {
-                        borderRadius: 50
+                        borderRadius: 50,
+                        backgroundColor: 'black'
                     }]}>
                         <TouchableHighlight
                         activeOpacity={0.5}
@@ -174,7 +175,7 @@ export default class PlaylistThumbnail extends React.Component {
                         </TouchableOpacity> */}
                         <LinearGradient style={[styles.infoContainer, {
                             borderRadius: 5,
-                            overflow: 'hidden'
+                            overflow: 'hidden',
                         }]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
                             <TouchableOpacity 
                                 onPress={() => this._handleLeftPress()}

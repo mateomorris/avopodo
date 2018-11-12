@@ -18,7 +18,6 @@ export function getEpisodeListForShow(showId, ageLimit = 0, nextEpisodeDate = ne
             let episodeList = show.episodes.filter((episode) => {
                 return episode.audio ? episode : null // ensure audio exists
             }).map((episode) => {
-                console.log(episode)
                 return {
                     id: episode.id,
                     title: episode.title,
