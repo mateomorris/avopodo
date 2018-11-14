@@ -22,6 +22,21 @@ import { LoadingIndicator } from '../components/SimpleComponents';
 
 class HomeScreen extends React.Component {
 
+  static options(passProps) {
+    return {
+      topBar: {
+        noBorder: true,
+        title: {
+          text: 'Home'
+        },
+        background: {
+          color: '#fafafa',
+          blur: true
+        }
+      }
+    };
+  }
+
   state = {
     refreshing: false,
     buffered: false,

@@ -13,6 +13,21 @@ import * as actions from '../redux/actions'
 
 class SubscribedScreen extends React.Component {
 
+  static options(passProps) {
+    return {
+      topBar: {
+        noBorder: true,
+        title: {
+          text: 'Subscribed'
+        },
+        background: {
+          color: '#fafafa',
+          blur: true
+        }
+      }
+    };
+  }
+
   _handleFavoritePress = () => {
 
   }

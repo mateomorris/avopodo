@@ -23,6 +23,21 @@ import SearchBar from 'react-native-search-bar';
 
 class DiscoverScreen extends React.Component {
 
+  static options(passProps) {
+    return {
+      topBar: {
+        noBorder: true,
+        title: {
+          text: 'Discover'
+        },
+        background: {
+          color: '#fafafa',
+          blur: true
+        }
+      }
+    };
+  }
+
   state = {
     noResultsFound : false,
     genres: [],
