@@ -7,8 +7,6 @@ export function getNewestFromSubscribed() {
 
         let { subscribedShows } = getState()
 
-        console.log(getState())
-
         let checkIfNewEpisodePromises = subscribedShows.map((show) => {
             return dispatch(checkIfNewEpisode(show))
         })
