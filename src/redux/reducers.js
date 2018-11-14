@@ -95,7 +95,8 @@ function reducer(state = initialState, action) {
                             name : action.playlist.name,
                             playFirst : action.playlist.playFirst,
                             released : action.playlist.released,
-                            shows : action.playlist.shows
+                            shows : action.playlist.shows,
+                            icon : action.playlist.icon
                         }
                     } else {
                         return playlist

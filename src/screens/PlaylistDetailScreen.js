@@ -7,6 +7,7 @@ import SvgUri from 'react-native-svg-uri';
 import { Navigation } from 'react-native-navigation';
 
 import playlistIcons from '../assets/newPlaylistIcons'
+import IconPanel from '../components/IconPanel'
 
 import Lightbox from '../components/Lightbox';
 import * as actions from '../redux/actions'
@@ -21,7 +22,9 @@ class PlaylistDetailScreen extends Component {
         shows: this.props.playlist.shows,
         releaseRange: this.props.playlist.released,
         episodeLength: this.props.playlist.length,
-        playFirst: this.props.playlist.playFirst
+        playFirst: this.props.playlist.playFirst,
+        selectedPlaylistIcon: this.props.playlist.icon,
+        episodeQueue : this.props.playlist.episodeQueue
     }
 
 
@@ -55,7 +58,6 @@ class PlaylistDetailScreen extends Component {
 
         let shows = playlist.shows.map((showId) => {
             return this.props.state.subscribedShows.find((subscribedShow) => {
-                console.log(subscribedShow.id, showId)
                 return subscribedShow.id == showId ? subscribedShow : false
             })
         })
@@ -173,8 +175,8 @@ class PlaylistDetailScreen extends Component {
         if (
             playlist.released != this.state.releaseRange || 
             playlist.playFirst != this.state.playFirst ||
-            playlist.duration != this.state.duration ||
-            playlist.shows != this.state.shows
+            playlist.duration != this.state.episodeLength ||
+            playlist.shows != this.state.shows 
         ) {
             return this.props.actions.createPlaylistQueue({
                 playlistName : this.state.playlistName,
@@ -183,7 +185,6 @@ class PlaylistDetailScreen extends Component {
                 playFirst : this.state.playFirst,
                 shows : this.state.shows
             }).then((response) => {
-                console.log(response)
                 if (response) {
                     // this.props.actions.setPlaylistQueue(this.state.playlistId, response.episodeList, response.episodeListDuration)
                     return {
@@ -208,32 +209,55 @@ class PlaylistDetailScreen extends Component {
     }
 
     _editPlaylist = () => {
-        this._generateAndSetNewQueue(this.props.playlist).then((response) => {
-            console.log(response)
-            if (response.episodeQueue.length > 0) {
-                this.props.actions.editPlaylist({
-                    id : this.state.playlistId,
-                    duration : this.state.episodeLength,
-                    episodeQueue : {
-                        episodeList : response.episodeQueue,
-                        episodeListDuration : response.episodeQueueDuration
-                    },
-                    name : this.state.playlistName,
-                    playFirst : this.state.playFirst,
-                    released : this.state.releaseRange,
-                    shows : this.state.checkedShows
-                })
-                Navigation.dismissOverlay(this.props.componentId)
-            } else {
-                Alert.alert(
-                    'No episodes fit criteria, try casting a wider net',
-                    '',
-                    [
-                        {text: 'Okay', onPress: () => console.log('Cancel Pressed')},
-                    ],
-                )
-            }
-        })
+        let { released, playFirst, duration, shows } = this.props.playlist
+
+        if (
+            released != this.state.releaseRange || 
+            playFirst != this.state.playFirst ||
+            duration != this.state.episodeLength ||
+            shows != this.state.shows 
+        ) {
+            this._generateAndSetNewQueue(this.props.playlist).then((response) => {
+                if (response.episodeQueue.length > 0) {
+                    this.props.actions.editPlaylist({
+                        id : this.state.playlistId,
+                        duration : this.state.episodeLength,
+                        episodeQueue : {
+                            episodeList : response.episodeQueue,
+                            episodeListDuration : response.episodeQueueDuration
+                        },
+                        name : this.state.playlistName,
+                        playFirst : this.state.playFirst,
+                        released : this.state.releaseRange,
+                        shows : this.state.checkedShows,
+                        icon : this.state.selectedPlaylistIcon
+                    })
+                    Navigation.dismissOverlay(this.props.componentId)
+                } else {
+                    Alert.alert(
+                        'No episodes fit criteria, try casting a wider net',
+                        '',
+                        [
+                            {text: 'Okay', onPress: () => console.log('Cancel Pressed')},
+                        ],
+                    )
+                }
+            })
+        } else if (this.props.playlist.icon != this.state.selectedPlaylistIcon) {
+            this.props.actions.editPlaylist({
+                id : this.state.playlistId,
+                duration : this.state.episodeLength,
+                episodeQueue : this.state.episodeQueue,
+                name : this.state.playlistName,
+                playFirst : this.state.playFirst,
+                released : this.state.releaseRange,
+                shows : this.state.checkedShows,
+                icon : this.state.selectedPlaylistIcon
+            })
+            Navigation.dismissOverlay(this.props.componentId)
+        } else {
+            Navigation.dismissOverlay(this.props.componentId)
+        }
     }
 
     _renderPlaylistItem = ({item}) => {
@@ -302,10 +326,7 @@ class PlaylistDetailScreen extends Component {
                         alignItems: 'center',
                         justifyContent: 'flex-start'
                     }}>
-                        {
-                            Platform.OS == 'ios' &&
-                            <SvgUri width="30" height="30" svgXmlData={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
-                        }
+                        <SvgUri width="30" height="30" svgXmlData={playlistIcons[playlist.icon]} fill={'white'} fillAll={true} style={{ marginRight: 10 }}/>
                         <Text style={{
                             fontSize: 30, 
                             fontWeight: '700',
@@ -354,7 +375,7 @@ class PlaylistDetailScreen extends Component {
                                 extraData={this.props.state}
                                 renderItem={({item, separators}) => (
                                     <TouchableOpacity onPress={() => { this._addShowToNewPlaylist(item.id) }}>
-                                        <ImageBackground source={{uri: item.image}} style={{
+                                        <ImageBackground source={{uri: item.imageHighRes}} style={{
                                             height: 100, 
                                             width: 100,
                                             margin: 10,
@@ -515,7 +536,10 @@ class PlaylistDetailScreen extends Component {
                                 paddingLeft: 30,
                                 backgroundColor: 'rgba(0,0,0,.3)', 
                                 paddingTop: 20,
-                                paddingBottom: 20
+                                paddingBottom: 20,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                paddingRight: 30
                             }}>
                                 <TextInput
                                     style={{
@@ -530,6 +554,43 @@ class PlaylistDetailScreen extends Component {
                                     onChangeText={(text) => this.setState({playlistName : text})}
                                     value={ this.state.playlistName }
                                 />
+                                <TouchableOpacity 
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        backgroundColor: 'rgba(0,0,0,.3)',
+                                        borderRadius: 5,
+                                        padding: 5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                    onPress={() => {
+                                        this.setState({
+                                            iconPanelExpanded : this.state.iconPanelExpanded ? false : true
+                                        })
+                                    }}
+                                    >
+                                    <SvgUri width="30" height="30" svgXmlData={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{
+                                padding: 20,
+                                paddingTop: 0,
+                                backgroundColor: 'rgba(0,0,0,.3)'
+                            }}>
+                                {
+                                    this.state.iconPanelExpanded &&
+                                    <IconPanel 
+                                        currentIcon={this.state.selectedPlaylistIcon}
+                                        icons={playlistIcons} 
+                                        iconSelected={(icon) => {
+                                            this.setState({
+                                                selectedPlaylistIcon : icon,
+                                                iconPanelExpanded : this.state.iconPanelExpanded ? false : true
+                                            })
+                                        }}
+                                    />
+                                }
                             </View>
                         </View>
                     }

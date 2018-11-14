@@ -353,27 +353,24 @@ class PlaylistCreationScreen extends Component {
                             onChangeText={(text) => this.setState({playlistName : text})}
                             value={ this.state.playlistName }
                         />
-                            {
-                                Platform.OS == 'ios' &&
-                                <TouchableOpacity 
-                                    style={{
-                                        width: 40,
-                                        height: 40,
-                                        backgroundColor: 'rgba(0,0,0,.3)',
-                                        borderRadius: 5,
-                                        padding: 5,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}
-                                    onPress={() => {
-                                        this.setState({
-                                            iconPanelExpanded : this.state.iconPanelExpanded ? false : true
-                                        })
-                                    }}
-                                    >
-                                    <SvgUri width="30" height="30" svgXmlData={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
-                                </TouchableOpacity>
-                            }
+                        <TouchableOpacity 
+                            style={{
+                                width: 40,
+                                height: 40,
+                                backgroundColor: 'rgba(0,0,0,.3)',
+                                borderRadius: 5,
+                                padding: 5,
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                            onPress={() => {
+                                this.setState({
+                                    iconPanelExpanded : this.state.iconPanelExpanded ? false : true
+                                })
+                            }}
+                            >
+                            <SvgUri width="30" height="30" svgXmlData={playlistIcons[this.state.selectedPlaylistIcon]} fill={'white'} fillAll={true}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={{
                         padding: 20,
