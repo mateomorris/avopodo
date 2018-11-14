@@ -27,11 +27,16 @@ export function getNewestFromSubscribed() {
 
             // Fetch necessary episode list (return stored list for the rest), then sort them by date
             return Promise.all(compiledEpisodeList).then((episodeLists) => {
-                let newestEpisodesList = episodeLists.map((episodeList) => {
+                let newestEpisodesList = episodeLists.filter(({episodeList}) => {
+                    if (episodeList) {
+                        return episodeList
+                    } 
+                }).map(({episodeList}) => {
                     return episodeList[0] // Grab the most recent episode
                 }).sort((a, b) => {
                     return b.publishDate - a.publishDate // Sort the whole list from newest to oldest
                 })
+
                 dispatch(setNewestFromSubscribed(newestEpisodesList))
 
                 return true // return success
