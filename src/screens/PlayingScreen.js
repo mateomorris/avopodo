@@ -353,9 +353,7 @@ class PlayingScreen extends React.Component {
         </View>
         <View style={{
           position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0
+          bottom: 0
         }}>
           <NowPlayingFooter 
             componentId={this.props.componentId}

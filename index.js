@@ -152,8 +152,6 @@ import TopBar from './src/components/TopBar';
                         topBar: {
                           title: {
                             text: 'Stations',
-                            color: 'red',
-                            fontSize: 20
                           },
                         }
                       }

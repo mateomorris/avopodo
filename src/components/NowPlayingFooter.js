@@ -24,7 +24,7 @@ class NowPlayingFooter extends React.Component {
         <TouchableOpacity style={{
             padding: 10,
             paddingBottom: 0,
-            backgroundColor: `${this.props.color}7F`,
+            // backgroundColor: `${this.props.color}7F`
         }} onPress={() => {
               this.props.onPress()
         }}>
