@@ -46,28 +46,27 @@ class NowPlayingHeader extends React.Component {
     return (
         <View style={{
             padding: 20,
-            paddingTop: 30,
-            paddingBottom: 0
+            paddingTop: 20,
+            paddingBottom: 10
         }}>
           <View style={{
               flexDirection: 'row',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              position: 'relative'
           }}>
-            <TouchableOpacity style={{
+            {/* <TouchableOpacity style={{
                 padding: 10,
                 paddingRight: 30,
             }} onPress={() => {
               this.props.onPress()
             }}>
-                {/* <Image source={require('../assets/down-arrow.png')}/> */}
-                {
                   <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
-                }
-            </TouchableOpacity>
-            { this.props.playlist && <View style={{
+            </TouchableOpacity> */}
+            <View style={{
               flexDirection: 'row',
               justifyContent: 'center',
-              alignItems: 'flex-start'
+              alignItems: 'center',
+              flex: 1
             }}>
                 {
                   this.props.playlist.name &&
@@ -77,10 +76,12 @@ class NowPlayingHeader extends React.Component {
                     color: 'white',
                     fontWeight: '600',
                     fontSize: 17
-                }}>{this.props.playlist.name}</Text>
-            </View> }
+                }}>{this.props.playlist.name || 'Now Playing'}</Text>
+            </View> 
             <View style={{
-                paddingTop: 0,
+                position: 'absolute',
+                right: 0,
+                top: 0
             }}>
             {
               this.props.state.playQueue.length > 1 &&
