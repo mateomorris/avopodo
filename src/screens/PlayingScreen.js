@@ -18,6 +18,7 @@ import PlayBackButtons from '../components/PlaybackButtons';
 
 import * as actions from '../redux/actions'
 import NowPlayingHeader from '../components/NowPlayingHeader';
+import NowPlayingFooter from '../components/NowPlayingFooter';
 
 class PlayingScreen extends React.Component {
 
@@ -279,7 +280,6 @@ class PlayingScreen extends React.Component {
         style={{
           flex: 1,
           paddingTop: 10,
-          paddingBottom: 25
         }}>
           {
             this.props.expanded &&
@@ -302,7 +302,10 @@ class PlayingScreen extends React.Component {
         </GestureRecognizer>
 
         <View style={{
-          flex: 1
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
         }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
             <TouchableOpacity 
@@ -339,16 +342,26 @@ class PlayingScreen extends React.Component {
             }}
             playingNextEpisode={this.state.playingNextEpisode}
           />
-          <View>
-            <PlayBackButtons 
-              color={nowPlaying.showColor}
-              playbackStatus={playing}
-              onPlayPause={() => { togglePlayback() }} 
-              onJumpBack={() => { this._handlePlaybackStep(-15) }} 
-              onJumpForward={() => { this._handlePlaybackStep(15) }}
-              buffering={bufferingStatus}
-            />
-          </View>
+          <PlayBackButtons 
+            color={nowPlaying.showColor}
+            playbackStatus={playing}
+            onPlayPause={() => { togglePlayback() }} 
+            onJumpBack={() => { this._handlePlaybackStep(-15) }} 
+            onJumpForward={() => { this._handlePlaybackStep(15) }}
+            buffering={bufferingStatus}
+          />
+        </View>
+        <View style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0
+        }}>
+          <NowPlayingFooter 
+            componentId={this.props.componentId}
+            onPress={() => { this.props.onClose() }}
+            color={nowPlaying.showColor}
+          />
         </View>
       </View>
       || null
