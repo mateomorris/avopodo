@@ -153,7 +153,7 @@ class PlaylistsScreen extends React.Component {
       });
       
     } else {
-      Alert.alert(`You must subscribe to at least three shows before creating a playlist`, `otherwise like, what's the point`);
+      Alert.alert(`You must subscribe to at least three shows before creating a station`, `otherwise, what's the point?`);
     }
   }
 
