@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import playlistIcons from '../assets/newPlaylistIcons'
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import playlistIcons from 'assets/newPlaylistIcons'
 
 import * as actions from '../redux/actions'
 
@@ -60,7 +60,7 @@ class NowPlayingHeader extends React.Component {
             }} onPress={() => {
               this.props.onPress()
             }}>
-                  <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                  <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
             </TouchableOpacity> */}
             <View style={{
               flexDirection: 'row',
@@ -92,9 +92,9 @@ class NowPlayingHeader extends React.Component {
                 paddingRight: 5,
                 paddingTop: 0
               }}>
-                {/* <Image source={require('../assets/playlist.png')} style={{ height: 20, width: 20 }}/> */}
+                {/* <Image source={require('assets/playlist.png')} style={{ height: 20, width: 20 }}/> */}
                 {
-                  <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('../assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
+                  <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
                 }
               </TouchableOpacity>
             }

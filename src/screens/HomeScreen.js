@@ -6,10 +6,10 @@ import SvgUri from 'react-native-svg-uri';
 
 import { Navigation } from "react-native-navigation";
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import PlayBar from '../components/PlayBar';
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import PlayBar from 'components/PlayBar';
 
 import trackDetails from '../utilities/tracks';
 
@@ -18,7 +18,7 @@ import TrackPlayer from 'react-native-track-player';
 import * as specialActions from '../redux/actions'
 
 import { WebView } from 'react-native';
-import { LoadingIndicator } from '../components/SimpleComponents';
+import { LoadingIndicator } from 'components/SimpleComponents';
 
 class HomeScreen extends React.Component {
 
@@ -325,7 +325,7 @@ class HomeScreen extends React.Component {
           paddingTop: 0
         }}>
           <Image 
-            source={require('../assets/avopodo.png')}
+            source={require('assets/avopodo.png')}
             style={{
               width: 150,
               height: 150

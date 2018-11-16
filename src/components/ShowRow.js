@@ -22,7 +22,7 @@ export default class ShowRow extends React.Component {
                 this.props.subscribeToShow()
               }}>
                 <Image 
-                  source={ this.props.subscribed ? require('../assets/bookmark-black.png') : require('../assets/bookmark.png') } 
+                  source={ this.props.subscribed ? require('assets/bookmark-black.png') : require('assets/bookmark.png') } 
                   style={{ width: 25, height: 25 }}
                 />
               </TouchableOpacity>

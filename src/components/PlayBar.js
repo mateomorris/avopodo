@@ -364,7 +364,7 @@ class PlayBar extends React.Component {
                         >
                             <View style={{ backgroundColor: 'transparent', paddingTop: 10 }}>
                             {
-                                <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                                <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
                             }
                             </View>
                         </View>
@@ -381,9 +381,9 @@ class PlayBar extends React.Component {
                         <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
                             <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={30} animationDuration={2000} />
                             {
-                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 13 }} width="25" height="25" source={(playing ? require('../assets/interface-icons/pause.svg') : require('../assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 13 }} width="25" height="25" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
                             }
-                            {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('../assets/pause.png') : require('../assets/play.png'))} resizeMode={'center'}/> */}
+                            {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('assets/pause.png') : require('assets/play.png'))} resizeMode={'center'}/> */}
                         </TouchableOpacity>
                     </Animated.View>
                     <Animated.View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: Dimensions.get('window').height, width: '100%' }}>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
-import Lightbox from '../components/Lightbox';
+import LightBox from 'components/LightBox';
 
 import * as specialActions from '../redux/actions';
 
@@ -58,7 +58,7 @@ class ShowPreviewScreen extends Component {
 
         return(
             
-            <Lightbox componentId={this.props.componentId}>
+            <LightBox componentId={this.props.componentId}>
                 <Image source={{ uri: imageHighRes }} 
                     style={{
                         width: screenWidth - 90, // Parent padding + width
@@ -123,7 +123,7 @@ class ShowPreviewScreen extends Component {
                                     height: 20,
                                     width: 20,
                                     marginLeft: 3
-                                }} source={require('../assets/bookmark.png')} />
+                                }} source={require('assets/bookmark.png')} />
                             </TouchableOpacity>
                             : 
                             <TouchableOpacity style={{
@@ -148,11 +148,11 @@ class ShowPreviewScreen extends Component {
                                     height: 20,
                                     width: 20,
                                     marginLeft: 3
-                                }} source={require('../assets/bookmark.png')} />
+                                }} source={require('assets/bookmark.png')} />
                             </TouchableOpacity>
                         }
                 </View>
-            </Lightbox>
+            </LightBox>
         )
     }
 }

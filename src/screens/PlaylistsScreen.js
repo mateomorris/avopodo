@@ -5,13 +5,13 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import SvgUri from 'react-native-svg-uri';
 
-import playlistIcons from '../assets/newPlaylistIcons'
-import generalIcons from '../assets/generalIcons'
+import playlistIcons from 'assets/newPlaylistIcons'
+import generalIcons from 'assets/generalIcons'
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import PlayBar from '../components/PlayBar';
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import PlayBar from 'components/PlayBar';
 
 import * as actions from '../redux/actions'
 
@@ -201,7 +201,7 @@ class PlaylistsScreen extends React.Component {
                 alignItems: 'center',
                 backgroundColor: '#D8D8D8',
               }}>
-                {/* <Image source={require('../assets/plus.png')} style={{
+                {/* <Image source={require('assets/plus.png')} style={{
                   marginRight: 10,
                   height: 25,
                   width: 25

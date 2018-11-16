@@ -87,7 +87,7 @@ export default class EpisodeRow extends React.Component {
                         this.props.onPlayPress()
                     }}>
                         {/* <Image
-                            source={require('../assets/play-gray.png')}
+                            source={require('assets/play-gray.png')}
                             resizeMode={'center'}
                             style={{
                                 position: 'absolute',
@@ -105,7 +105,7 @@ export default class EpisodeRow extends React.Component {
                             }} 
                             width="20" 
                             height="20" 
-                            source={require('../assets/interface-icons/play.svg')} 
+                            source={require('assets/interface-icons/play.svg')} 
                             fill={info.showColor} 
                             fillAll={true}
                         />

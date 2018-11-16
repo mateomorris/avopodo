@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
-import PlaylistPicker from '../components/PlaylistPicker'
-import IconPanel from '../components/IconPanel'
-import Lightbox from '../components/Lightbox';
+import PlaylistPicker from 'components/PlaylistPicker'
+import IconPanel from 'components/IconPanel'
+import LightBox from 'components/LightBox';
 import * as actions from '../redux/actions';
 
-// import playlistIcons from '../assets/playlist-icons'
-import playlistIcons from '../assets/newPlaylistIcons'
+// import playlistIcons from 'assets/playlist-icons'
+import playlistIcons from 'assets/newPlaylistIcons'
 
 import SvgUri from 'react-native-svg-uri';
 
@@ -64,7 +64,7 @@ class PlaylistCreationScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Image source={require('../assets/checkmark.png')} style={{
+                <Image source={require('assets/checkmark.png')} style={{
                     height: 50, 
                     width: 50
                 }}/>
@@ -143,7 +143,7 @@ class PlaylistCreationScreen extends Component {
 
         return(
             <KeyboardAvoidingView behavior="padding">
-                <Lightbox componentId={this.props.componentId} style={{
+                <LightBox componentId={this.props.componentId} style={{
                     paddingBottom: 25
                 }}>
                     <Text style={{
@@ -413,7 +413,7 @@ class PlaylistCreationScreen extends Component {
                             </Text>
                         </Button>
                     </View>
-                </Lightbox>
+                </LightBox>
             </KeyboardAvoidingView>
         )
     }

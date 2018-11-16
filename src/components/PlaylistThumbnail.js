@@ -82,9 +82,9 @@ export default class PlaylistThumbnail extends React.Component {
 
     _setButtonComponentIcon = (label) => {
         if (label == 'Remove') {
-            return require('../assets/x-black.png');
+            return require('assets/x-black.png');
         } else if (label == 'Revise') {
-            return require('../assets/edit.png');
+            return require('assets/edit.png');
         }
     }
 
@@ -200,7 +200,7 @@ export default class PlaylistThumbnail extends React.Component {
                         </LinearGradient>
                         <View pointerEvents="none" style={{ flex: 1 }}>
                             {/* <Image 
-                                source={require('../assets/play.png')} 
+                                source={require('assets/play.png')} 
                                 style={{
                                     height: 20,
                                     width: 20,
@@ -219,7 +219,7 @@ export default class PlaylistThumbnail extends React.Component {
                                         right: 5,
                                         bottom: 5,
                                         zIndex: 99999
-                                }} width="20" height="20" source={require('../assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                                }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
                             }
                         </View>
                     </View>

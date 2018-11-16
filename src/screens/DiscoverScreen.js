@@ -8,14 +8,14 @@ import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import GridView from 'react-native-super-grid';
 import SvgUri from 'react-native-svg-uri';
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import PlayBar from '../components/PlayBar';
-import ShowRow from '../components/ShowRow';
-import { LoadingIndicator } from '../components/SimpleComponents'
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import PlayBar from 'components/PlayBar';
+import ShowRow from 'components/ShowRow';
+import { LoadingIndicator } from 'components/SimpleComponents'
 
-import icons from '../assets/genre-icons';
+import icons from 'assets/genre-icons';
 
 import * as specialActions from '../redux/actions';
 

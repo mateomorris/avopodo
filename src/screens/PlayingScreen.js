@@ -12,13 +12,13 @@ import MarqueeText from 'react-native-marquee';
 import { Navigation } from "react-native-navigation";
 import firebase from 'react-native-firebase';
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlayProgressBar from '../components/PlayProgressBar';
-import PlayBackButtons from '../components/PlaybackButtons';
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlayProgressBar from 'components/PlayProgressBar';
+import PlayBackButtons from 'components/PlaybackButtons';
 
 import * as actions from '../redux/actions'
-import NowPlayingHeader from '../components/NowPlayingHeader';
-import NowPlayingFooter from '../components/NowPlayingFooter';
+import NowPlayingHeader from 'components/NowPlayingHeader';
+import NowPlayingFooter from 'components/NowPlayingFooter';
 
 class PlayingScreen extends React.Component {
 

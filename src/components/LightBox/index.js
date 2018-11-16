@@ -84,7 +84,7 @@ export default class LightBox extends Component {
                     }} onPress={() => {
                         this._closeLightbox()
                     }}>
-                        <Image style={{ width: 25, height: 25 }} source={require('../assets/x.png')} />
+                        <Image style={{ width: 25, height: 25 }} source={require('assets/x.png')} />
                     </TouchableOpacity>
                     <ScrollView style={[{
                         width: window.width - 40,

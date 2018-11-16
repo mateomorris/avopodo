@@ -6,11 +6,11 @@ import { Navigation } from 'react-native-navigation';
 import Search from 'react-native-search-box';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import PlayBar from '../components/PlayBar';
-import { LoadingIndicator } from '../components/SimpleComponents'
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import PlayBar from 'components/PlayBar';
+import { LoadingIndicator } from 'components/SimpleComponents'
 
 import * as specialActions from '../redux/actions';
 
@@ -120,7 +120,7 @@ class GenreListScreen extends React.Component {
                 this._subscribeToShow(item)
               }}>
                 <Image 
-                  source={ (this._checkIfSubscribed(item.id) ? require('../assets/bookmark-black.png'): require('../assets/bookmark.png')) } 
+                  source={ (this._checkIfSubscribed(item.id) ? require('assets/bookmark-black.png'): require('assets/bookmark.png')) } 
                   style={{ width: 25, height: 25 }}
                 />
               </TouchableOpacity>

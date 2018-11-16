@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 
-import Lightbox from '../components/Lightbox';
+import LightBox from 'components/LightBox';
 
 import * as specialActions from '../redux/actions';
 
@@ -23,7 +23,7 @@ class ShowPreviewScreen extends Component {
 
         return(
             
-            <Lightbox componentId={this.props.componentId} height={'auto'}>
+            <LightBox componentId={this.props.componentId} height={'auto'}>
                 <View style={{
                     flexDirection : 'row',
                 }}>
@@ -51,7 +51,7 @@ class ShowPreviewScreen extends Component {
                             flexDirection: 'row',
                             marginTop: 3
                         }}>
-                            <Image source={require('../assets/calendar.png')} style={{
+                            <Image source={require('assets/calendar.png')} style={{
                                 width: 15,
                                 height: 15,
                                 marginTop: 1,
@@ -113,11 +113,11 @@ class ShowPreviewScreen extends Component {
                                 width: 15,
                                 marginTop: 2,
                                 marginLeft: 5,
-                            }} source={require('../assets/play.png')} />
+                            }} source={require('assets/play.png')} />
                         </TouchableOpacity>
                     }
                 </View>
-            </Lightbox>
+            </LightBox>
         )
     }
 }

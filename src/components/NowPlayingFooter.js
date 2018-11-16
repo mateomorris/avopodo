@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
 
-import ShowThumbnail from '../components/ShowThumbnail';
-import PlaylistThumbnail from '../components/PlaylistThumbnail';
-import EpisodeSnippet from '../components/EpisodeSnippet';
-import playlistIcons from '../assets/newPlaylistIcons'
+import ShowThumbnail from 'components/ShowThumbnail';
+import PlaylistThumbnail from 'components/PlaylistThumbnail';
+import EpisodeSnippet from 'components/EpisodeSnippet';
+import playlistIcons from 'assets/newPlaylistIcons'
 
 import * as actions from '../redux/actions'
 
@@ -37,7 +37,7 @@ class NowPlayingFooter extends React.Component {
                 paddingBottom: 30
             }}>
                 {
-                  <SvgUri style={{transform: [{rotate:'180deg'}]}} width="20" height="20" source={require('../assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
+                  <SvgUri style={{transform: [{rotate:'180deg'}]}} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
                 }
             </View>
           </View>

@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
     "antd-mobile-rn": "^2.2.0",
+    "babel-preset-react-native": "2.1.0",
     "expo": "^26.0.0",
     "howler": "^2.0.9",
     "native-base": "^2.8.1",

@@ -12,7 +12,7 @@ import QueueScreen from './QueueScreen';
 import EpisodeDetailScreen from './EpisodeDetailScreen'
 import PlaylistDetailScreen from './PlaylistDetailScreen'
 
-import NowPlayingHeader from '../components/NowPlayingHeader';
+import NowPlayingHeader from 'components/NowPlayingHeader';
 
 export function registerScreens(store, Provider) {
   Navigation.registerComponent('example.HomeScreen', () => HomeScreen, store, Provider);

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
-import ShowDetail from '../components/ShowDetail';
-import EpisodeRow from '../components/EpisodeRow';
-import PlayBar from '../components/PlayBar';
-import { LoadingIndicator, SmallLoadingIndicator } from '../components/SimpleComponents'
+import ShowDetail from 'components/ShowDetail';
+import EpisodeRow from 'components/EpisodeRow';
+import PlayBar from 'components/PlayBar';
+import { LoadingIndicator, SmallLoadingIndicator } from 'components/SimpleComponents'
 
 import * as actions from '../redux/actions'
 

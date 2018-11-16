@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
-import playlistIcons from '../assets/newPlaylistIcons'
+import playlistIcons from 'assets/newPlaylistIcons'
 
-import Lightbox from '../components/Lightbox';
+import LightBox from 'components/LightBox';
 import * as actions from '../redux/actions'
 
 class QueueScreen extends Component {
@@ -68,7 +68,7 @@ class QueueScreen extends Component {
         let { playlist, queue } = this.props
 
         return(
-            <Lightbox componentId={this.props.componentId} style={{
+            <LightBox componentId={this.props.componentId} style={{
                 paddingBottom: 25,
                 paddingLeft: 25, 
                 paddingRight: 25, 
@@ -96,7 +96,7 @@ class QueueScreen extends Component {
                 renderItem={this._renderPlaylistItem}
                 initialNumToRender={11}
                 />
-            </Lightbox>
+            </LightBox>
         )
     }
 }

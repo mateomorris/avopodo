@@ -6,10 +6,10 @@ import { bindActionCreators } from 'redux';
 import SvgUri from 'react-native-svg-uri';
 import { Navigation } from 'react-native-navigation';
 
-import playlistIcons from '../assets/newPlaylistIcons'
-import IconPanel from '../components/IconPanel'
+import playlistIcons from 'assets/newPlaylistIcons'
+import IconPanel from 'components/IconPanel'
 
-import Lightbox from '../components/Lightbox';
+import LightBox from 'components/LightBox';
 import * as actions from '../redux/actions'
 
 class PlaylistDetailScreen extends Component {
@@ -114,7 +114,7 @@ class PlaylistDetailScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Image source={require('../assets/checkmark.png')} style={{
+                <Image source={require('assets/checkmark.png')} style={{
                     height: 50, 
                     width: 50
                 }}/>
@@ -315,7 +315,7 @@ class PlaylistDetailScreen extends Component {
 
         return(
             <KeyboardAvoidingView behavior="padding">
-                <Lightbox componentId={this.props.componentId} style={{
+                <LightBox componentId={this.props.componentId} style={{
                     paddingBottom: 25
                 }}>
                     <View style={{
@@ -621,7 +621,7 @@ class PlaylistDetailScreen extends Component {
                                 alignItems: 'center',
                                 flexDirection: 'row'
                             }}>
-                                    <Image source={require('../assets/x.png')} style={{
+                                    <Image source={require('assets/x.png')} style={{
                                     flex: 1,
                                     height: '100%',
                                     width: 50
@@ -644,7 +644,7 @@ class PlaylistDetailScreen extends Component {
                             </Text>
                         </Button>
                     </View>
-                </Lightbox>
+                </LightBox>
             </KeyboardAvoidingView>
         )
     }
