@@ -53,8 +53,9 @@ class ShowPreviewScreen extends Component {
     render() {
         const { title, publisher, description, image, imageHighRes } = this.props.item;
 
-        const screenWidth = Dimensions.get('window').width;
-        const screenHeight = Dimensions.get('window').height;
+        const screenDimensions = Dimensions.get('window');
+        const screenWidth = screenDimensions.width;
+        const screenHeight = screenDimensions.height;
 
         return(
             
