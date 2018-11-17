@@ -36,7 +36,7 @@ class ShowPreviewScreen extends Component {
                 return show.id == this.props.item.id
             })
             this.setState({
-                artwork : show.imageHighRes,
+                artwork : show.image,
                 artworkColor: show.color
             })
         } else {
@@ -59,7 +59,7 @@ class ShowPreviewScreen extends Component {
         return(
             
             <LightBox componentId={this.props.componentId}>
-                <Image source={{ uri: imageHighRes }} 
+                <Image source={{ uri: image }} 
                     style={{
                         width: screenWidth - 90, // Parent padding + width
                         height: screenWidth - 90, 
