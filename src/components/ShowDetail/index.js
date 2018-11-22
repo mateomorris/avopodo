@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class ShowDetail extends React.Component {
+export class ShowDetail extends React.Component {
 
     _handlePress = () => {
         this.props.onPress();
