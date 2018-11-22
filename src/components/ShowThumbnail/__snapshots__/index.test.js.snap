@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ShowThumbnail correctly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderRadius": 5,
+        "height": 246.66666666666666,
+        "justifyContent": "center",
+        "shadowColor": "#000000",
+        "shadowOffset": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "shadowOpacity": 0.75,
+        "shadowRadius": 2,
+        "width": 246.66666666666666,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 5,
+          "height": "90%",
+          "justifyContent": "center",
+          "position": "relative",
+          "width": "90%",
+        },
+        "",
+        undefined,
+        Object {
+          "backgroundColor": "blue",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 18,
+          "fontWeight": "700",
+          "padding": 10,
+          "textAlign": "center",
+        }
+      }
+    />
+    <Image
+      source={
+        Object {
+          "cache": "force-cache",
+          "uri": "https://d3sv2eduhewoas.cloudfront.net/channel/image/16c3788027f64c7e81a86e054da2c993.jpg",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 5,
+          "height": "100%",
+          "position": "absolute",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;

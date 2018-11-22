@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class ShowThumbnail extends React.Component {
+export class ShowThumbnail extends React.Component {
 
     _handlePress = () => {
         this.props.onPress();
@@ -41,6 +41,8 @@ export default class ShowThumbnail extends React.Component {
     render() {
 
         const { art, featured, color } = this.props; 
+
+        console.log(art)
 
         return (
             <TouchableHighlight 
