@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class EpisodeSnippet extends React.Component {
+export class EpisodeSnippet extends React.Component {
 
     state = {
         titleHeight : null,
@@ -67,6 +67,7 @@ export default class EpisodeSnippet extends React.Component {
                 <TouchableOpacity style={styles.container} onPress={() => { this.props.onThumbnailPress() }}>
                     <Image source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: showColor}]} />
                     {
+                        !this.props.testing &&
                         <SvgUri style={{
                                 height: 20,
                                 width: 20,

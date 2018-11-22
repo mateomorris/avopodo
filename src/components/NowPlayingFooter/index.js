@@ -7,7 +7,7 @@ import SvgUri from 'react-native-svg-uri';
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
-import EpisodeSnippet from 'components/EpisodeSnippet';
+import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import playlistIcons from 'assets/newPlaylistIcons'
 
 import * as actions from 'actions'

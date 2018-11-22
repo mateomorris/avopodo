@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders EpisodeSnippet correctly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "flexDirection": "row",
+      "height": 130,
+      "marginBottom": 10,
+      "marginTop": 5,
+      "opacity": 1,
+      "overflow": "hidden",
+    }
+  }
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "margin": 5,
+        "opacity": 1,
+        "shadowColor": "#000000",
+        "shadowOffset": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "shadowOpacity": 0.75,
+        "shadowRadius": 2,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "cache": "force-cache",
+          "uri": "https://d3sv2eduhewoas.cloudfront.net/channel/image/e87fddda33fa436a82c53204306b2727.jpg",
+        }
+      }
+      style={
+        Array [
+          Object {
+            "borderRadius": 5,
+            "height": 120,
+            "width": 120,
+          },
+          Object {
+            "backgroundColor": "#C5C4BF",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "backgroundColor": "black",
+          "borderBottomLeftRadius": 5,
+          "borderTopRightRadius": 5,
+          "marginLeft": 5,
+          "paddingLeft": 5,
+          "paddingRight": 5,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontWeight": "900",
+          }
+        }
+      >
+        18m
+      </Text>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "opacity": 1,
+        "paddingLeft": 10,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "paddingRight": 10,
+        }
+      }
+    >
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        onLayout={[Function]}
+        style={
+          Object {
+            "color": "black",
+            "flex": 1,
+            "fontSize": 16,
+            "fontWeight": "700",
+          }
+        }
+      >
+        A Forgotten Prayer, Answered | With Mira Sorvino
+      </Text>
+    </View>
+    <View>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={5}
+        style={
+          Object {
+            "color": "#666666",
+            "fontSize": 14,
+            "fontWeight": "500",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#666666",
+              "fontSize": 14,
+              "fontWeight": "700",
+            }
+          }
+        >
+          November 21 | 
+        </Text>
+        When Charlotte Bacon went to a temple in Bhutan, the place unlocked feelings in her that she hadn't truly realized were there. Her essay is read by Mira Sorvino ("StartUp").
+      </Text>
+    </View>
+  </View>
+</View>
+`;

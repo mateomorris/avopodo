@@ -10,7 +10,7 @@ import generalIcons from 'assets/generalIcons'
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
-import EpisodeSnippet from 'components/EpisodeSnippet';
+import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 
 import * as actions from 'actions'

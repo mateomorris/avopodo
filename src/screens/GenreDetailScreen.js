@@ -8,7 +8,7 @@ import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
-import EpisodeSnippet from 'components/EpisodeSnippet';
+import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 import { LoadingIndicator } from 'components/SimpleComponents'
 import ShowRow from 'components/ShowRow';

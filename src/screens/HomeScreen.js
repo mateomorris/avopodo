@@ -8,7 +8,7 @@ import { Navigation } from "react-native-navigation";
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
-import EpisodeSnippet from 'components/EpisodeSnippet';
+import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 
 import trackDetails from '../utilities/tracks';
@@ -255,6 +255,7 @@ export class HomeScreen extends React.Component {
             keyExtractor={(item, index) => item.id}
             initialNumToRender={5}
             renderItem={({item}) => {
+              console.log(item)
               return (
                 <EpisodeSnippet 
                   data={item}
