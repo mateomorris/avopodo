@@ -188,7 +188,6 @@ class PlayingScreen extends React.Component {
   }
 
   _markEpisodeAsPlayed = (episodeId, carousel) => {
-      console.log(carousel)
       if (carousel) {
         console.log('snapping carousel to next')
         carousel.snapToNext() // handles playing the next track 

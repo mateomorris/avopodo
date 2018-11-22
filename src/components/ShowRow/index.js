@@ -5,8 +5,8 @@ const styles = StyleSheet.create({
 
 });
 
-export default class ShowRow extends React.Component {
-
+export class ShowRow extends React.Component {
+    
     render() {
 
         return (
