@@ -12,7 +12,7 @@ import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import EpisodeSnippet from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
-import ShowRow from 'components/ShowRow';
+import { ShowRow } from 'components/ShowRow';
 import { LoadingIndicator } from 'components/SimpleComponents'
 
 import icons from 'assets/genre-icons';
@@ -237,7 +237,7 @@ class DiscoverScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <Search
-          ref="search_box"
+          ref={(ref) => { this.myTextInput = ref }}
           // placeholder='Search by name, description, or author'
           onChangeText={(text) => {
             return new Promise((resolve, reject) => {
@@ -257,15 +257,13 @@ class DiscoverScreen extends React.Component {
               resolve();
             });
           }}
+          onDelete={() => {
+            return new Promise((resolve, reject) => {
+              this.myTextInput.focus()
+              resolve();
+            });
+          }}
         />
-        {/* <SearchBar
-          ref={ ref => (this.searchBar = ref) }
-          placeholder='Search by name, description, or author'
-          text={this.state.search}
-          onChangeText={ text => this.setState({ search: text}) }
-          onSearchButtonPress={() => this._searchForTerm(this.state.search) }
-          onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
-        /> */}
         {
           this.state.noResultsFound &&
           <View
