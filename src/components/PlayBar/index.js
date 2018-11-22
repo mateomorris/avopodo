@@ -7,16 +7,16 @@ import SvgUri from 'react-native-svg-uri';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
-import PlayProgressIndicator from './PlayProgressIndicator';
+import PlayProgressIndicator from 'components/PlayProgressIndicator';
 import { MaterialIndicator } from 'react-native-indicators';
 import MarqueeText from 'react-native-marquee';
 
-import PlayingScreen from '../screens/PlayingScreen';
+import PlayingScreen from 'screens/PlayingScreen';
 
-import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player';
 
-import trackDetails from '../utilities/tracks';
-import * as actions from '../redux/actions'
+import trackDetails from 'utilities/tracks';
+import * as actions from 'actions'
 
 
 const styles = StyleSheet.create({

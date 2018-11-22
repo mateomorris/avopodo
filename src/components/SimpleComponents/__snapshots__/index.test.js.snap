@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders LoadingIndicator correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 1134,
+    }
+  }
+>
+  <View
+    animating={true}
+    animationDuration={1200}
+    animationEasing={[Function]}
+    color="gray"
+    interaction={true}
+    renderComponent={[Function]}
+    size={16}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`renders SmallLoadingIndicator correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 100,
+    }
+  }
+>
+  <View
+    animating={true}
+    animationDuration={1200}
+    animationEasing={[Function]}
+    color="gray"
+    interaction={true}
+    renderComponent={[Function]}
+    size={16}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "backgroundColor": "gray",
+          "borderRadius": 8,
+          "height": 16,
+          "margin": 8,
+          "transform": Array [
+            Object {
+              "scale": 1,
+            },
+          ],
+          "width": 16,
+        }
+      }
+    />
+  </View>
+</View>
+`;

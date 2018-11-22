@@ -122,7 +122,7 @@ export default class PlaylistThumbnail extends React.Component {
 
     render() {
 
-        const { icon, title, duration, episodes } = this.props; 
+        const { icon, title, duration, episodes, testing } = this.props; 
 
         const playlistButtons = [
             {
@@ -188,7 +188,7 @@ export default class PlaylistThumbnail extends React.Component {
                                     paddingRight: 10
                                 }}>
                                 {
-                                    // Platform.OS == 'ios' &&
+                                    !this.props.testing &&
                                     <SvgUri width="30" height="30" svgXmlData={icon} fill={'white'} fillAll={true}/>
                                 }
                                 </View>
@@ -211,7 +211,7 @@ export default class PlaylistThumbnail extends React.Component {
                                 }}
                             /> */}
                             {
-                                // Platform.OS == 'ios' &&
+                                !this.props.testing &&
                                 <SvgUri style={{
                                         height: 20,
                                         width: 20,

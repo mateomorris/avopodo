@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders EpisodeRow correctly 1`] = `
+<View
+  opacity={0.5}
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "borderBottomColor": "#CCC",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 75,
+        "justifyContent": "space-between",
+        "marginLeft": 10,
+        "opacity": 1,
+        "padding": 20,
+        "paddingRight": 10,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "paddingRight": 35,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#666666",
+            "fontSize": 14,
+            "fontWeight": "500",
+          }
+        }
+      >
+        November 12
+      </Text>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "color": "#222",
+            "fontSize": 16,
+            "fontWeight": "600",
+          }
+        }
+      >
+        With Bugs & Bacteria Living In Your Home, You're 'Never Home Alone'
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingLeft": 10,
+          "paddingRight": 30,
+          "position": "absolute",
+          "right": 15,
+          "top": 0,
+          "zIndex": 9,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "overflow": "hidden",
+            },
+            Object {
+              "opacity": 0.5,
+              "position": "absolute",
+            },
+          ]
+        }
+      >
+        <ARTSurfaceView
+          style={
+            Array [
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "0deg",
+                  },
+                ],
+              },
+              Object {
+                "height": 24,
+                "width": 24,
+              },
+            ]
+          }
+        >
+          <ARTShape
+            d={
+              Array [
+                0,
+                12,
+                1.5,
+                2,
+                12,
+                1.5,
+              ]
+            }
+            fill={null}
+            opacity={1}
+            stroke={
+              Array [
+                0.011764705882352941,
+                0.01568627450980392,
+                0.01568627450980392,
+                1,
+              ]
+            }
+            strokeCap={0}
+            strokeDash={null}
+            strokeJoin={1}
+            strokeWidth={3}
+            transform={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+          />
+        </ARTSurfaceView>
+      </View>
+    </View>
+  </View>
+</View>
+`;

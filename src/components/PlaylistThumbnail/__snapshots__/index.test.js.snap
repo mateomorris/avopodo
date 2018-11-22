@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders PlaylistThumbnail correctly 1`] = `
+<View
+  style={
+    Object {
+      "overflow": "hidden",
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "borderRadius": 4,
+          "margin": 5,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 0,
+            "width": 0,
+          },
+          "shadowOpacity": 0.75,
+          "shadowRadius": 3,
+        },
+        Object {
+          "shadowOpacity": 0.75,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 10,
+            "flexDirection": "row",
+          },
+          Object {
+            "backgroundColor": "black",
+            "borderRadius": 50,
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "borderRadius": 5,
+            "overflow": "hidden",
+            "position": "absolute",
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row-reverse",
+                "justifyContent": "flex-start",
+                "width": "100%",
+              },
+            ]
+          }
+        />
+      </View>
+      <BVLinearGradient
+        colors={
+          Array [
+            4278190080,
+            3858759680,
+            0,
+          ]
+        }
+        endPoint={
+          Object {
+            "x": 1,
+            "y": 0.5,
+          }
+        }
+        locations={
+          Array [
+            0,
+            0.8,
+            1,
+          ]
+        }
+        startPoint={
+          Object {
+            "x": 0,
+            "y": 0.5,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "alignSelf": "flex-end",
+              "flexDirection": "row",
+              "height": 75,
+              "paddingBottom": 10,
+              "paddingLeft": 20,
+              "paddingRight": 60,
+              "paddingTop": 10,
+            },
+            Object {
+              "borderRadius": 5,
+              "overflow": "hidden",
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "paddingRight": 10,
+              }
+            }
+          />
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                  "fontWeight": "800",
+                }
+              }
+            >
+              TEST TITLE
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "white",
+                  "fontSize": 15,
+                }
+              }
+            >
+              40+ hours
+            </Text>
+          </View>
+        </View>
+      </BVLinearGradient>
+      <View
+        pointerEvents="none"
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

@@ -135,3 +135,7 @@ export default class PlaylistPicker extends React.Component {
         )
     }
 }
+
+PlaylistPicker.defaultProps = {
+
+}

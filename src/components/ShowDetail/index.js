@@ -36,11 +36,7 @@ export default class ShowDetail extends React.Component {
                     <Image source={{uri: image, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: color}]} />
                 </View>
                 <View style={{ paddingLeft: 10, width: '65%' }}>
-                    {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{fontSize: 16, color: 'black', fontWeight: '700'}}>{title}</Text>
-                    </View> */}
                     <View style={{ height: 130 }}>
-                        {/* <Text style={{fontSize: 15, color: '#fefefe', fontWeight: '900'}}>From the New York Times</Text> */}
                         <Text 
                             style={{fontSize: 15, color: '#fefefe', fontWeight: '500'}} 
                             ellipsizeMode='tail' 

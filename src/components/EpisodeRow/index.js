@@ -96,19 +96,22 @@ export default class EpisodeRow extends React.Component {
                                 padding: 10
                             }}
                         /> */}
-                        <SvgUri 
-                            style={{ 
-                                position: 'absolute',
-                                // width: 20,
-                                // height: 20,
-                                // padding: 10
-                            }} 
-                            width="20" 
-                            height="20" 
-                            source={require('assets/interface-icons/play.svg')} 
-                            fill={info.showColor} 
-                            fillAll={true}
-                        />
+                        {
+                            !this.props.testing &&
+                            <SvgUri 
+                                style={{ 
+                                    position: 'absolute',
+                                    // width: 20,
+                                    // height: 20,
+                                    // padding: 10
+                                }} 
+                                width="20" 
+                                height="20" 
+                                source={require('assets/interface-icons/play.svg')} 
+                                fill={info.showColor} 
+                                fillAll={true}
+                            />
+                        }
                         <Progress.Circle 
                             style={{
                                 position: 'absolute',

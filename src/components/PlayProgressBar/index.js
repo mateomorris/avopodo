@@ -75,11 +75,11 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
         //     this.props.onProgressUpdate(Math.floor(position));
         // } 
 
-        if (trackProgress >= 0.999) {
-            this.playNextEpisode(this.props.playingNextEpisode); // "do something" happens
-        } else if (trackProgress <= 0.01) {
-            this.startNewEpisode(this.props.playingNextEpisode)
-        }
+        // if (trackProgress >= 0.999) {
+        //     this.playNextEpisode(this.props.playingNextEpisode); // "do something" happens
+        // } else if (trackProgress <= 0.01) {
+        //     this.startNewEpisode(this.props.playingNextEpisode)
+        // }
 
         return (
             <View style={{ padding: 20, paddingTop: 10, paddingBottom: 0, justifyContent: 'center', alignItems: 'center' }}>
@@ -119,10 +119,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                         TrackPlayer.getPosition().then((position) => {
                             // new position = total duration (in seconds) * new percentage / total percentage (1)
                             let newPosition = Math.floor(duration * this.state.sliderValue) || null
-
-                            console.log(newPosition)
                             if (newPosition) {
-                                console.log(`TrackPlayer seeking to `, position * this.state.sliderValue / trackProgress)
                                 TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
                             } 
                         })

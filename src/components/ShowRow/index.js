@@ -43,3 +43,9 @@ export default class ShowRow extends React.Component {
 
     }
 }
+
+ShowRow.defaultProps = {
+  item : {
+    image: ''
+  }
+}

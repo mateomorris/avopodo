@@ -10,7 +10,7 @@ import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import EpisodeSnippet from 'components/EpisodeSnippet';
 import playlistIcons from 'assets/newPlaylistIcons'
 
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 
 class NowPlayingFooter extends React.Component {
 
