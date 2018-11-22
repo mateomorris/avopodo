@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import * as specialActions from '../redux/actions'
+import * as specialActions from 'actions'
 
 class BlankScreen extends React.Component {
 

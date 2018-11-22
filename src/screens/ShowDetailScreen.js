@@ -9,7 +9,7 @@ import EpisodeRow from 'components/EpisodeRow';
 import PlayBar from 'components/PlayBar';
 import { LoadingIndicator, SmallLoadingIndicator } from 'components/SimpleComponents'
 
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 
 const styles = StyleSheet.create({
     container: {

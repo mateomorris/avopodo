@@ -14,7 +14,7 @@ import { LoadingIndicator } from 'components/SimpleComponents'
 import ShowRow from 'components/ShowRow';
 import { SmallLoadingIndicator } from 'components/SimpleComponents'
 
-import * as specialActions from '../redux/actions';
+import * as specialActions from 'actions';
 
 import SearchBar from 'react-native-search-bar';
 

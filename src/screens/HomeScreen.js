@@ -15,12 +15,12 @@ import trackDetails from '../utilities/tracks';
 
 import TrackPlayer from 'react-native-track-player';
 
-import * as specialActions from '../redux/actions'
+import * as specialActions from 'actions'
 
 import { WebView } from 'react-native';
 import { LoadingIndicator } from 'components/SimpleComponents';
 
-class HomeScreen extends React.Component {
+export class HomeScreen extends React.Component {
 
   static options(passProps) {
     return {
@@ -353,7 +353,6 @@ class HomeScreen extends React.Component {
           { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
         </ScrollView>
       }
-        {/* <PlayBar nav={Navigation}/> */}
       </View>
     );
   }

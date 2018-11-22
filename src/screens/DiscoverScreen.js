@@ -17,7 +17,7 @@ import { LoadingIndicator } from 'components/SimpleComponents'
 
 import icons from 'assets/genre-icons';
 
-import * as specialActions from '../redux/actions';
+import * as specialActions from 'actions';
 
 import SearchBar from 'react-native-search-bar';
 

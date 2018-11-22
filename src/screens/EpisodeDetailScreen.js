@@ -6,7 +6,7 @@ import { Navigation } from "react-native-navigation";
 
 import LightBox from 'components/LightBox';
 
-import * as specialActions from '../redux/actions';
+import * as specialActions from 'actions';
 
 class ShowPreviewScreen extends Component {
 

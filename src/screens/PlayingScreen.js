@@ -16,7 +16,7 @@ import ShowThumbnail from 'components/ShowThumbnail';
 import PlayProgressBar from 'components/PlayProgressBar';
 import PlayBackButtons from 'components/PlaybackButtons';
 
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 import NowPlayingHeader from 'components/NowPlayingHeader';
 import NowPlayingFooter from 'components/NowPlayingFooter';
 
@@ -117,7 +117,14 @@ class PlayingScreen extends React.Component {
 
   _renderFavorites = (favorites) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', flex: 1}}>
+      <View 
+        style={{
+          flexDirection: 'row', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          flexWrap: 'wrap', 
+          flex: 1
+        }}>
         {favorites.map((item, index) => {
           return (
             <ShowThumbnail art={item.image} key={index} onPress={() => { 
@@ -136,39 +143,23 @@ class PlayingScreen extends React.Component {
 
   _renderItem ({item, index}) {
     return (
-      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', overflow: 'hidden', borderRadius: 5, height: Dimensions.get('window').width - 100, width: Dimensions.get('window').width - 100, backgroundColor: item.showColor}}>
-        {/* <TouchableOpacity
-          onPress={() => {
-            Alert.alert('yeah')
-          }}
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            padding: 20,
-            paddingTop: 10,
-            paddingRight: 10,
-            zIndex: 9
-          }}
-        >
-          <SvgUri 
-            style={{
-              height: 20,
-              width: 20,
-            }} 
-            width="20" 
-            height="20" 
-            svgXmlData={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="#ffffff"><path d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M16,21h-2v-7h2V21z M15,11.5 c-0.828,0-1.5-0.672-1.5-1.5s0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5S15.828,11.5,15,11.5z" fill="#ffffff"/></svg>`} 
-            fill={'#EEE'} 
-            fillAll={true}
-          />
-        </TouchableOpacity> */}
+      <Animated.View 
+        key={index}
+        style={{ 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          overflow: 'hidden', 
+          borderRadius: 5, 
+          height: Dimensions.get('window').width - 100, 
+          width: Dimensions.get('window').width - 100, 
+          backgroundColor: item.showColor
+        }}>
         <Animated.View
           style={{
               position: "absolute",
               top: 0, left: 0, bottom: 0, right: 0,
               zIndex: 9,
-              opacity: index <= 2 ? this.state.loadedImages[index] : 0
+              opacity: index <= 2 && this.state.loadedImages[index] ? this.state.loadedImages[index] : 0
           }}>
             <BlurView
               style={{ flex: 1 }}
@@ -192,15 +183,22 @@ class PlayingScreen extends React.Component {
   }
 
   _playNextItemInQueue = (index) => {
+    console.log('PlayingScreen: Playing the next item in queue')
     this.props.actions.playNextItemInQueue(index)
   }
 
   _markEpisodeAsPlayed = (episodeId, carousel) => {
-      carousel.snapToNext() // handles playing the next track 
-      this.props.actions.markEpisodeAsPlayed(episodeId)
-      this.setState({
-        playingNextEpisode : true
-      })
+      console.log(carousel)
+      if (carousel) {
+        console.log('snapping carousel to next')
+        carousel.snapToNext() // handles playing the next track 
+        this.props.actions.markEpisodeAsPlayed(episodeId)
+        this.setState({
+          playingNextEpisode : true
+        })
+      } else {
+        console.log('carousel not initiated yet')
+      }
   }
 
   _startNewTrack = () => {
@@ -287,7 +285,7 @@ class PlayingScreen extends React.Component {
             <Carousel
               ref={(c) => { this._carousel = c; }}
               layout={'stack'} 
-              layoutCardOffset={`18`} 
+              layoutCardOffset={18} 
               onBeforeSnapToItem={(index) => {
                 this._playNextItemInQueue(index)}}
                 // NEXT: Set state playingNextEpisode back to false
@@ -335,7 +333,7 @@ class PlayingScreen extends React.Component {
             onFinishTrack={() => { 
               // Dispatch action to mark the track as played
               console.log('ON FINISH TRACK')
-              // this._markEpisodeAsPlayed(nowPlaying.id, this._carousel)
+              this._markEpisodeAsPlayed(nowPlaying.id, this._carousel)
             }}
             onStartNewTrack={() => {
               this._startNewTrack()

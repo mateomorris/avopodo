@@ -6,10 +6,9 @@ import { Navigation } from 'react-native-navigation';
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
-import EpisodeSnippet from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 
 class SubscribedScreen extends React.Component {
 

@@ -8,7 +8,7 @@ import { Navigation } from 'react-native-navigation';
 import PlaylistPicker from 'components/PlaylistPicker'
 import IconPanel from 'components/IconPanel'
 import LightBox from 'components/LightBox';
-import * as actions from '../redux/actions';
+import * as actions from 'actions';
 
 // import playlistIcons from 'assets/playlist-icons'
 import playlistIcons from 'assets/newPlaylistIcons'

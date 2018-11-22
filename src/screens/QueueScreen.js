@@ -7,7 +7,7 @@ import SvgUri from 'react-native-svg-uri';
 import playlistIcons from 'assets/newPlaylistIcons'
 
 import LightBox from 'components/LightBox';
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 
 class QueueScreen extends Component {
 

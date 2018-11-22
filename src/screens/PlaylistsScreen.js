@@ -13,7 +13,7 @@ import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import EpisodeSnippet from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 
-import * as actions from '../redux/actions'
+import * as actions from 'actions'
 
 class PlaylistsScreen extends React.Component {
 
