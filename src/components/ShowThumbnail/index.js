@@ -42,8 +42,6 @@ export class ShowThumbnail extends React.Component {
 
         const { art, featured, color } = this.props; 
 
-        console.log(art)
-
         return (
             <TouchableHighlight 
                 underlayColor={color}
