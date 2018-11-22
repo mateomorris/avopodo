@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Picker, Platform } from 'react-native'
 
-export default class PlaylistPicker extends React.Component {
+export class PlaylistPicker extends React.Component {
     state = {
         value: this.props.items[0]['value']
     }

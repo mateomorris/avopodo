@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders PlaylistPicker correctly 1`] = `
+<View>
+  <Text
+    style={
+      Object {
+        "color": "white",
+        "fontSize": 20,
+        "paddingLeft": 25,
+      }
+    }
+  >
+    Released when?
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,.3)",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 10,
+        "marginTop": 10,
+        "paddingLeft": 30,
+        "paddingRight": 30,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "paddingRight": 2.5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 20,
+            "fontWeight": "700",
+          }
+        }
+      >
+        Within the past
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "borderLeftColor": "rgba(0,0,0,.5)",
+          "borderLeftWidth": 3,
+          "flex": 1,
+          "marginLeft": 2.5,
+          "paddingLeft": 2.5,
+        }
+      }
+    >
+      <RCTPicker
+        items={
+          Array [
+            Object {
+              "label": "week",
+              "textColor": undefined,
+              "value": "week",
+            },
+            Object {
+              "label": "two weeks",
+              "textColor": undefined,
+              "value": "two-weeks",
+            },
+            Object {
+              "label": "month",
+              "textColor": undefined,
+              "value": "month",
+            },
+            Object {
+              "label": "eternity",
+              "textColor": undefined,
+              "value": "eternity",
+            },
+          ]
+        }
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            Object {
+              "color": "#eee",
+              "height": 100,
+              "textAlign": "left",
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

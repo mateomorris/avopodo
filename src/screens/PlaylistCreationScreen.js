@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
-import PlaylistPicker from 'components/PlaylistPicker'
+import { PlaylistPicker } from 'components/PlaylistPicker'
 import IconPanel from 'components/IconPanel'
 import LightBox from 'components/LightBox';
 import * as actions from 'actions';
