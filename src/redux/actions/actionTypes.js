@@ -27,3 +27,6 @@ export const SETUP_APP = 'Setup app';
 export const SYNC_QUEUE = 'Sync queue';
 export const RESET_QUEUE = 'Reset player';
 export const SYNC_PLAY_STATUS = 'Sync play status';
+export const UPDATE_PLAY_QUEUE = 'Update play queue';
+export const UPDATE_NOW_PLAYING = 'Update now playing';
+export const UPDATE_PLAYLIST_EPISODE_LIST = 'Update playlist episode list';

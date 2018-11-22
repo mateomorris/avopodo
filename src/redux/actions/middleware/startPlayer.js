@@ -1,5 +1,6 @@
 import { AppRegistry, Platform } from 'react-native';
-import { setupPlayer, setCurrentTrackPosition } from '../finalware'
+import { setupPlayer, setCurrentTrackPosition, updatePlayQueue } from '../finalware'
+import { playNextItemInQueue, syncPlayQueue } from '../middleware'
 import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 
 export function startPlayer() {
@@ -11,7 +12,6 @@ export function startPlayer() {
         let nowPlayingEpisodeId = state.active ? state.nowPlaying.id : false;
 
             dispatch(setupPlayer())
-
 
             let storedTrackPosition = state.episodePlaybackPositions[nowPlayingEpisodeId];
 
@@ -30,8 +30,7 @@ export function startPlayer() {
             TrackPlayer.registerEventHandler(async (data) => {
                 console.log(data)
                 if (data.type === 'playback-track-changed') {
-                    console.log('playback-track-changed')
-                    // dispatch(playNextItemInQueue(1))
+                    dispatch(syncPlayQueue()) 
                 } 
                 else if(data.type == 'remote-seek') {
                     console.log('Remote seek')
@@ -50,7 +49,6 @@ export function startPlayer() {
                     console.log('Remote previous')
                     TrackPlayer.skipToPrevious()
                 } else if (data.type === 'playback-state') {
-                    console.log('Playback state', data, nowPlayingEpisodeId)
                     // PlayerStore.playbackState = data.state;
 
 

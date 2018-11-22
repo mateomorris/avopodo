@@ -22,7 +22,10 @@ import {
     REMOVE_PLAYLIST,
     SYNC_QUEUE,
     RESET_QUEUE,
-    SYNC_PLAY_STATUS
+    SYNC_PLAY_STATUS,
+    UPDATE_PLAY_QUEUE,
+    UPDATE_NOW_PLAYING,
+    UPDATE_PLAYLIST_EPISODE_LIST
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -47,6 +50,42 @@ const initialState = {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case UPDATE_PLAYLIST_EPISODE_LIST: 
+            
+            const newPlaylistEpisodeListDuration = action.newEpisodeList.map((episode) => {
+                return episode.duration
+            }).reduce((accumulator, currentValue) => {
+                return accumulator + currentValue
+            })
+
+
+            return {
+                ...state,
+                playlists: state.playlists.map((playlist) => {
+                    if (playlist.id == action.playlistId) {
+                        return {
+                            ...playlist,
+                            episodeQueue : {
+                                episodeList : action.newEpisodeList,
+                                episodeListDuration : newPlaylistEpisodeListDuration
+                            }
+                        }
+                    } else {
+                        return playlist
+                    }
+                })
+            }
+        case UPDATE_NOW_PLAYING: 
+            return {
+                ...state,
+                nowPlaying: action.newEpisode
+            }
+        case UPDATE_PLAY_QUEUE: 
+
+            return {
+                ...state,
+                playQueue: action.newPlayQueue
+            }
         case SYNC_PLAY_STATUS: 
             console.log('playing STATUS')
             return {
@@ -287,7 +326,6 @@ function reducer(state = initialState, action) {
 
                 const trackPositionSetter = setInterval(function() {
                     TrackPlayer.getBufferedPosition().then((buffered) => {
-                        console.log(buffered)
                         if (buffered > 0) {
                             TrackPlayer.seekTo(retrievedTrackPosition);
                             clearInterval(trackPositionSetter)
@@ -574,7 +612,6 @@ function reducer(state = initialState, action) {
                 subscribedShows: newNewSubscribedShows
             }
         default:
-            console.log('No matching action type found in reducer');
             return state
     }
 }
