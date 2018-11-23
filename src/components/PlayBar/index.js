@@ -358,32 +358,48 @@ class PlayBar extends React.Component {
                     }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
                         <View
                             style={{
-                                height: '100%'
+                                height: '100%',
+                                justifyContent: 'center'
                             }}
                             {...this.panResponder.panHandlers} 
                         >
-                            <View style={{ backgroundColor: 'transparent', paddingTop: 10 }}>
-                            {
-                                <SvgUri style={{ width: 30, height: 20, paddingLeft: 5 }} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
-                            }
-                            </View>
+                            <Image 
+                                source={{ uri: nowPlaying.showImage, backgroundColor: nowPlaying.showColor }}
+                                style={{
+                                    height: 30,
+                                    width: 30,
+                                    borderRadius: 2
+                                }}
+                            />
                         </View>
-                        {/* <TouchableOpacity onPress={() => { this._expandModal() }} style={{ paddingLeft: 10, paddingRight: 10, overflow: 'hidden', maxWidth: '80%'}}> */}
                         <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
                             {...this.panResponder.panHandlers} 
                         >
-                            <View style={{ alignItems: 'center', flex: 1 }}>
+                            <View style={{ alignItems: 'flex-start', flex: 1 }}>
                                 <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
-                                <Text style={{ color: 'white', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
+                                <Text style={{ color: '#EEE', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
                             </View>
                         </View>
                         {/* </TouchableOpacity> */}
-                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'flex-start', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
+                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
                             <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={30} animationDuration={2000} />
+                            <View style={{
+                                height: 27,
+                                width: 27,
+                                backgroundColor: `${nowPlaying.showColor}7F`,
+                                borderRadius: 100,
+                                position: 'absolute'
+                            }}></View>
+                            <View style={{
+                                height: 15,
+                                width: 15,
+                                backgroundColor: '#FFF',
+                                borderRadius: 100,
+                                position: 'absolute'
+                            }}></View>
                             {
-                                <SvgUri style={{height: 25, width: 25, position: 'absolute', top: 13 }} width="25" height="25" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={'#FFF'} fillAll={true}/>
+                                <SvgUri style={{height: 25, width: 25, position: 'absolute' }} width="25" height="25" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={nowPlaying.showColor} fillAll={true}/>
                             }
-                            {/* <Image style={{height: 25, width: 25, position: 'absolute' }} source={(playing ? require('assets/pause.png') : require('assets/play.png'))} resizeMode={'center'}/> */}
                         </TouchableOpacity>
                     </Animated.View>
                     <Animated.View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: Dimensions.get('window').height, width: '100%' }}>
