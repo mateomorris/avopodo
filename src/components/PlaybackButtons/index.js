@@ -4,7 +4,7 @@ import SvgUri from 'react-native-svg-uri';
 
 import { MaterialIndicator } from 'react-native-indicators';
 
-export default class PlaybackButton extends Component {
+export class PlaybackButtons extends Component {
 
     state = {
         playing: null,
@@ -21,12 +21,10 @@ export default class PlaybackButton extends Component {
         return(
             <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
                 <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center', width: 100, height: 100, marginTop: 20 }} onPress={() => {this.props.onJumpBack()}}>
-                    {/* <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, right: 40 }}>15</Text> */}
-                    {/* <Image style={{ height: 40, width: 40 }} source={require('assets/skip-back.png')} /> */}
-                    <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-back.svg')} fill={'#EEE'} fillAll={true}/>
-                    {/* {
-                        <SvgUri  style={{transform: [{ rotate: '90deg'}] }} width="50" height="50" source={require('assets/interface-icons/seek.svg')} fill={'#EEE'} fillAll={true}/>
-                    } */}
+                    {
+                        !this.props.testing &&
+                        <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-back.svg')} fill={'#EEE'} fillAll={true}/>
+                    }
                 </TouchableOpacity>
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: 150, height: 150 }} onPress={() => {this.props.onPlayPause()}}>
                     <MaterialIndicator color={ buffering ? color : 'transparent' } size={110} animationDuration={3000} style={{
@@ -45,6 +43,7 @@ export default class PlaybackButton extends Component {
                         top: 20,
                     }}>
                         {
+                            !this.props.testing &&
                             <SvgUri style={{ 
                                 backgroundColor: 'white', 
                                 height: 50, 
@@ -58,12 +57,10 @@ export default class PlaybackButton extends Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ alignItems: 'flex-start', justifyContent: 'center', width: 100, height: 100, paddingRight: 30, marginTop: 20 }} onPress={() => {this.props.onJumpForward()}}>
-                    {/* {
-                        <SvgUri style={{transform: [{ rotateX: '-180deg' },{ rotate: '-90deg' }] }} width="50" height="50" source={require('assets/interface-icons/seek.svg')} fill={'#EEE'} fillAll={true}/>
-                    } */}
-                    {/* <Text style={{ color: 'gainsboro', fontSize: 14, fontWeight: '800', position: 'absolute', zIndex: -1, left: 44 }}>15</Text> */}
-                    {/* <Image style={{ height: 40, width: 40 }} source={require('assets/skip-ahead.png')} /> */}
-                    <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-forward.svg')} fill={'#FFF'} fillAll={true}/>
+                    {
+                        !this.props.testing &&
+                        <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-forward.svg')} fill={'#FFF'} fillAll={true}/>
+                    }
                 </TouchableOpacity>
             </View>
         ) 

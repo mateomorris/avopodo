@@ -21,7 +21,7 @@ import QueueScreen from './src/screens/QueueScreen';
 import EpisodeDetailScreen from './src/screens/EpisodeDetailScreen';
 import PlaylistDetailScreen from './src/screens/PlaylistDetailScreen';
 
-import PlayBar from './src/components/PlayBar';
+import { PlayBar } from './src/components/PlayBar';
 
 
 ////////////////////////////////

@@ -1,0 +1,278 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders PlaybackButtons correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "height": 100,
+        "justifyContent": "center",
+        "marginTop": 20,
+        "opacity": 1,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": 150,
+        "justifyContent": "center",
+        "opacity": 1,
+        "width": 150,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          Object {
+            "position": "absolute",
+            "top": 20,
+          },
+        ]
+      }
+    >
+      <View
+        animating={true}
+        animationDuration={3000}
+        animationEasing={[Function]}
+        color="blue"
+        interaction={true}
+        renderComponent={[Function]}
+        style={
+          Object {
+            "height": 110,
+            "width": 110,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 110,
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+                "width": 110,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "height": 55,
+                  "overflow": "hidden",
+                  "width": 110,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 110,
+                    "transform": Array [
+                      Object {
+                        "translateY": 0,
+                      },
+                      Object {
+                        "rotate": "-165deg",
+                      },
+                    ],
+                    "width": 110,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "height": 55,
+                      "overflow": "hidden",
+                      "width": 110,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "borderColor": "blue",
+                        "borderRadius": 55,
+                        "borderWidth": 11,
+                        "height": 110,
+                        "width": 110,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 110,
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+                "width": 110,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "height": 55,
+                  "overflow": "hidden",
+                  "top": 55,
+                  "width": 110,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 110,
+                    "transform": Array [
+                      Object {
+                        "translateY": -55,
+                      },
+                      Object {
+                        "rotate": "345deg",
+                      },
+                    ],
+                    "width": 110,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "height": 55,
+                      "overflow": "hidden",
+                      "width": 110,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "borderColor": "blue",
+                        "borderRadius": 55,
+                        "borderWidth": 11,
+                        "height": 110,
+                        "width": 110,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "blue7F",
+          "borderRadius": 500,
+          "height": 110,
+          "justifyContent": "center",
+          "position": "absolute",
+          "top": 20,
+          "width": 110,
+        }
+      }
+    />
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "height": 100,
+        "justifyContent": "center",
+        "marginTop": 20,
+        "opacity": 1,
+        "paddingRight": 30,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;

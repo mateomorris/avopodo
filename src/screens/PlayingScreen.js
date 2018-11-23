@@ -14,7 +14,7 @@ import firebase from 'react-native-firebase';
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlayProgressBar from 'components/PlayProgressBar';
-import PlayBackButtons from 'components/PlaybackButtons';
+import { PlaybackButtons } from 'components/PlaybackButtons';
 
 import * as actions from 'actions'
 import NowPlayingHeader from 'components/NowPlayingHeader';
@@ -339,7 +339,7 @@ class PlayingScreen extends React.Component {
             }}
             playingNextEpisode={this.state.playingNextEpisode}
           />
-          <PlayBackButtons 
+          <PlaybackButtons 
             color={nowPlaying.showColor}
             playbackStatus={playing}
             onPlayPause={() => { togglePlayback() }} 

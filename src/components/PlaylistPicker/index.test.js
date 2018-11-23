@@ -2,7 +2,6 @@ import React from 'react';
 import { Text } from 'react-native';
 import { PlaylistPicker } from './index';
 import renderer from 'react-test-renderer';
-import playlistIcons from 'assets/newPlaylistIcons'
 
 jest.useFakeTimers();
 
