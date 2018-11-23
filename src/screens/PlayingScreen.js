@@ -313,11 +313,10 @@ class PlayingScreen extends React.Component {
             >
               {/* <Text style={{color:'white', fontSize: 20, fontWeight: '700', textAlign: 'center', height: 25, marginLeft: 10, marginRight: 10}}>{nowPlaying.title}</Text> */}
               <MarqueeText
-              style={{ color:'white', fontSize: 20, fontWeight: '700', textAlign: 'center', height: 25 }}
-              marqueeOnStart
-              loop={false}
-              marqueeDelay={5000}
-              marqueeResetDelay={1000}
+                style={{ color:'white', fontSize: 20, fontWeight: '700', textAlign: 'center', height: 25 }}
+                marqueeOnStart
+                loop={false}
+                duration={3000}
               >
                 {nowPlaying.title}
               </MarqueeText>

@@ -347,7 +347,6 @@ export class HomeScreen extends React.Component {
               />
           }
         >
-          {/* { this._renderPlaylists(this.state.playlists) } */}
           { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
         </ScrollView>
       }
