@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { ShowThumbnail } from './index';
+import ShowThumbnail from './index';
 import renderer from 'react-test-renderer';
 
 it('renders ShowThumbnail correctly', () => {

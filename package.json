@@ -27,6 +27,7 @@
     "react-native-modalbox": "^1.4.2",
     "react-native-music-control": "^0.7.3",
     "react-native-navigation": "^2.0.2575",
+    "react-native-offline-mode": "^0.1.5",
     "react-native-palette": "^0.3.2",
     "react-native-progress": "^3.5.0",
     "react-native-search-bar": "^3.4.2",
@@ -57,8 +58,8 @@
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     },
-    "testPathIgnorePatterns" : [
-      "/node_modules/", 
+    "testPathIgnorePatterns": [
+      "/node_modules/",
       "<rootDir>/node_modules/"
     ]
   }

@@ -46,6 +46,7 @@ export function addToQueueFrontAndPlayEpisode(show, episode) {
             });
             dispatch(playEpisode(show, episode))
         } else {
+            console.log('Nothing to do')
             // Do nothing
         }
     }

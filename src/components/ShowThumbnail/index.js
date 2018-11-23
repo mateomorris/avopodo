@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export class ShowThumbnail extends React.Component {
+export default class ShowThumbnail extends React.Component {
 
     _handlePress = () => {
         this.props.onPress();

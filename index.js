@@ -24,6 +24,7 @@ import EpisodeDetailScreen from './src/screens/EpisodeDetailScreen';
 import PlaylistDetailScreen from './src/screens/PlaylistDetailScreen';
 import PlayBar from './src/components/PlayBar';
 import TopBar from './src/components/TopBar';
+import OfflineBanner from 'components/OfflineBanner';
 
 // import reducers from './src/redux/reducers' // where reducers is an object of reducers
 
@@ -52,6 +53,10 @@ import TopBar from './src/components/TopBar';
 
   // });
 
+    //////////////////////////////////
+    console.disableYellowBox = true;
+    //////////////////////////////////
+
     persistStore(store, null, () => {
 
       Navigation.registerComponentWithRedux('example.HomeScreen', () => HomeScreen, Provider, store);
@@ -69,6 +74,7 @@ import TopBar from './src/components/TopBar';
       Navigation.registerComponentWithRedux('example.PlaylistDetailScreen', () => PlaylistDetailScreen, Provider, store);
       Navigation.registerComponentWithRedux('example.PlayBar', () => PlayBar, Provider, store);
       Navigation.registerComponentWithRedux('example.TopBar', () => TopBar, Provider, store);
+      Navigation.registerComponentWithRedux('example.OfflineBanner', () => OfflineBanner, Provider, store);
 
       Navigation.setRoot({
           root: {

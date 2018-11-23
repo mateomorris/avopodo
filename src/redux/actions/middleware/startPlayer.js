@@ -5,8 +5,6 @@ import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 
 export function startPlayer() {
     return (dispatch, getState) => {
-
-        console.log(getState())
         
         let state = getState();
         let nowPlayingEpisodeId = state.active ? state.nowPlaying.id : false;

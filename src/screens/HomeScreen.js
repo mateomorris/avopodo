@@ -20,6 +20,8 @@ import * as specialActions from 'actions'
 import { WebView } from 'react-native';
 import { LoadingIndicator } from 'components/SimpleComponents';
 
+import OfflineBanner from 'components/OfflineBanner';
+
 export class HomeScreen extends React.Component {
 
   static options(passProps) {
@@ -144,6 +146,18 @@ export class HomeScreen extends React.Component {
         }
     });
 
+    // Active Offline Indicator
+    Navigation.showOverlay({
+        component: {
+            name: 'example.OfflineBanner',
+            options: {
+                overlay: {
+                    interceptTouchOutside: false
+                }
+            }
+        }
+    });
+
 
     if ('id' in this.props.state.nowPlaying) {
       console.log('An episode is currently playing')
@@ -255,7 +269,6 @@ export class HomeScreen extends React.Component {
             keyExtractor={(item, index) => item.id}
             initialNumToRender={5}
             renderItem={({item}) => {
-              console.log(item)
               return (
                 <EpisodeSnippet 
                   data={item}
@@ -265,22 +278,6 @@ export class HomeScreen extends React.Component {
               )
             }}
           />
-          {/* {
-            episodes.filter((episode) => {
-              if (episode && !this.props.state.finishedEpisodes.find(matchingEpisode => matchingEpisode == episode.id)) {
-                return episode
-              }
-            }).map((episode, index) => {
-              return (
-                <EpisodeSnippet 
-                  key={index}
-                  data={episode}
-                  onThumbnailPress={() => this._handleEpisodeThumbnailPress(episode)}
-                  onDetailPress={() => this._handleEpisodeDetailPress(episode)}
-                />
-              )
-            })
-          } */}
         </View>
       );
     } else {
