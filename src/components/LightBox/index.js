@@ -4,7 +4,7 @@ import { Navigation } from "react-native-navigation";
 import { BlurView } from 'react-native-blur';
 import * as Animatable from 'react-native-animatable';
 
-export default class LightBox extends Component {
+export class LightBox extends Component {
 
     state = {
         containerHeight : 0, // used to calculate how tall the touchable area under the content is

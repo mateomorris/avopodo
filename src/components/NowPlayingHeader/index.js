@@ -12,7 +12,7 @@ import playlistIcons from 'assets/newPlaylistIcons'
 
 import * as actions from 'actions'
 
-class NowPlayingHeader extends React.Component {
+export class NowPlayingHeader extends React.Component {
 
   _handleFavoritePress = () => {
 
@@ -54,14 +54,6 @@ class NowPlayingHeader extends React.Component {
               justifyContent: 'space-between',
               position: 'relative'
           }}>
-            {/* <TouchableOpacity style={{
-                padding: 10,
-                paddingRight: 30,
-            }} onPress={() => {
-              this.props.onPress()
-            }}>
-                  <SvgUri style={{transform: [{rotate:'180deg'},{translateY:15}]}} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
-            </TouchableOpacity> */}
             <View style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -92,7 +84,6 @@ class NowPlayingHeader extends React.Component {
                 paddingRight: 5,
                 paddingTop: 0
               }}>
-                {/* <Image source={require('assets/playlist.png')} style={{ height: 20, width: 20 }}/> */}
                 {
                   <SvgUri style={{ width: 20, height: 20 }}  width="20" height="20" source={require('assets/interface-icons/queue.svg')} fill={'#EEE'} fillAll={true}/>
                 }

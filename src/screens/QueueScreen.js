@@ -6,7 +6,7 @@ import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
 import playlistIcons from 'assets/newPlaylistIcons'
 
-import LightBox from 'components/LightBox';
+import { LightBox } from 'components/LightBox';
 import * as actions from 'actions'
 
 class QueueScreen extends Component {

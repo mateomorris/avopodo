@@ -7,7 +7,7 @@ import { Navigation } from 'react-native-navigation';
 
 import { PlaylistPicker } from 'components/PlaylistPicker'
 import IconPanel from 'components/IconPanel'
-import LightBox from 'components/LightBox';
+import { LightBox } from 'components/LightBox';
 import * as actions from 'actions';
 
 // import playlistIcons from 'assets/playlist-icons'

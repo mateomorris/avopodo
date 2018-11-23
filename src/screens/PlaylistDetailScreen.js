@@ -9,7 +9,7 @@ import { Navigation } from 'react-native-navigation';
 import playlistIcons from 'assets/newPlaylistIcons'
 import IconPanel from 'components/IconPanel'
 
-import LightBox from 'components/LightBox';
+import { LightBox } from 'components/LightBox';
 import * as actions from 'actions'
 
 class PlaylistDetailScreen extends Component {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
 
-import LightBox from 'components/LightBox';
+import { LightBox } from 'components/LightBox';
 
 import * as specialActions from 'actions';
 
