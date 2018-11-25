@@ -4,6 +4,7 @@ exports[`renders PlaybackButtons correctly 1`] = `
 <View
   style={
     Object {
+      "alignItems": "center",
       "flex": 1,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -22,11 +23,11 @@ exports[`renders PlaybackButtons correctly 1`] = `
     style={
       Object {
         "alignItems": "flex-end",
-        "height": 100,
+        "borderRadius": 50,
+        "height": 80,
         "justifyContent": "center",
-        "marginTop": 20,
         "opacity": 1,
-        "width": 100,
+        "width": 80,
       }
     }
   />
@@ -265,12 +266,11 @@ exports[`renders PlaybackButtons correctly 1`] = `
     style={
       Object {
         "alignItems": "flex-start",
-        "height": 100,
+        "borderRadius": 50,
+        "height": 80,
         "justifyContent": "center",
-        "marginTop": 20,
         "opacity": 1,
-        "paddingRight": 30,
-        "width": 100,
+        "width": 80,
       }
     }
   />
