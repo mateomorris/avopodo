@@ -359,18 +359,23 @@ class PlayBar extends React.Component {
                         <View
                             style={{
                                 height: '100%',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
                             }}
                             {...this.panResponder.panHandlers} 
                         >
-                            <Image 
-                                source={{ uri: nowPlaying.showImage, backgroundColor: nowPlaying.showColor }}
-                                style={{
-                                    height: 30,
-                                    width: 30,
-                                    borderRadius: 2
-                                }}
-                            />
+                            <View style={{
+                                backgroundColor: nowPlaying.showColor,
+                                borderRadius: 2
+                            }}>
+                                <Image 
+                                    source={{ uri: nowPlaying.showImage, backgroundColor: nowPlaying.showColor }}
+                                    style={{
+                                        height: 30,
+                                        width: 30,
+                                        borderRadius: 2
+                                    }}
+                                />
+                            </View>
                         </View>
                         <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
                             {...this.panResponder.panHandlers} 

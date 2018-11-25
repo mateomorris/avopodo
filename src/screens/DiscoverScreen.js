@@ -50,24 +50,7 @@ class DiscoverScreen extends React.Component {
     }),
   };
 
-  // _subscribeToShow = async (id, title, image, description, itunesId) => {
-
-  //   if (this._checkIfSubscribed(id)) {
-  //     this.props.actions.unsubscribeFromShow(id);
-  //     console.log(this.props.details);
-  //     console.log('unsubscribing');
-  //   } else {
-  //     let highResArtwork = await this._getHighResArtwork(itunesId).then((artworkUrl) => {
-  //       this.props.actions.subscribeToShow(id, title, image, description, artworkUrl);
-  //     })
-  //   }
-
-  // }
-
   _subscribeToShow = (show) => {
-    // let alreadySubscribed = this.props.details.subscribedShows.find((subscribedShow) => {
-    //   return subscribedShow.id == show.id
-    // })
     
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
       return subscribedShowId == show.id
@@ -348,39 +331,6 @@ class DiscoverScreen extends React.Component {
               </TouchableOpacity>
             )}
           />
-          {/* <FlatList
-            data={this.state.genres.filter((genre) => {
-              if (genre.id !== 67) {
-                return genre
-              }
-            })}
-            renderItem={({item, separators}) => (
-                <TouchableOpacity onPress={() => {
-                  Navigation.push(this.props.componentId, {
-                    component: {
-                      name: 'example.GenreDetailScreen',
-                      passProps: {
-                        genre: item
-                      },
-                      options: {
-                        topBar: {
-                          title: {
-                            text: item.name
-                          }
-                        }
-                      }
-                    }
-                  });
-                }}>
-                </TouchableOpacity>
-            )}
-          /> */}
-
-
-
-          {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Trending Shows</Text>
-          { this._renderFavorites(this.state.favorites) }
-          { this._renderPlaylists(this.state.playlists) } */}
         </ScrollView>
       </View>
     );

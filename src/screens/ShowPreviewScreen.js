@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
 import { LightBox } from 'components/LightBox';
+import { SimpleButton } from 'components/SimpleComponents';
 
 import * as specialActions from 'actions';
 
@@ -22,10 +23,6 @@ class ShowPreviewScreen extends Component {
                 artworkColor: color
             })
         }) 
-
-        // this.props.actions.getHighResArtwork(this.props.item.itunesId).then((artwork) => {
-        //     this.setState({ artwork });
-        // })
     }
 
     
@@ -102,30 +99,39 @@ class ShowPreviewScreen extends Component {
                 }}>
                         {
                             this.state.subscribed ? 
-                            <TouchableOpacity style={{
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                paddingTop: 5,
-                                paddingBottom: 5,
-                                borderColor: 'whitesmoke',
-                                borderWidth: 2,
-                                borderRadius: 35,
-                                flexDirection: 'row'
-                            }} onPress={() => {
-                                this.setState({
-                                    subscribed: this.state.subscribed ? false : true
-                                });
-                            }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontWeight: '900'
-                                }}>Unsubscribe</Text>
-                                <Image style={{
-                                    height: 20,
-                                    width: 20,
-                                    marginLeft: 3
-                                }} source={require('assets/bookmark.png')} />
-                            </TouchableOpacity>
+                            <SimpleButton 
+                                onPress={() => {
+                                    this.setState({
+                                        subscribed: this.state.subscribed ? false : true
+                                    });
+                                }}
+                                label={'Subscribe'}
+                                icon={require('assets/bookmark.png')}
+                            />
+                            // <TouchableOpacity style={{
+                            //     paddingLeft: 10,
+                            //     paddingRight: 10,
+                            //     paddingTop: 5,
+                            //     paddingBottom: 5,
+                            //     borderColor: 'whitesmoke',
+                            //     borderWidth: 2,
+                            //     borderRadius: 35,
+                            //     flexDirection: 'row'
+                            // }} onPress={() => {
+                            //     this.setState({
+                            //         subscribed: this.state.subscribed ? false : true
+                            //     });
+                            // }}>
+                            //     <Text style={{
+                            //         color: 'white',
+                            //         fontWeight: '900'
+                            //     }}>Unsubscribe</Text>
+                            //     <Image style={{
+                            //         height: 20,
+                            //         width: 20,
+                            //         marginLeft: 3
+                            //     }} source={require('assets/bookmark.png')} />
+                            // </TouchableOpacity>
                             : 
                             <TouchableOpacity style={{
                                 paddingLeft: 10,
