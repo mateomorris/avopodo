@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         height: 0,
         position: 'absolute',
         right: 0,
-        borderRadius: 20
+        borderRadius: 4
     },
     backgroundImage: {
         width: 'auto'
@@ -140,7 +140,7 @@ export default class PlaylistThumbnail extends React.Component {
             <View style={{ overflow: 'hidden' }}>
                 <View style={[styles.containerOuter, { shadowOpacity: this.state.pressStatus ? 0.4 : 0.75 }]}>
                     <View style={[styles.containerInner, {
-                        borderRadius: 50,
+                        borderRadius: 4,
                         backgroundColor: 'black'
                     }]}
                     onLayout={(e) => {
@@ -150,7 +150,7 @@ export default class PlaylistThumbnail extends React.Component {
                     }}
                     >
                         <TouchableHighlight
-                        activeOpacity={0.5}
+                        activeOpacity={1}
                         onPress={() => this._handleRightPress()}
                         style={{ 
                             width: '100%',

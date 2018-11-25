@@ -19,8 +19,14 @@ export class PlaybackButtons extends Component {
         let { color, buffering }= this.props;
 
         return(
-            <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
-                <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center', width: 100, height: 100, marginTop: 20 }} onPress={() => {this.props.onJumpBack()}}>
+            <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableOpacity style={{ 
+                    alignItems: 'flex-end', 
+                    justifyContent: 'center', 
+                    height: 80, 
+                    width: 80,
+                    borderRadius: 50
+                }} onPress={() => {this.props.onJumpBack()}}>
                     {
                         !this.props.testing &&
                         <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-back.svg')} fill={'#EEE'} fillAll={true}/>
@@ -56,7 +62,14 @@ export class PlaybackButtons extends Component {
                         }
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ alignItems: 'flex-start', justifyContent: 'center', width: 100, height: 100, paddingRight: 30, marginTop: 20 }} onPress={() => {this.props.onJumpForward()}}>
+                <TouchableOpacity style={{ 
+                        alignItems: 'flex-start', 
+                        justifyContent: 'center', 
+                        height: 80, 
+                        width: 80,
+                        borderRadius: 50                    
+                    }} 
+                    onPress={() => {this.props.onJumpBack()}}>
                     {
                         !this.props.testing &&
                         <SvgUri style={{}} width="50" height="50" source={require('assets/interface-icons/seek-forward.svg')} fill={'#FFF'} fillAll={true}/>
