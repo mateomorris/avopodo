@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SvgUri from 'react-native-svg-uri';
+import { BlurView } from 'react-native-blur';
 
 const styles = StyleSheet.create({
     containerOuter: { 
@@ -29,8 +30,7 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     backgroundImage: {
-        height: 75,
-        width: 75
+        width: 'auto'
     },
     infoContainer: { 
         flexDirection: 'row', 
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
 export default class PlaylistThumbnail extends React.Component {
 
     state = {
-        pressStatus : false
+        pressStatus : false,
+        containerHeight: 0
     }
 
     _handleRightPress = () => {
@@ -141,7 +142,13 @@ export default class PlaylistThumbnail extends React.Component {
                     <View style={[styles.containerInner, {
                         borderRadius: 50,
                         backgroundColor: 'black'
-                    }]}>
+                    }]}
+                    onLayout={(e) => {
+                        this.setState({
+                            containerHeight: e.nativeEvent.layout.height,
+                        })
+                    }}
+                    >
                         <TouchableHighlight
                         activeOpacity={0.5}
                         onPress={() => this._handleRightPress()}
@@ -158,21 +165,12 @@ export default class PlaylistThumbnail extends React.Component {
                                 {
                                     episodes ? episodes.slice(0,3).map((episode, index) => {
                                         return (
-                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { backgroundColor: episode.showColor}]} key={index}/>
+                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
                                         )
                                     }) : null
                                 }
                             </View>
                         </TouchableHighlight>
-                        {/* <TouchableOpacity style={styles.backgroundImages} onPress={() => this._handleRightPress()}>
-                            {
-                                episodes ? episodes.slice(0,3).map((episode, index) => {
-                                    return (
-                                        <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={styles.backgroundImage} key={index}/>
-                                    )
-                                }) : null
-                            }
-                        </TouchableOpacity> */}
                         <LinearGradient style={[styles.infoContainer, {
                             borderRadius: 5,
                             overflow: 'hidden',
@@ -198,30 +196,63 @@ export default class PlaylistThumbnail extends React.Component {
                                 </View>
                             </TouchableOpacity>
                         </LinearGradient>
-                        <View pointerEvents="none" style={{ flex: 1 }}>
-                            {/* <Image 
-                                source={require('assets/play.png')} 
-                                style={{
-                                    height: 20,
-                                    width: 20,
-                                    position: 'absolute',
-                                    right: 5,
-                                    bottom: 5,
-                                    zIndex: 99999
-                                }}
-                            /> */}
-                            {
-                                !this.props.testing &&
-                                <SvgUri style={{
-                                        height: 20,
-                                        width: 20,
-                                        position: 'absolute',
-                                        right: 5,
-                                        bottom: 5,
-                                        zIndex: 99999
-                                }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
-                            }
-                        </View>
+
+                        {
+                            this.props.currentPlaylist.id == this.props.playlist.id ? 
+                            <View pointerEvents="none" style={{ 
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                width: this.state.containerHeight,
+                                borderRadius: 4,
+                                overflow: 'hidden'
+                            }}>
+                                {
+                                    !this.props.testing &&
+                                    <View style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        justifyContent: 'center', 
+                                        alignItems: 'center', 
+                                    }}>
+                                        <BlurView
+                                            style={{ 
+                                                width: '100%',
+                                                height: '100%',
+                                                position: 'absolute'
+                                            }}
+                                            viewRef={this.state.viewRef}
+                                            blurType="dark"
+                                            blurAmount={5}
+                                        />
+                                        <SvgUri style={
+                                            {
+                                                // position: 'absolute',
+                                                // right: 5,
+                                                // bottom: 5,
+                                                zIndex: 99999
+                                        }} width="35" height="35" source={this.props.playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg') } fill={'#EEE'} fillAll={true}/>
+                                    </View>
+                                }
+                            </View> 
+                            :
+                            <View pointerEvents="none" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                {
+                                    !this.props.testing &&
+                                    <SvgUri style={
+                                        {
+                                            height: 20,
+                                            width: 20,
+                                            position: 'absolute',
+                                            right: 5,
+                                            bottom: 5,
+                                            zIndex: 99999
+                                    }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                                }
+                            </View>
+                        }
+
                     </View>
                 </View>
             </View>          

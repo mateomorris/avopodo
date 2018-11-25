@@ -66,20 +66,11 @@ class PlaylistsScreen extends React.Component {
 
   _handlePlaylistPlayPress = (playlist) => {
 
-    // let playlistQueue = playlist.episodeQueue.map((episode) => {
-    //   return {
-    //     id: episode.id,
-    //     title: episode.title,
-    //     url: episode.audio,
-    //     artist: episode.showTitle,
-    //     duration: episode.duration,
-    //     description: episode.description,
-    //     // date: '',
-    //     artwork: episode.showImage
-    //   }
-    // })
-
-    this._playAudio(playlist)
+    if (playlist.id == this.props.activePlaylist.id) {
+      this.props.actions.togglePlayback()
+    } else {
+      this._playAudio(playlist)
+    }
 
   }
 
@@ -95,17 +86,20 @@ class PlaylistsScreen extends React.Component {
     );
   }
 
-  _renderPlaylists = (playlists, nowPlaying) => {
+  _renderPlaylists = (playlists, nowPlaying, nowPlayingPlaylist) => {
     return (
       <View>
         {playlists.map((item, index) => {
           return (
             <PlaylistThumbnail 
               key={index} 
+              playing={this.props.state.playing}
+              playlist={item}
               title={item.name} 
               duration={item.episodeQueue.episodeListDuration} 
               icon={playlistIcons[item.icon]} 
               episodes={item.episodeQueue.episodeList.length > 0 ? item.episodeQueue.episodeList : null} 
+              currentPlaylist={nowPlayingPlaylist}
               onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
               onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
             />
@@ -164,6 +158,8 @@ class PlaylistsScreen extends React.Component {
 
   render() {
 
+    console.log(this.props.state)
+
     this.state = {
       favorites: [],
       playlists: [],
@@ -177,7 +173,7 @@ class PlaylistsScreen extends React.Component {
         <ScrollView contentContainerStyle={styles.container}>
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 10, paddingRight: 10 }}>
-            { this._renderPlaylists(this.props.playlists, this.props.nowPlaying) }
+            { this._renderPlaylists(this.props.playlists, this.props.nowPlaying, this.props.activePlaylist) }
             <View style={{
               backgroundColor: 'black',
               marginTop: 10,
@@ -201,11 +197,6 @@ class PlaylistsScreen extends React.Component {
                 alignItems: 'center',
                 backgroundColor: '#D8D8D8',
               }}>
-                {/* <Image source={require('assets/plus.png')} style={{
-                  marginRight: 10,
-                  height: 25,
-                  width: 25
-                }}/> */}
                   <SvgUri 
                       style={{ 
                         paddingRight: 5
@@ -239,6 +230,7 @@ function mapStateToProps(state, ownProps) {
     subscribedShows: state.subscribedShows,
     playlists: state.playlists,
     nowPlaying: state.nowPlaying,
+    activePlaylist : state.activePlaylist,
     state
 	};
 }
