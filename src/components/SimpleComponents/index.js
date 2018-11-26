@@ -17,30 +17,3 @@ export const SmallLoadingIndicator = () => {
         </View>
     )
 }
-
-export const SimpleButton = () => {
-    return (
-        <TouchableOpacity style={{
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 5,
-            paddingBottom: 5,
-            borderColor: 'whitesmoke',
-            borderWidth: 2,
-            borderRadius: 35,
-            flexDirection: 'row'
-        }} onPress={() => {
-            this.props.onPress
-        }}>
-            <Text style={{
-                color: 'white',
-                fontWeight: '900'
-            }}>{ this.props.label }</Text>
-            <Image style={{
-                height: 20,
-                width: 20,
-                marginLeft: 3
-            }} source={this.props.icon} />
-        </TouchableOpacity>
-    )
-}

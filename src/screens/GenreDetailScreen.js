@@ -11,7 +11,7 @@ import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 import { LoadingIndicator } from 'components/SimpleComponents'
-import ShowRow from 'components/ShowRow';
+import { ShowRow } from 'components/ShowRow';
 import { SmallLoadingIndicator } from 'components/SimpleComponents'
 
 import * as specialActions from 'actions';
@@ -61,24 +61,7 @@ class GenreDetailScreen extends React.Component {
     ]
   };
 
-  // _subscribeToShow = async (id, title, image, description, itunesId) => {
-
-  //   if (this._checkIfSubscribed(id)) {
-  //     this.props.actions.unsubscribeFromShow(id);
-  //     console.log(this.props.details);
-  //     console.log('unsubscribing');
-  //   } else {
-  //     let highResArtwork = await this._getHighResArtwork(itunesId).then((artworkUrl) => {
-  //       this.props.actions.subscribeToShow(id, title, image, description, artworkUrl);
-  //     })
-  //   }
-
-  // }
-
   _subscribeToShow = (show) => {
-    // let alreadySubscribed = this.props.details.subscribedShows.find((subscribedShow) => {
-    //   return subscribedShow.id == show.id
-    // })
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
       return subscribedShowId == show.id
     })
@@ -209,13 +192,6 @@ class GenreDetailScreen extends React.Component {
       }
   }
 
-  // componentDidMount() {
-  //   // console.log(this.props.details);
-  //   this.props.actions.getGenres().then(({ genres }) => {
-  //     this.setState({ genres });
-  //   })
-  // }
-
   componentWillMount() {
     this.props.actions.getShowsInGenre(this.props.genre.id).then((shows) => {
       this.setState({ 
@@ -231,36 +207,6 @@ class GenreDetailScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         { this.state.loading && <LoadingIndicator /> }
-        {/* <Search
-          ref="search_box"
-          // placeholder='Search by name, description, or author'
-          onChangeText={(text) => {
-            return new Promise((resolve, reject) => {
-                this.setState({ search: text });
-                resolve();
-            });
-          }}
-          onSearch={() => {
-            return new Promise((resolve, reject) => {
-              this._searchForTerm(this.state.search);
-              resolve();
-            });
-          }}
-          onCancel={()=>{ 
-            return new Promise((resolve, reject) => {
-              this.setState({showSearchResults: false})
-              resolve();
-            });
-          }}
-        /> */}
-        {/* <SearchBar
-          ref={ ref => (this.searchBar = ref) }
-          placeholder='Search by name, description, or author'
-          text={this.state.search}
-          onChangeText={ text => this.setState({ search: text}) }
-          onSearchButtonPress={() => this._searchForTerm(this.state.search) }
-          onCancelButtonPress={()=>{ this.setState({showSearchResults: false}) }}
-        /> */}
         <ScrollView 
           contentContainerStyle={styles.container}
           onScroll={(e) => this._checkIfBottomReached(e)}

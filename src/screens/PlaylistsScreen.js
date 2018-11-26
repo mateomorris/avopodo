@@ -158,8 +158,6 @@ class PlaylistsScreen extends React.Component {
 
   render() {
 
-    console.log(this.props.state)
-
     this.state = {
       favorites: [],
       playlists: [],
@@ -210,7 +208,7 @@ class PlaylistsScreen extends React.Component {
                 <Text style={{
                   fontWeight: '800',
                   fontSize: 17,
-                  color: '#666666'
+                  color: '#666666',
                 }}>
                   Add a New Station
                 </Text>

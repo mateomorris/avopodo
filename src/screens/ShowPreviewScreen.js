@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 
 import { LightBox } from 'components/LightBox';
-import { SimpleButton } from 'components/SimpleComponents';
+import Button from 'components/Button';
 
 import * as specialActions from 'actions';
 
@@ -57,7 +57,7 @@ class ShowPreviewScreen extends Component {
         return(
             
             <LightBox componentId={this.props.componentId}>
-                <Image source={{ uri: image }} 
+                <Image source={{ uri: imageHighRes || image }} 
                     style={{
                         width: screenWidth - 90, // Parent padding + width
                         height: screenWidth - 90, 
@@ -99,64 +99,25 @@ class ShowPreviewScreen extends Component {
                 }}>
                         {
                             this.state.subscribed ? 
-                            <SimpleButton 
+                            <Button 
                                 onPress={() => {
                                     this.setState({
-                                        subscribed: this.state.subscribed ? false : true
+                                        subscribed: false
+                                    });
+                                }}
+                                label={'Unsubscribe'}
+                                icon={require('assets/bookmark.png')}
+                            />
+                            : 
+                            <Button 
+                                onPress={() => {
+                                    this.setState({
+                                        subscribed: true
                                     });
                                 }}
                                 label={'Subscribe'}
                                 icon={require('assets/bookmark.png')}
                             />
-                            // <TouchableOpacity style={{
-                            //     paddingLeft: 10,
-                            //     paddingRight: 10,
-                            //     paddingTop: 5,
-                            //     paddingBottom: 5,
-                            //     borderColor: 'whitesmoke',
-                            //     borderWidth: 2,
-                            //     borderRadius: 35,
-                            //     flexDirection: 'row'
-                            // }} onPress={() => {
-                            //     this.setState({
-                            //         subscribed: this.state.subscribed ? false : true
-                            //     });
-                            // }}>
-                            //     <Text style={{
-                            //         color: 'white',
-                            //         fontWeight: '900'
-                            //     }}>Unsubscribe</Text>
-                            //     <Image style={{
-                            //         height: 20,
-                            //         width: 20,
-                            //         marginLeft: 3
-                            //     }} source={require('assets/bookmark.png')} />
-                            // </TouchableOpacity>
-                            : 
-                            <TouchableOpacity style={{
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                paddingTop: 5,
-                                paddingBottom: 5,
-                                borderColor: 'whitesmoke',
-                                borderWidth: 2,
-                                borderRadius: 35,
-                                flexDirection: 'row'
-                            }} onPress={() => {
-                                this.setState({
-                                    subscribed: this.state.subscribed ? false : true
-                                });
-                            }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontWeight: '900'
-                                }}>Subscribe</Text>
-                                <Image style={{
-                                    height: 20,
-                                    width: 20,
-                                    marginLeft: 3
-                                }} source={require('assets/bookmark.png')} />
-                            </TouchableOpacity>
                         }
                 </View>
             </LightBox>

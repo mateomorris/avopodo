@@ -10,6 +10,7 @@ import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
+import { Headline } from 'components/Headline';
 
 import trackDetails from '../utilities/tracks';
 
@@ -256,7 +257,12 @@ export class HomeScreen extends React.Component {
     if (episodes) {
       return (
         <View style={{flex: 1}}>
-          <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Newest from Subscribed</Text>
+          <Headline 
+            text={'Newest from Subscribed'}
+            style={{
+              marginBottom: 10,
+            }}
+          />
           <FlatList 
             data={
               episodes.filter((episode) => {
