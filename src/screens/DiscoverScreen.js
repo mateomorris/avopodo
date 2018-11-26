@@ -11,9 +11,9 @@ import SvgUri from 'react-native-svg-uri';
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
-import PlayBar from 'components/PlayBar';
 import { ShowRow } from 'components/ShowRow';
 import { LoadingIndicator } from 'components/SimpleComponents'
+import { Headline } from 'components/Headline'
 
 import icons from 'assets/genre-icons';
 
@@ -42,12 +42,14 @@ class DiscoverScreen extends React.Component {
     noResultsFound : false,
     genres: [],
     showSearchResults: false,
+    showGenres : true,
     searching: false,
     search: '',
     searchResults: [],
     subscribedShows: this.props.details.subscribedShows.map((show) => {
       return show.id
     }),
+    typeAheadShows: [],
   };
 
   _subscribeToShow = (show) => {
@@ -215,28 +217,79 @@ class DiscoverScreen extends React.Component {
     })
   }
 
+  _getShowDetails = (show) => {
+    console.log(show)
+    this.props.actions.getShowDetails(show.id).then((result) => {
+      Navigation.showOverlay({
+        component: {
+          name: 'example.ShowPreviewScreen',
+          passProps: { 
+            item : result,
+            subscribed: this._checkIfSubscribed(result.id),
+            onSubscribe: () => {this._subscribeToShow(result)}
+          }, // simple serializable object that will pass as props to the lightbox (optional)
+          options: {
+            overlay: {
+              interceptTouchOutside: false
+            }
+          }
+        }
+      });
+    })
+  }
+
   render() {
 
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <Search
           ref={(ref) => { this.myTextInput = ref }}
-          // placeholder='Search by name, description, or author'
           onChangeText={(text) => {
             return new Promise((resolve, reject) => {
-                this.setState({ search: text });
+                clearTimeout(this.change);
+
+                this.setState({ search: text }, () => {
+                  if (text.length > 5) {
+                    this.setState({
+                      searching: true,
+                      showGenres: false,
+                      showSuggestions: false
+                    })
+                    this.change = setTimeout(() => {
+                      this.props.actions.getTypeAhead(text).then((result) => {
+                        this.setState({
+                          typeAheadShows : result,
+                          searching: false,
+                          showSuggestions: true
+                        }, () => {
+                          this.setState({
+                            noResultsFound : this.state.typeAheadShows.length > 0 ? false : true
+                          })
+                        })
+                      })
+                    }, 500)
+                  }
+                });
+
                 resolve();
             });
           }}
           onSearch={() => {
             return new Promise((resolve, reject) => {
               this._searchForTerm(this.state.search);
+              this.setState({
+                showSuggestions: false
+              })
               resolve();
             });
           }}
           onCancel={()=>{ 
             return new Promise((resolve, reject) => {
-              this.setState({showSearchResults: false})
+              this.setState({
+                showSearchResults: false,
+                showGenres: true,
+                showSuggestions: false
+              })
               resolve();
             });
           }}
@@ -274,63 +327,109 @@ class DiscoverScreen extends React.Component {
             paddingLeft: 10,
             paddingRight: 10
           }}>
-            { this.state.showSearchResults && this._renderSearchResults(this.state.searchResults) }
-            { this.state.searching && <LoadingIndicator /> }
+            {
+              this.state.typeAheadShows.length > 0 &&
+              this.state.showSuggestions > 0 &&
+              <View style={{
+                flexDirection : 'column'
+              }}>
+                <Headline text={'Search Suggestions'}/>
+                <View
+                  style={{
+                    flexDirection: 'row'
+                  }}
+                  onLayout={(e) => {
+                      this.setState({
+                          containerWidth: e.nativeEvent.layout.width,
+                      })
+                  }}
+                >
+                  {
+                    this.state.typeAheadShows.map((show) => {
+                      return (
+                        <ShowThumbnail
+                        style={{
+                          height: this.state.containerWidth / 5,
+                          width: this.state.containerWidth / 5,
+                          opacity: this.state.containerWidth > 0 ? 1 : 0
+                        }}
+                        art={show.thumbnail}
+                        color={'black'}
+                        onPress={() => {
+                          this._getShowDetails(show)
+                        }}
+                        />  
+                      )
+                    })
+                  }
+                </View>
+              </View>
+            }
+            { 
+              this.state.showSearchResults && 
+              <View>
+                <Headline 
+                  text={'Search Results'}
+                  style={{
+                    marginBottom: 0
+                  }}
+                />
+                {              
+                  this._renderSearchResults(this.state.searchResults) 
+                }
+              </View>
+            }
+            { 
+              this.state.searching && 
+              <LoadingIndicator /> 
+            }
           </View>
-          <GridView
-            spacing={20}
-            itemDimension={130}
-            items={this.state.genres}
-            renderItem={genre => (
-              <TouchableOpacity style={{
-                backgroundColor: '#111',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 100,
-                paddingLeft: 10,
-                paddingRight: 10,
-                borderRadius: 5,
-              }} onPress={() => {
-                Navigation.push(this.props.componentId, {
-                  component: {
-                    name: 'example.GenreDetailScreen',
-                    passProps: {
-                      genre
-                    },
-                    noBorder: false,
-                    options: {
-                      topBar: {
-                        // background : {
-                        //   color : '#000000'
-                        // },
-                        title: {
-                          text: genre.name,
-                          // color: 'white',
-                          // component: {
-                          //   name: 'example.TopBar',
-                          //   alignment: 'center',
-                          //   passProps : {
-                          //     title : genre.name
-                          //   }
-                          // }
+          {
+            this.state.showGenres &&
+            <GridView
+              spacing={20}
+              itemDimension={130}
+              items={this.state.genres}
+              renderItem={genre => (
+                <TouchableOpacity style={{
+                  backgroundColor: '#111',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 100,
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  borderRadius: 5,
+                }} onPress={() => {
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: 'example.GenreDetailScreen',
+                      passProps: {
+                        genre
+                      },
+                      noBorder: false,
+                      options: {
+                        topBar: {
+                          title: {
+                            text: genre.name,
+                          }
                         }
                       }
                     }
-                  }
-                });
-              }}>
-                <SvgUri style={{
-                  paddingBottom: 5,
-                }} width="20" height="20" svgXmlData={this._getIcon(genre)} fill={'#EEE'} fillAll={true}/>
-                <Text style={{
-                  fontSize: 15,
-                  color: 'white',
-                  fontWeight: '600',
-                  textAlign: 'center'
-                }}>{ genre.name }</Text>
-              </TouchableOpacity>
-            )}
-          />
+                  });
+                }}>
+                  <SvgUri style={{
+                    paddingBottom: 5,
+                  }} width="20" height="20" svgXmlData={this._getIcon(genre)} fill={'#EEE'} fillAll={true}/>
+                  <Text style={{
+                    fontSize: 15,
+                    color: 'white',
+                    fontWeight: '600',
+                    textAlign: 'center'
+                  }}>{ genre.name }</Text>
+                </TouchableOpacity>
+              )}
+            />
+          }
         </ScrollView>
       </View>
     );

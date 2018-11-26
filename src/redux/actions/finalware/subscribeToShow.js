@@ -9,7 +9,7 @@ export function subscribeToShow(show) {
       image : show.thumbnail,
       description : show.description,
       publisher : show.publisher,
-      imageHighRes: show.image,
+      imageHighRes: show.image || show.imageHighRes,
       itunesId : show.itunesId,
       color: null
     }
