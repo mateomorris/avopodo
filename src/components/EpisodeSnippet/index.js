@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
+import { BlurView } from 'react-native-blur';
+
+import icons from 'assets/generalIcons';
 
 const styles = StyleSheet.create({
     container: {
@@ -55,13 +58,47 @@ export class EpisodeSnippet extends React.Component {
         }
     }
 
+    _renderOverlay = () => {
+        return (
+            <View 
+                style={{ 
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    zIndex: 9,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }} 
+            >
+                <BlurView
+                    style={{ 
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        zIndex: 9
+                    }}
+                    viewRef={this.state.viewRef}
+                    blurType="dark"
+                    blurAmount={2.5}
+                />
+                {
+                    !this.props.testing &&
+                    <SvgUri style={{
+                            zIndex: 10
+                        }} width="40" height="40" svgXmlData={this.props.playing ? icons.pause : icons.play} fill={'#EEE'} fillAll={true}/>
+                }
+            </View>
+        )
+    }
+
     render() {
 
+        const { playing } = this.props
         const { title, showImage, showImageHighRes, duration, description, publishDate, showColor } = this.props.data; 
 
         return (
             <TouchableOpacity style={{ flexDirection: 'row', height: 120 }} onPress={() => {this.props.onPress()}}>
-                <TouchableOpacity style={styles.container} onPress={() => { this.props.onThumbnailPress() }}>
+                <TouchableOpacity style={[styles.container, {}]} onPress={() => { this.props.onThumbnailPress() }}>
                     <ImageBackground 
                         source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} 
                         style={[
@@ -71,6 +108,10 @@ export class EpisodeSnippet extends React.Component {
                             }]}
                         >
                         {
+                            this.props.active &&
+                            this._renderOverlay()
+                        }
+                        {
                             !this.props.testing &&
                             <SvgUri style={{
                                     height: 20,
@@ -78,23 +119,26 @@ export class EpisodeSnippet extends React.Component {
                                     position: 'absolute',
                                     right: 5,
                                     bottom: 5
-                                }} width="20" height="20" svgXmlData={this.state.SVGs.play} fill={'#EEE'} fillAll={true}/>
+                                }} width="20" height="20" svgXmlData={icons.play} fill={'#EEE'} fillAll={true}/>
                         }
-                        <View 
-                            style={{ 
-                                backgroundColor: 'black', 
-                                borderBottomLeftRadius: 5,
-                                borderTopRightRadius: 5,
-                                paddingLeft: 5, 
-                                paddingRight: 5, 
-                                alignSelf: 'flex-start', 
-                                marginLeft: 5 ,
-                                position: 'absolute',
-                                right: 0,
-                                top: 0
-                            }}>
-                            <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
-                        </View>
+                        {
+                            !this.props.active &&
+                            <View 
+                                style={{ 
+                                    backgroundColor: 'black', 
+                                    borderBottomLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                    paddingLeft: 5, 
+                                    paddingRight: 5, 
+                                    alignSelf: 'flex-start', 
+                                    marginLeft: 5 ,
+                                    position: 'absolute',
+                                    right: 0,
+                                    top: 0
+                                }}>
+                                <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
+                            </View>
+                        }
                     </ImageBackground>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => { this.props.onDetailPress() }}>

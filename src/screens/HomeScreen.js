@@ -88,15 +88,18 @@ export class HomeScreen extends React.Component {
 
   _handleEpisodeThumbnailPress = (episode) => {
 
-    let show = {
-      title: episode.showTitle,
-      image: episode.showImage,
-      color: episode.showColor,
-      description: episode.showImageHighRes,
-      imageHighRes: episode.showImageHighRes
+    if (this.props.nowPlaying.id == episode.id) { // if already playing
+      this.props.actions.togglePlayback()
+    } else {
+      let show = {
+        title: episode.showTitle,
+        image: episode.showImage,
+        color: episode.showColor,
+        description: episode.showImageHighRes,
+        imageHighRes: episode.showImageHighRes
+      }
+      this.props.actions.addToQueueFrontAndPlayEpisode(show, episode); // reactivate
     }
-    
-    this.props.actions.addToQueueFrontAndPlayEpisode(show, episode); // reactivate
 
   }
 
@@ -232,7 +235,10 @@ export class HomeScreen extends React.Component {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {favorites.map((item, index) => {
           return (
-            <ShowThumbnail art={item.art} key={index} />
+            <ShowThumbnail 
+              art={item.art} 
+              key={index} 
+            />
           )
         })}
       </View>
@@ -260,6 +266,7 @@ export class HomeScreen extends React.Component {
           <Headline 
             text={'Newest from Subscribed'}
             style={{
+              marginTop: 0,
               marginBottom: 10,
             }}
           />
@@ -275,11 +282,14 @@ export class HomeScreen extends React.Component {
             keyExtractor={(item, index) => item.id}
             initialNumToRender={5}
             renderItem={({item}) => {
+              let isActive = this.props.nowPlaying.id == item.id ? true : false
               return (
                 <EpisodeSnippet 
                   data={item}
                   onThumbnailPress={() => this._handleEpisodeThumbnailPress(item)}
                   onDetailPress={() => this._handleEpisodeDetailPress(item)}
+                  active={isActive}
+                  playing={this.props.playing}
                 />
               )
             }}
@@ -368,7 +378,9 @@ export class HomeScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		state: state
+		state: state,
+    nowPlaying : state.nowPlaying,
+    playing : state.playing
 	};
 }
 
