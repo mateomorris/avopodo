@@ -206,6 +206,8 @@ export default class PlaylistThumbnail extends React.Component {
                                 bottom: 0,
                                 width: this.state.containerHeight,
                                 borderRadius: 4,
+                                borderTopLeftRadius : 0,
+                                borderBottomLeftRadius: 0,
                                 overflow: 'hidden'
                             }}>
                                 {
