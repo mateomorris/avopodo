@@ -1,5 +1,5 @@
 import { Navigation, NativeEventsReceiver } from 'react-native-navigation';
-import { Platform, AppRegistry } from 'react-native';
+import { Platform, AppRegistry, Text } from 'react-native';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 import { Provider, connect, bindActionCreators } from 'react-redux';
@@ -8,7 +8,6 @@ import { persistStore, persistCombineReducers } from 'redux-persist'
 
 import store from './src/redux/store';
 
-import App from "./App";
 import HomeScreen from './src/screens/HomeScreen';
 import DiscoverScreen from './src/screens/DiscoverScreen';
 import GenreListScreen from './src/screens/GenreListScreen';
@@ -56,6 +55,9 @@ import OfflineBanner from 'components/OfflineBanner';
     //////////////////////////////////
     console.disableYellowBox = true;
     //////////////////////////////////
+
+    if (Text.defaultProps == null) Text.defaultProps = {};
+    Text.defaultProps.allowFontScaling = false;
 
     persistStore(store, null, () => {
 
