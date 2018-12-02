@@ -172,13 +172,11 @@ export class HomeScreen extends React.Component {
     }
 
     // TODO: Offline functionality
-    NetInfo.getConnectionInfo().then((connectionInfo) => {
+    // NetInfo.getConnectionInfo().then((connectionInfo) => {
 
-    });
+    // });
 
-    // this.props.actions.getNewestFromSubscribed();
     this._onRefresh()
-    // this._getNewestFromSubscribed()
 
     // #TODO: Clean playQueue by removing played tracks
   }

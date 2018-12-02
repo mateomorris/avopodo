@@ -13,8 +13,7 @@ export function getBestShowsForGenre (genreId) {
           })
           .then()
           .catch((error) =>{
-            console.log('fetching error');
-            console.error(error);
+            console.error('Error fetching best shows for genre', error);
           });
     }
 }

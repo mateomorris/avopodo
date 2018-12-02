@@ -15,7 +15,7 @@ export function getShowsInGenre (genreId, page = 1) {
             return responseJson.channels;
           })
           .catch((error) =>{
-            console.log('fetching error');
+            console.error('Error getting shows in genre');
             console.error(error);
           });
     }

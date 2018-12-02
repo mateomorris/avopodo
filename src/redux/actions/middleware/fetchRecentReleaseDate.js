@@ -12,7 +12,7 @@ export function fetchRecentReleaseDate (itunesId) {
 
         })
         .catch((error) =>{
-          console.error('Error fetching recent release date', error);
+          console.error('Error fetching recent release date');
         });
     }
 }

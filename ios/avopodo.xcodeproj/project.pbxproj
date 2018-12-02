@@ -51,6 +51,7 @@
 		9ECB005766C94BCFB9FD0B98 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DF20180348242DBAA107A4B /* FontAwesome.ttf */; };
 		A20D79D42138CF99007118F9 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20D79D12138CF6A007118F9 /* libReactNativeNavigation.a */; };
 		A20D7A7D2138E6C8007118F9 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20D7A7C2138E6C8007118F9 /* dummy.swift */; };
+		A266E6FA21B2E5FC006F6BBD /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A266E6F221B2E5E5006F6BBD /* libRNFetchBlob.a */; };
 		A276460521952CAD00DBB804 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A276460221952CA000DBB804 /* libART.a */; };
 		A2AF307A2140C2A5006A1293 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF30792140C2A5006A1293 /* GameKit.framework */; };
 		A2AF307C2140C2AB006A1293 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF307B2140C2AB006A1293 /* StoreKit.framework */; };
@@ -441,6 +442,13 @@
 			remoteGlobalIDString = 9B0E28291F07D76F00B71D2A;
 			remoteInfo = RNTrackPlayer;
 		};
+		A266E6F121B2E5E5006F6BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A15C300E1CD25C330074CB35;
+			remoteInfo = RNFetchBlob;
+		};
 		A276460121952CA000DBB804 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A27645FC21952CA000DBB804 /* ART.xcodeproj */;
@@ -528,6 +536,7 @@
 		A20D79A62138CF6A007118F9 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		A20D7A7B2138E6C8007118F9 /* avopodo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avopodo-Bridging-Header.h"; sourceTree = "<group>"; };
 		A20D7A7C2138E6C8007118F9 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		A27645FC21952CA000DBB804 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		A2AF30792140C2A5006A1293 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A2AF307B2140C2AB006A1293 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -571,6 +580,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A266E6FA21B2E5FC006F6BBD /* libRNFetchBlob.a in Frameworks */,
 				A276460521952CAD00DBB804 /* libART.a in Frameworks */,
 				A20D79D42138CF99007118F9 /* libReactNativeNavigation.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -802,6 +812,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */,
 				A27645FC21952CA000DBB804 /* ART.xcodeproj */,
 				A20D79A62138CF6A007118F9 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -960,6 +971,14 @@
 			isa = PBXGroup;
 			children = (
 				A2236FEE217EA226003768E8 /* libRNTrackPlayer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A266E6BF21B2E5E5006F6BBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A266E6F221B2E5E5006F6BBD /* libRNFetchBlob.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1223,6 +1242,10 @@
 				{
 					ProductGroup = A20D7A1C2138D970007118F9 /* Products */;
 					ProjectRef = F708B6C5867C4820B2DB638F /* RNBlur.xcodeproj */;
+				},
+				{
+					ProductGroup = A266E6BF21B2E5E5006F6BBD /* Products */;
+					ProjectRef = A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */;
 				},
 				{
 					ProductGroup = A2B40028215B21AE0047F055 /* Products */;
@@ -1608,6 +1631,13 @@
 			fileType = archive.ar;
 			path = libRNTrackPlayer.a;
 			remoteRef = A2236FED217EA226003768E8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A266E6F221B2E5E5006F6BBD /* libRNFetchBlob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFetchBlob.a;
+			remoteRef = A266E6F121B2E5E5006F6BBD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A276460221952CA000DBB804 /* libART.a */ = {

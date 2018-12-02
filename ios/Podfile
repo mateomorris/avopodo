@@ -9,6 +9,8 @@ target 'avopodo' do
   pod 'Firebase/Core'
 
 
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   target 'avopodoTests' do
     inherit! :search_paths
     # Pods for testing

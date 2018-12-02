@@ -11,7 +11,7 @@ export function getHighResArtwork (id) {
   
         })
         .catch((error) =>{
-          console.log('fetching error');
+          console.log('error fetching high res artwork');
           console.error(error);
         });
     }

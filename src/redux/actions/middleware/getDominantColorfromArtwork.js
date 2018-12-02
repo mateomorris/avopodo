@@ -12,5 +12,8 @@ export function getDominantColorfromArtwork (url) {
             console.log(`Retrieved color ${color} from ${url}`)
             return color;
         })
+        .catch((error) =>{
+          console.error('Error fetching dominant color from artwork', error);
+        });
     }
 }

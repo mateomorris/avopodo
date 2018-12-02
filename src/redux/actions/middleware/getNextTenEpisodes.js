@@ -26,7 +26,7 @@ export function getNextTenEpisodes (id, nextPublishDate) {
           })
           .then()
           .catch((error) =>{
-            console.log('fetching error');
+            console.log('error fetching next ten episodes');
             console.error(error);
           });
     }

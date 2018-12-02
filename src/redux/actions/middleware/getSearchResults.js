@@ -29,8 +29,8 @@ export function getSearchResults (term) {
             })
             .then()
             .catch((error) =>{
-            console.log('fetching error');
-            console.error(error);
+                console.log('Error fetching search results');
+                console.error(error);
             });
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, ImageBackground } from 'react-native';
+import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 
 const thumbnailSize = ( Dimensions.get('window').width / 3 ) - (10 / 3)
 
@@ -34,8 +35,27 @@ const styles = StyleSheet.create({
 
 export default class ShowThumbnail extends React.Component {
 
+    state = {
+        reStoreComplete : false
+    }
+
     _handlePress = () => {
         this.props.onPress();
+    }
+
+    componentDidMount() {
+        OfflineImageStore.restore(
+        {
+        name: 'My_Image_gallery',
+        imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
+        debugMode: true,
+        }, () => {
+            this.setState({ reStoreCompleted: true });
+
+            // Preload images
+            // Note: We recommend call this method on `restore` completion!
+            OfflineImageStore.preLoad(this.props.art);
+        })
     }
 
     render() {
@@ -56,8 +76,8 @@ export default class ShowThumbnail extends React.Component {
                         fontWeight: '700',
                         textAlign: 'center',
                         padding: 10
-                    }}>{ this.props.name }</Text>
-                    <Image 
+                    }}>{ this.props.name ? this.props.name.match(/\b(\w)/g).join('') : '' }</Text>
+                    {/* <Image 
                         style={{
                             position: 'absolute',
                             width: '100%',
@@ -65,7 +85,22 @@ export default class ShowThumbnail extends React.Component {
                             borderRadius: 5
                         }}
                         source={{uri: art, cache: 'force-cache'}} 
-                    />
+                    /> */}
+                    {
+                        this.state.reStoreCompleted &&
+                        <OfflineImage
+                            key={art}
+                            resizeMode={'contain'}
+                            style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                borderRadius: 5,
+                                overflow: 'hidden'
+                            }}
+                            source={{ uri : art }}
+                        /> 
+                    }
                 </View>
             </TouchableHighlight>
         );
