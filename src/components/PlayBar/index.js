@@ -6,6 +6,7 @@ import { Navigation } from "react-native-navigation";
 import SvgUri from 'react-native-svg-uri';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import tinycolor from 'tinycolor2'
 
 import PlayProgressIndicator from 'components/PlayProgressIndicator';
 import { MaterialIndicator } from 'react-native-indicators';
@@ -398,7 +399,7 @@ class PlayBar extends React.Component {
                             <View style={{
                                 height: 15,
                                 width: 15,
-                                backgroundColor: '#FFF',
+                                backgroundColor: tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white',
                                 borderRadius: 100,
                                 position: 'absolute'
                             }}></View>

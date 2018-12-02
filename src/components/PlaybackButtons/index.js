@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
+import tinycolor from 'tinycolor2'
 
 import { MaterialIndicator } from 'react-native-indicators';
 
@@ -51,7 +52,7 @@ export class PlaybackButtons extends Component {
                         {
                             !this.props.testing &&
                             <SvgUri style={{ 
-                                backgroundColor: 'white', 
+                                backgroundColor: tinycolor(color).isLight() ? 'black' : 'white', 
                                 height: 50, 
                                 width: 50, 
                                 justifyContent: 'center', 
