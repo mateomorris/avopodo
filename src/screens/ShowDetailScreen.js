@@ -62,6 +62,7 @@ class ShowDetailScreen extends React.Component {
     }
 
     componentDidMount = () => {
+        this.props.actions.setShowAsNew(this.props.id, false)
         this._getEpisodeList(this.props.id);
         this._onRefresh()
     }

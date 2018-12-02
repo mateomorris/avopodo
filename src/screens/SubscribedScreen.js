@@ -40,6 +40,7 @@ class SubscribedScreen extends React.Component {
               style={{
 
               }}
+              newIndicator={item.newEpisodesAvailable}
               art={item.imageHighRes} 
               color={item.color} 
               key={index} 
@@ -86,6 +87,7 @@ class SubscribedScreen extends React.Component {
                   style={{
 
                   }}
+                  newIndicator={item.newEpisodesAvailable}
                   name={item.title}
                   art={item.imageHighRes} 
                   color={item.color} 

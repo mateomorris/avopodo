@@ -25,7 +25,8 @@ import {
     SYNC_PLAY_STATUS,
     UPDATE_PLAY_QUEUE,
     UPDATE_NOW_PLAYING,
-    UPDATE_PLAYLIST_EPISODE_LIST
+    UPDATE_PLAYLIST_EPISODE_LIST,
+    SET_SHOW_AS_NEW
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -50,6 +51,20 @@ const initialState = {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case SET_SHOW_AS_NEW: 
+            return {
+                ...state,
+                subscribedShows: state.subscribedShows.map((show) => {
+                    if (show.id == action.showId) {
+                        return {
+                            ...show,
+                            newEpisodesAvailable: action.setNew
+                        }
+                    } else {
+                        return show
+                    }
+                })
+            }
         case UPDATE_PLAYLIST_EPISODE_LIST: 
             
             const newPlaylistEpisodeListDuration = action.newEpisodeList.map((episode) => {

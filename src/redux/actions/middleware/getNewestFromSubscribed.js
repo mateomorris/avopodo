@@ -1,5 +1,5 @@
 import { checkIfNewEpisode, getEpisodeListForShow } from './index'
-import { setNewestFromSubscribed } from '../finalware'
+import { setNewestFromSubscribed, setShowAsNew } from '../finalware'
 
 export function getNewestFromSubscribed() {
 
@@ -17,10 +17,12 @@ export function getNewestFromSubscribed() {
             // Collect Promises for each show that needs to fetch a fresh episode list
             let compiledEpisodeList = values.map((response) => {
                 if (response.newEpisodeAvailable) { 
+                    dispatch(setShowAsNew(response.show.id)) 
                     return dispatch(getEpisodeListForShow(response.show.id)).then(({ episodeList }) => {
                         return episodeList
                     })
                 } else {
+                    // dispatch(setShowAsNew(response.show.id)) 
                     return response.show.episodeList
                 }
             })

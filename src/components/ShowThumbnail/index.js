@@ -60,7 +60,7 @@ export default class ShowThumbnail extends React.Component {
 
     render() {
 
-        const { art, featured, color } = this.props; 
+        const { art, featured, color, newIndicator } = this.props; 
 
         return (
             <TouchableHighlight 
@@ -70,6 +70,25 @@ export default class ShowThumbnail extends React.Component {
                 <View
                     style={[styles.thumbnail, (featured ? styles.featured : ''), , {backgroundColor: color}]}
                 >
+                    {
+                        newIndicator &&
+                        <View 
+                            style={{ 
+                                backgroundColor: 'black', 
+                                borderBottomLeftRadius: 5,
+                                borderTopRightRadius: 5,
+                                paddingLeft: 5, 
+                                paddingRight: 5, 
+                                alignSelf: 'flex-start', 
+                                marginLeft: 5 ,
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                zIndex: 9
+                            }}>
+                            <Text style={{ color: 'white', fontWeight: '900', fontSize: 10 }}>New</Text>
+                        </View>
+                    }
                     <Text style={{
                         color: 'white',
                         fontSize: 18,
@@ -77,15 +96,6 @@ export default class ShowThumbnail extends React.Component {
                         textAlign: 'center',
                         padding: 10
                     }}>{ this.props.name ? this.props.name.match(/\b(\w)/g).join('') : '' }</Text>
-                    {/* <Image 
-                        style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            borderRadius: 5
-                        }}
-                        source={{uri: art, cache: 'force-cache'}} 
-                    /> */}
                     {
                         this.state.reStoreCompleted &&
                         <OfflineImage
@@ -96,7 +106,8 @@ export default class ShowThumbnail extends React.Component {
                                 width: '100%',
                                 height: '100%',
                                 borderRadius: 5,
-                                overflow: 'hidden'
+                                overflow: 'hidden',
+                                zIndex: 1
                             }}
                             source={{ uri : art }}
                         /> 
