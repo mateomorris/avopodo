@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TouchableHighli
 import LinearGradient from 'react-native-linear-gradient';
 import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
+import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 
 const styles = StyleSheet.create({
     containerOuter: { 
@@ -70,7 +71,8 @@ export default class PlaylistThumbnail extends React.Component {
 
     state = {
         pressStatus : false,
-        containerHeight: 0
+        containerHeight: 0,
+        reStoreCompleted: false
     }
 
     _handleRightPress = () => {
@@ -121,6 +123,22 @@ export default class PlaylistThumbnail extends React.Component {
         this.setState({ pressStatus: true });
     }
 
+    componentDidMount() {
+        OfflineImageStore.restore(
+            {
+                name: `show_art`,
+                // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
+                debugMode: true,
+            }, () => {
+                this.setState({ reStoreCompleted: true });
+
+                // Preload images
+                // Note: We recommend call this method on `restore` completion!
+                OfflineImageStore.preLoad(this.props.episodes.map(episode => episode.showImage));
+            }
+        )
+    }
+
     render() {
 
         const { icon, title, duration, episodes, testing } = this.props; 
@@ -165,7 +183,13 @@ export default class PlaylistThumbnail extends React.Component {
                                 {
                                     episodes ? episodes.slice(0,3).map((episode, index) => {
                                         return (
-                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
+                                            // <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
+                                            <OfflineImage
+                                                key={index}
+                                                resizeMode={'contain'}
+                                                style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]}
+                                                source={{ uri: episode.showImage }}
+                                            /> 
                                         )
                                     }) : null
                                 }
