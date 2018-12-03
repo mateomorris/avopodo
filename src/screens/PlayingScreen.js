@@ -320,7 +320,15 @@ class PlayingScreen extends React.Component {
               >
                 {nowPlaying.title}
               </MarqueeText>
-              <Text style={{color:'#93A8B3', textAlign: 'center'}}>{nowPlaying.showTitle}</Text>
+              <MarqueeText
+                style={{ color:'#93A8B3', textAlign: 'center' }}
+                marqueeOnStart
+                loop={false}
+                duration={3000}
+              >
+                {nowPlaying.showTitle}
+              </MarqueeText>
+              {/* <Text style={{color:'#93A8B3', textAlign: 'center'}}>{nowPlaying.showTitle}</Text> */}
             </TouchableOpacity>
           </View>
           <PlayProgressBar 

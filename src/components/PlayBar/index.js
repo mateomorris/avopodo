@@ -343,6 +343,8 @@ class PlayBar extends React.Component {
                 style={[{ 
                     width: '100%', 
                     overflow: 'hidden',
+                    borderTopLeftRadius : 7,
+                    borderTopRightRadius: 7,
                     backgroundColor: 'transparent',
                     transform: [
                         {

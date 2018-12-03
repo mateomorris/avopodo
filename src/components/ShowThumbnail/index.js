@@ -46,9 +46,9 @@ export default class ShowThumbnail extends React.Component {
     componentDidMount() {
         OfflineImageStore.restore(
         {
-        name: 'My_Image_gallery',
-        imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
-        debugMode: true,
+        name: `${this.props.id}_gallery`,
+        // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
+        // debugMode: true,
         }, () => {
             this.setState({ reStoreCompleted: true });
 
@@ -101,6 +101,9 @@ export default class ShowThumbnail extends React.Component {
                         <OfflineImage
                             key={art}
                             resizeMode={'contain'}
+                            onLoadEnd={(sourceUri) => {
+                                console.log('Loading finished for image with path: ', sourceUri)
+                            }}
                             style={{
                                 position: 'absolute',
                                 width: '100%',
