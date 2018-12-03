@@ -76,6 +76,10 @@ class PlaylistCreationScreen extends Component {
 
     }
 
+    componentDidMount() {
+        TextInput.defaultProps = { allowFontScaling: false }
+    }
+
     _renderShowAddtion() {
 
         return (
@@ -297,18 +301,6 @@ class PlaylistCreationScreen extends Component {
                                 color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
                             }}>Oldest</Text>
                         </Button>
-                        {/* <Button style={{
-                            flex: 1,
-                            marginRight: 10,
-                            fontSize: 10,
-                            backgroundColor: this.state.playFirst ==  'oldest' ? '#222' : 'white'
-                        }} onClick={() => {
-                            this.setState({ playFirst: 'random' })
-                        }}>
-                            <Text style={{
-                                color: this.state.playFirst ==  'oldest' ? 'white' : '#222'
-                            }}>Random</Text>
-                        </Button> */}
                         <Button style={{
                             flex: 1,
                             marginRight: 10,
@@ -320,6 +312,18 @@ class PlaylistCreationScreen extends Component {
                                 fontSize: 15,
                                 color: this.state.playFirst ==  'newest' ? 'white' : '#222'
                             }}>Newest</Text>
+                        </Button>
+                        <Button style={{
+                            flex: 1,
+                            marginRight: 10,
+                            backgroundColor: this.state.playFirst ==  'shuffle' ? '#222' : 'white'
+                        }} onClick={() => {
+                            this.setState({ playFirst: 'shuffle' })
+                        }}>
+                            <Text style={{
+                                fontSize: 15,
+                                color: this.state.playFirst ==  'shuffle' ? 'white' : '#222'
+                            }}>Shuffle</Text>
                         </Button>
                     </View>
                     <Text style={{

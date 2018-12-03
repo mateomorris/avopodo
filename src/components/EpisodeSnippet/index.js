@@ -120,9 +120,6 @@ export class EpisodeSnippet extends React.Component {
                     <OfflineImage
                         key={showImage}
                         resizeMode={'contain'}
-                        onLoadEnd={(sourceUri) => {
-                            console.log('Loading finished for image with path: ', sourceUri)
-                        }}
                         style={[
                             styles.thumbnail, 
                             {

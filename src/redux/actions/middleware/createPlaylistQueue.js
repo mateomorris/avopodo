@@ -43,10 +43,20 @@ export function createPlaylistQueue({ episodeLength, playFirst, releaseRange, sh
                 let episodeList = [].concat.apply([], values.map((showEpisodeList) => {
                     return showEpisodeList.episodeList
                 })).sort((a, b) => {
-                    return playFirst == 'newest' ? b.publishDate - a.publishDate :  a.publishDate - b.publishDate 
+                    console.log(playFirst)
+                    if (playFirst == 'newest') {
+                        return b.publishDate - a.publishDate
+                    } else if (playFirst == 'oldest') {
+                        return a.publishDate - b.publishDate
+                    } else {
+                        console.log('Shuffling array')
+                        return 0.5 - Math.random() // 
+                    }
                 }).filter((episode) => {
                     return episode.duration < episodeLengthNumeric
                 })
+
+                console.log(episodeList)
 
                 if (episodeList.length > 0) {
 

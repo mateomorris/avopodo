@@ -128,7 +128,7 @@ export default class PlaylistThumbnail extends React.Component {
             {
                 name: `show_art`,
                 // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
-                debugMode: true,
+                // debugMode: true,
             }, () => {
                 this.setState({ reStoreCompleted: true });
 
