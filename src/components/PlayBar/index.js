@@ -7,6 +7,7 @@ import SvgUri from 'react-native-svg-uri';
 import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import tinycolor from 'tinycolor2'
+import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 
 import PlayProgressIndicator from 'components/PlayProgressIndicator';
 import { MaterialIndicator } from 'react-native-indicators';
@@ -60,7 +61,8 @@ class PlayBar extends React.Component {
         height : new Animated.Value(Dimensions.get('window').height + 50),
         bottomSpacing : new Animated.Value(0),
         expanded: false,
-        tabHeight: 0
+        tabHeight: 0,
+        reStoreCompleted : false
     }
 
     componentDidUpdate() {
@@ -86,6 +88,20 @@ class PlayBar extends React.Component {
                 this.props.actions.togglePlayback();
             }
         })
+
+        OfflineImageStore.restore(
+            {
+                name: `show_art`,
+                // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
+                // debugMode: true,
+            }, () => {
+                this.setState({ reStoreCompleted: true });
+
+                // Preload images
+                // Note: We recommend call this method on `restore` completion!
+                OfflineImageStore.preLoad(this.props.state.nowPlaying.showImage);
+            }
+        )
     }
 
     componentDidUpdate() {
@@ -370,14 +386,31 @@ class PlayBar extends React.Component {
                                 backgroundColor: nowPlaying.showColor,
                                 borderRadius: 2
                             }}>
-                                <Image 
-                                    source={{ uri: nowPlaying.showImage, backgroundColor: nowPlaying.showColor }}
+                                {/* <Image 
+                                    source={{ uri: nowPlaying.showImage }}
                                     style={{
                                         height: 30,
                                         width: 30,
                                         borderRadius: 2
                                     }}
-                                />
+                                /> */}
+                                {
+                                    this.state.reStoreCompleted &&
+                                    <OfflineImage
+                                        key={nowPlaying.showImage}
+                                        resizeMode={'contain'}
+                                        onLoadEnd={(sourceUri) => {
+                                            console.log('Loading finished for image with path: ', sourceUri)
+                                        }}
+                                        style={{
+                                            height: 30,
+                                            width: 30,
+                                            borderRadius: 2,
+                                            backgroundColor: nowPlaying.showColor
+                                        }}
+                                        source={{ uri: nowPlaying.showImage }}
+                                    /> 
+                                }
                             </View>
                         </View>
                         <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}

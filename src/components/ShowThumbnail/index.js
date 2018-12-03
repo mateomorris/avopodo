@@ -46,7 +46,7 @@ export default class ShowThumbnail extends React.Component {
     componentDidMount() {
         OfflineImageStore.restore(
         {
-        name: `${this.props.id}_gallery`,
+        name: `show_art`,
         // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
         // debugMode: true,
         }, () => {
