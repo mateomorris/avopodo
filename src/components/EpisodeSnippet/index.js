@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
+import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 
 import icons from 'assets/generalIcons';
 
@@ -26,7 +27,8 @@ export class EpisodeSnippet extends React.Component {
         titleHeight : null,
         SVGs : {
             play : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>button-play</title><path fill="black" d="M12,24A12,12,0,1,0,0,12,12.013,12.013,0,0,0,12,24Zm4.812-11.5a.939.939,0,0,1-.587.824L10.14,16.366a1.185,1.185,0,0,1-.531.133.919.919,0,0,1-.488-.136,1.032,1.032,0,0,1-.459-.911V9.546a.974.974,0,0,1,1.478-.914l6.085,3.043A.939.939,0,0,1,16.812,12.5Z"/></svg>`,
-        }
+        },
+        reStoreCompleted : false
     }
 
     _handlePress = () => {
@@ -91,6 +93,22 @@ export class EpisodeSnippet extends React.Component {
         )
     }
 
+    componentDidMount() {
+        OfflineImageStore.restore(
+            {
+                name: `show_art`,
+                // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
+                // debugMode: true,
+            }, () => {
+                this.setState({ reStoreCompleted: true });
+
+                // Preload images
+                // Note: We recommend call this method on `restore` completion!
+                OfflineImageStore.preLoad(this.props.data.showImage);
+            }
+        )
+    }
+
     render() {
 
         const { playing } = this.props
@@ -99,7 +117,21 @@ export class EpisodeSnippet extends React.Component {
         return (
             <TouchableOpacity style={{ flexDirection: 'row', height: 120 }} onPress={() => {this.props.onPress()}}>
                 <TouchableOpacity style={[styles.container, {}]} onPress={() => { this.props.onThumbnailPress() }}>
-                    <ImageBackground 
+                    <OfflineImage
+                        key={showImage}
+                        resizeMode={'contain'}
+                        onLoadEnd={(sourceUri) => {
+                            console.log('Loading finished for image with path: ', sourceUri)
+                        }}
+                        style={[
+                            styles.thumbnail, 
+                            {
+                                backgroundColor: showColor,
+                            }]
+                        }
+                        source={{ uri: showImageHighRes || showImage }}
+                    /> 
+                    {/* <ImageBackground 
                         source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} 
                         style={[
                             styles.thumbnail, 
@@ -139,7 +171,7 @@ export class EpisodeSnippet extends React.Component {
                                 <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
                             </View>
                         }
-                    </ImageBackground>
+                    </ImageBackground> */}
                 </TouchableOpacity>
                 <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => { this.props.onDetailPress() }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 10}}>
