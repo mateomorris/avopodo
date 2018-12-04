@@ -1,7 +1,6 @@
 import { SUBSCRIBE_TO_SHOW } from '../actionTypes'
 
 export function subscribeToShow(show) {
-    console.log(show)
     return {
       type: SUBSCRIBE_TO_SHOW,
       id : show.id,

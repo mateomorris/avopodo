@@ -90,7 +90,6 @@ class PlaylistsScreen extends React.Component {
     return (
       <View>
         {playlists.map((item, index) => {
-          console.log(item)
           return (
             <PlaylistThumbnail 
               key={index} 

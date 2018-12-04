@@ -47,13 +47,22 @@ export class EpisodeSnippet extends React.Component {
     _getDate = (ms) => {
         const theDate = new Date(ms)
         const currentDate = new Date();
+        const yesterday = new Date();
+
+        yesterday.setDate(currentDate.getDate() - 1)
 
         const month = theDate.toLocaleString('en-us', { month: "long" })
         const day = theDate.getDate()
         const year = theDate.getFullYear();
 
+        console.log(currentDate.getDate(), theDate.getDate())
+
         // Only show the year if it's past
-        if (year == currentDate.getFullYear()) {
+        if (currentDate.toDateString() == theDate.toDateString()) {
+            return 'Today';
+        } else if (yesterday.toDateString() == theDate.toDateString()) {
+            return 'Yesterday';
+        } else if (year == currentDate.getFullYear()) {
             return `${month} ${day}`;
         } else {
             return `${month} ${day}, ${year}`;
@@ -128,47 +137,6 @@ export class EpisodeSnippet extends React.Component {
                         }
                         source={{ uri: showImageHighRes || showImage }}
                     /> 
-                    {/* <ImageBackground 
-                        source={{uri: showImageHighRes || showImage, cache: 'force-cache'}} 
-                        style={[
-                            styles.thumbnail, 
-                            {
-                                backgroundColor: showColor,
-                            }]}
-                        >
-                        {
-                            this.props.active &&
-                            this._renderOverlay()
-                        }
-                        {
-                            !this.props.testing &&
-                            <SvgUri style={{
-                                    height: 20,
-                                    width: 20,
-                                    position: 'absolute',
-                                    right: 5,
-                                    bottom: 5
-                                }} width="20" height="20" svgXmlData={icons.play} fill={'#EEE'} fillAll={true}/>
-                        }
-                        {
-                            !this.props.active &&
-                            <View 
-                                style={{ 
-                                    backgroundColor: 'black', 
-                                    borderBottomLeftRadius: 5,
-                                    borderTopRightRadius: 5,
-                                    paddingLeft: 5, 
-                                    paddingRight: 5, 
-                                    alignSelf: 'flex-start', 
-                                    marginLeft: 5 ,
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: 0
-                                }}>
-                                <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
-                            </View>
-                        }
-                    </ImageBackground> */}
                 </TouchableOpacity>
                 <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => { this.props.onDetailPress() }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 10}}>

@@ -526,7 +526,8 @@ function reducer(state = initialState, action) {
                 description: action.description,
                 publisher : action.publisher,
                 imageHighRes: action.imageHighRes,
-                itunesId : action.itunesId
+                itunesId : action.itunesId,
+                newEpisodesAvailable : true
             }
             return {
                 ...state, 
