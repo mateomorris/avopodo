@@ -51,6 +51,9 @@ class PlaylistDetailScreen extends Component {
         // this.setState({
         //     shows: [...shows, ...restOfSubscribedShows]
         // })
+
+        TextInput.defaultProps = { allowFontScaling: false }
+
     }
 
     _getShowList = () => {

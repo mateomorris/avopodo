@@ -101,9 +101,6 @@ export default class ShowThumbnail extends React.Component {
                         <OfflineImage
                             key={art}
                             resizeMode={'contain'}
-                            onLoadEnd={(sourceUri) => {
-                                console.log('Loading finished for image with path: ', sourceUri)
-                            }}
                             style={{
                                 position: 'absolute',
                                 width: '100%',

@@ -399,9 +399,6 @@ class PlayBar extends React.Component {
                                     <OfflineImage
                                         key={nowPlaying.showImage}
                                         resizeMode={'contain'}
-                                        onLoadEnd={(sourceUri) => {
-                                            console.log('Loading finished for image with path: ', sourceUri)
-                                        }}
                                         style={{
                                             height: 30,
                                             width: 30,

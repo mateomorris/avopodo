@@ -128,7 +128,7 @@ export default class PlaylistThumbnail extends React.Component {
             {
                 name: `show_art`,
                 // imageRemoveTimeout: 30, // expire image after 30 seconds, default is 3 days if you don't provide this property.
-                // debugMode: true,
+                debugMode: true,
             }, () => {
                 this.setState({ reStoreCompleted: true });
 
@@ -182,14 +182,15 @@ export default class PlaylistThumbnail extends React.Component {
                             <View style={[{ width: '100%', flexDirection: 'row-reverse', justifyContent: 'flex-start' }]}>
                                 {
                                     episodes ? episodes.slice(0,3).map((episode, index) => {
+                                        console.log(episode, this.props.playlist.name)
                                         return (
-                                            // <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
-                                            <OfflineImage
-                                                key={index}
-                                                resizeMode={'contain'}
-                                                style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]}
-                                                source={{ uri: episode.showImage }}
-                                            /> 
+                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
+                                            // <OfflineImage
+                                            //     key={index}
+                                            //     resizeMode={'contain'}
+                                            //     style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]}
+                                            //     source={{ uri: episode.showImage }}
+                                            // /> 
                                         )
                                     }) : null
                                 }
@@ -254,9 +255,6 @@ export default class PlaylistThumbnail extends React.Component {
                                         />
                                         <SvgUri style={
                                             {
-                                                // position: 'absolute',
-                                                // right: 5,
-                                                // bottom: 5,
                                                 zIndex: 99999
                                         }} width="35" height="35" source={this.props.playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg') } fill={'#EEE'} fillAll={true}/>
                                     </View>
