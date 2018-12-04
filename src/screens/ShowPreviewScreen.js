@@ -93,27 +93,47 @@ class ShowPreviewScreen extends Component {
                     { description }
                 </Text>
                 <View style={{
+                    flexDirection: 'row',
                     alignItems: 'flex-end',
-                    marginBottom: 50,
+                    justifyContent: 'flex-end',
+                    marginBottom: 20,
                     marginTop: 20
                 }}>
                         {
                             this.state.subscribed ? 
                             <Button 
+                                style={{
+                                    marginRight: 10
+                                }}
                                 onPress={() => {
                                     this.setState({
                                         subscribed: false
                                     });
+                                    Navigation.dismissOverlay(this.props.componentId);
                                 }}
                                 label={'Unsubscribe'}
                                 icon={require('assets/bookmark.png')}
                             />
+                            // <Button 
+                            //     style={{
+                            //         marginRight: 10
+                            //     }}
+                            //     onPress={() => {
+                            //         // this.setState({
+                            //         //     subscribed: true
+                            //         // });
+                            //         this._goToShow();
+                            //     }}
+                            //     label={'Go to Show'}
+                            //     icon={require('assets/next.png')}
+                            // />
                             : 
                             <Button 
                                 onPress={() => {
                                     this.setState({
                                         subscribed: true
                                     });
+                                    Navigation.dismissOverlay(this.props.componentId);
                                 }}
                                 label={'Subscribe'}
                                 icon={require('assets/bookmark.png')}

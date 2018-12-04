@@ -23,7 +23,7 @@ export default class Button extends React.Component {
     render() {
 
         return (
-            <TouchableOpacity style={{
+            <TouchableOpacity style={[{
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingTop: 5,
@@ -32,7 +32,7 @@ export default class Button extends React.Component {
                 borderWidth: 2,
                 borderRadius: 35,
                 flexDirection: 'row'
-            }} onPress={() => {
+            }, this.props.style]} onPress={() => {
                 this._handlePress()
             }}>
                 <Text style={{

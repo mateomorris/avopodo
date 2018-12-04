@@ -218,7 +218,6 @@ class DiscoverScreen extends React.Component {
   }
 
   _getShowDetails = (show) => {
-    console.log(show)
     this.props.actions.getShowDetails(show.id).then((result) => {
       Navigation.showOverlay({
         component: {
