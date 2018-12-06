@@ -32,39 +32,21 @@ const styles = StyleSheet.create({
 class ShowDetailScreen extends React.Component {
 
     state = {
+        loaded: false,
         refreshing : false,
         firstEpisodeReached: false,
         bufferedPosition: null,
         playingPosition: null,
-        episodes: [
-            {
-                title: 'Episode Title',
-                description: 'Epsidode',
-                duration: '',
-                publishDate: '4/29',
-                listenedTo: 0
-            },
-            {
-                title: 'Episode Title',
-                description: 'Epsidode',
-                duration: '',
-                publishDate: '',
-                listenedTo: 0
-            },
-            {
-                title: 'Episode Title',
-                description: 'Epsidode',
-                duration: '',
-                publishDate: '',
-                listenedTo: 0
-            }
-        ]
+        episodes: []
     }
 
     componentDidMount = () => {
         this.props.actions.setShowAsNew(this.props.id, false)
         this._getEpisodeList(this.props.id);
         this._onRefresh()
+        this.setState({
+            loaded : true
+        })
     }
 
     _handleEpisodeThumbnailPress = (episode) => {
@@ -273,19 +255,22 @@ class ShowDetailScreen extends React.Component {
                     color={color}
                     onPress={() => {this._showShowDetailLightbox(this.props)}}
                 />
-                <ScrollView 
-                    style={{ flexDirection: 'column' }} 
-                    onScroll={(e) => this._checkIfBottomReached(e)}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}
-                            onRefresh={this._onRefresh}
-                        />
-                    }
-                >
-                    { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) }
-                    { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
-                </ScrollView>
+                {
+                    this.state.loaded &&
+                    <ScrollView 
+                        style={{ flexDirection: 'column' }} 
+                        onScroll={(e) => this._checkIfBottomReached(e)}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                            />
+                        }
+                    >
+                        { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) }
+                        { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
+                    </ScrollView>
+                }
             </View>    
         );
 

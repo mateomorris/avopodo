@@ -420,7 +420,7 @@ class PlayBar extends React.Component {
                         </View>
                         {/* </TouchableOpacity> */}
                         <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
-                            <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={30} animationDuration={2000} />
+                            <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={26} animationDuration={2000} />
                             <View style={{
                                 height: 27,
                                 width: 27,

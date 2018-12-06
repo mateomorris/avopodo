@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Animated } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
@@ -28,11 +28,8 @@ export class EpisodeSnippet extends React.Component {
         SVGs : {
             play : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>button-play</title><path fill="black" d="M12,24A12,12,0,1,0,0,12,12.013,12.013,0,0,0,12,24Zm4.812-11.5a.939.939,0,0,1-.587.824L10.14,16.366a1.185,1.185,0,0,1-.531.133.919.919,0,0,1-.488-.136,1.032,1.032,0,0,1-.459-.911V9.546a.974.974,0,0,1,1.478-.914l6.085,3.043A.939.939,0,0,1,16.812,12.5Z"/></svg>`,
         },
-        reStoreCompleted : false
-    }
-
-    _handlePress = () => {
-        this.props.onPress();
+        reStoreCompleted : false,
+        pressedScale: new Animated.Value(1)
     }
 
     _normalizeDuration = (duration) => {
@@ -69,7 +66,7 @@ export class EpisodeSnippet extends React.Component {
         }
     }
 
-    _renderOverlay = () => {
+    _renderActiveOverlay = () => {
         return (
             <View 
                 style={{ 
@@ -102,6 +99,46 @@ export class EpisodeSnippet extends React.Component {
         )
     }
 
+    _renderInactiveOverlay = (duration) => {
+        return (
+            <View 
+                style={{ 
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    zIndex: 9,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }} 
+            >
+                <View 
+                    style={{ 
+                        backgroundColor: 'black', 
+                        borderBottomLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        paddingLeft: 5, 
+                        paddingRight: 5, 
+                        alignSelf: 'flex-start', 
+                        marginLeft: 5 ,
+                        position: 'absolute',
+                        right: 0,
+                        top: 0
+                    }}>
+                    <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
+                </View>
+                <SvgUri style={
+                    {
+                        height: 20,
+                        width: 20,
+                        position: 'absolute',
+                        right: 3,
+                        bottom: 3,
+                        zIndex: 99999
+                }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+            </View>
+        )
+    }
+
     componentDidMount() {
         OfflineImageStore.restore(
             {
@@ -118,26 +155,104 @@ export class EpisodeSnippet extends React.Component {
         )
     }
 
+    _handlePress = () => {
+        // this.props.onPress();
+        Animated.spring(            
+            this.state.pressedScale,         
+            {
+                toValue: 0.95, 
+                speed: 20,
+                useNativeDriver: true
+            }    
+        ).start(() => {
+            // Navigation.dismissOverlay(this.props.componentId)
+        });
+    }
+
+    _handleInitialPress = () => {
+        Animated.spring(            
+            this.state.pressedScale,         
+            {
+                toValue: 0.95, 
+                speed: 50,
+                useNativeDriver: true
+            }    
+        ).start(() => {
+            // Navigation.dismissOverlay(this.props.componentId)
+        });
+    }
+
+    _handleRelease = () => {
+        this.props.onThumbnailPress();
+        Animated.timing(            
+            this.state.pressedScale,         
+            {
+                toValue: 1, 
+                duration: 500,
+                delay: 1000,
+                useNativeDriver: true
+            }    
+        ).start(() => {
+            // this.props.onThumbnailPress();
+        });
+    }
+
+    _handleCancel = () => {
+        Animated.spring(            
+            this.state.pressedScale,         
+            {
+                toValue: 1, 
+                speed: 10,
+                useNativeDriver: true
+            }    
+        ).start(() => {
+            // this.props.onPress();
+        });
+    }
+
     render() {
 
         const { playing } = this.props
         const { title, showImage, showImageHighRes, duration, description, publishDate, showColor } = this.props.data; 
 
         return (
-            <TouchableOpacity style={{ flexDirection: 'row', height: 120 }} onPress={() => {this.props.onPress()}}>
-                <TouchableOpacity style={[styles.container, {}]} onPress={() => { this.props.onThumbnailPress() }}>
-                    <OfflineImage
-                        key={showImage}
-                        resizeMode={'contain'}
-                        style={[
-                            styles.thumbnail, 
-                            {
-                                backgroundColor: showColor,
-                            }]
+            <View style={{ flexDirection: 'row', height: 120 }}>
+                <Animated.View style={[styles.container, { 
+                    transform: [{
+                        scale: this.state.pressedScale
+                    }]
+                }]}
+                onStartShouldSetResponder={() => true}
+                onResponderGrant={() => {
+                    this._handlePress()
+                }}
+                onResponderRelease={() => {
+                    this._handleRelease()
+                }}
+                onResponderTerminate={() => {
+                    this._handleCancel()
+                }}
+                >
+                    <View style={styles.thumbnail}>
+                        <OfflineImage
+                            key={showImage}
+                            resizeMode={'contain'}
+                            style={[
+                                {
+                                    height : '100%',
+                                    width: '100%',
+                                    backgroundColor: showColor,
+                                }]
+                            }
+                            source={{ uri: showImageHighRes || showImage }}
+                        /> 
+                        {
+                            this.props.active ?
+                            this._renderActiveOverlay() :
+                            this._renderInactiveOverlay(duration)
                         }
-                        source={{ uri: showImageHighRes || showImage }}
-                    /> 
-                </TouchableOpacity>
+                    </View>
+                </Animated.View>
                 <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => { this.props.onDetailPress() }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 10}}>
                         <Text 
@@ -160,7 +275,7 @@ export class EpisodeSnippet extends React.Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
         );
 
     }
