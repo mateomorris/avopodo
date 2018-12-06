@@ -419,25 +419,31 @@ class PlayBar extends React.Component {
                             </View>
                         </View>
                         {/* </TouchableOpacity> */}
-                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ justifyContent: 'center', alignItems: 'center', zIndex: 9, paddingTop: 0 }}>
-                            <MaterialIndicator color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={26} animationDuration={2000} />
+                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ zIndex: 9 }}>
                             <View style={{
-                                height: 27,
-                                width: 27,
-                                backgroundColor: `${nowPlaying.showColor}7F`,
-                                borderRadius: 100,
-                                position: 'absolute'
-                            }}></View>
-                            <View style={{
-                                height: 15,
-                                width: 15,
-                                backgroundColor: tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white',
-                                borderRadius: 100,
-                                position: 'absolute'
-                            }}></View>
-                            {
-                                <SvgUri style={{height: 25, width: 25, position: 'absolute' }} width="25" height="25" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={nowPlaying.showColor} fillAll={true}/>
-                            }
+                                justifyContent: 'center', 
+                                alignItems: 'center', 
+                                height: '100%'
+                            }}>
+                                <MaterialIndicator style={{ position: 'absolute' }} color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={26} animationDuration={2000} />
+                                <View style={{
+                                    height: 35,
+                                    width: 35,
+                                    backgroundColor: `${nowPlaying.showColor}7F`,
+                                    borderRadius: 100,
+                                    position: 'absolute'
+                                }}></View>
+                                <View style={{
+                                    height: 15,
+                                    width: 15,
+                                    backgroundColor: tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white',
+                                    borderRadius: 100,
+                                    position: 'absolute'
+                                }}></View>
+                                {
+                                    <SvgUri width="33" height="33" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={nowPlaying.showColor} fillAll={true}/>
+                                }
+                            </View>
                         </TouchableOpacity>
                     </Animated.View>
                     <Animated.View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: Dimensions.get('window').height, width: '100%' }}>
