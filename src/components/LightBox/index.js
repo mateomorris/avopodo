@@ -9,7 +9,7 @@ export class LightBox extends Component {
     state = {
         containerHeight : 0, // used to calculate how tall the touchable area under the content is
         viewHeight : 0, // this also
-        opacity : new Animated.Value(0)
+        opacity : new Animated.Value(0),
     }
 
     componentDidMount() {
@@ -25,6 +25,7 @@ export class LightBox extends Component {
     }
 
     _closeLightbox = () => {
+
         Animated.timing(            
             this.state.opacity,         
             {
@@ -35,7 +36,6 @@ export class LightBox extends Component {
         ).start(() => {
             Navigation.dismissOverlay(this.props.componentId)
         });
-    
     }
 
 
@@ -43,21 +43,30 @@ export class LightBox extends Component {
 
         let window = Dimensions.get('window');
 
-        // if (!this.props.open) {
-        //     this._closeLightbox()
-        // }
-
         return(
             <Animated.View style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: Platform.OS == 'ios' ?  'rgba(0,0,0,.5)' : 'rgba(0,0,0,.85)',
+                // backgroundColor: Platform.OS == 'ios' ?  'rgba(0,0,0,.5)' : 'rgba(0,0,0,.85)',
                 padding: 10,
-                paddingTop: 37.5,
+                // paddingTop: 37.5,
+                paddingTop: 0,
                 paddingBottom: 37.5,
                 alignItems: 'center',
                 opacity: this.state.opacity
             }}>
+                <Image 
+                    style={{ 
+                        width: 25, 
+                        height: 25,
+                        position: 'absolute',
+                        top: 25,
+                        right: 20,
+                        zIndex: 9
+                    }} 
+                    pointerEvents="none"
+                    source={require('assets/x.png')} 
+                />
                 <BlurView
                     style={{
                         position: "absolute",
@@ -69,7 +78,8 @@ export class LightBox extends Component {
                 />
                 <View 
                 style={{
-                    maxHeight: window.height - 30
+                    maxHeight: window.height - 30,
+                    paddingTop: 60
                 }}
                 onLayout={(e) => {
                     this.setState({
@@ -77,7 +87,7 @@ export class LightBox extends Component {
                     })
                 }}
                 >
-                    <TouchableOpacity style={{
+                    {/* <TouchableOpacity style={{
                         paddingTop: 10,
                         paddingBottom: 10,
                         alignItems: 'flex-end'
@@ -85,11 +95,11 @@ export class LightBox extends Component {
                         this._closeLightbox()
                     }}>
                         <Image style={{ width: 25, height: 25 }} source={require('assets/x.png')} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <ScrollView style={[{
                         width: window.width - 40,
                         borderRadius: 5
-                    }]}>
+                    }]} pointerEvents="box-none">
                         <View 
                         style={[{
                             backgroundColor: 'rgba(0,0,0,.5)',
@@ -105,23 +115,36 @@ export class LightBox extends Component {
                         >
                             { this.props.children }
                         </View>
-                        <TouchableOpacity 
+                        <View 
                             style={{
                                 flex: 1,
                                 height: this.state.containerHeight - this.state.viewHeight - 30
                             }}
-                            onPress={() => {
+                            onStartShouldSetResponder={() => {
+                                this.background.setOpacityTo(0.2, 0.5);
+                                return true
+                            }}
+                            onResponderRelease={() => {
                                 this._closeLightbox()
-                            }}>
-                        </TouchableOpacity>
+                            }}
+                            onResponderTerminate={() => {
+                                this._closeLightbox()
+                            }}
+                            >
+                        </View>
                     </ScrollView>
                     <TouchableOpacity 
+                    ref={component => this.background = component}
                     style={{
                         position: 'absolute',
                         left: -50,
                         right: -50,
+                        top: 0,
+                        bottom: 0,
                         height: window.height,
-                        zIndex: -1
+                        zIndex: -1,
+                        opacity: 1,
+                        backgroundColor: 'rgba(0,0,0,.5)',
                     }} onPress={() => {
                         this._closeLightbox()
                     }}>
