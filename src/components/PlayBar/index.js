@@ -20,6 +20,8 @@ import TrackPlayer from 'react-native-track-player';
 import trackDetails from 'utilities/tracks';
 import * as actions from 'actions'
 
+import { CircleButton } from 'components/Button'
+import icons from 'assets/generalIcons';
 
 const styles = StyleSheet.create({
     container: {
@@ -373,7 +375,16 @@ class PlayBar extends React.Component {
                     />
                     <Animated.View 
                     style={{
-                        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', padding: 10, paddingTop: 0, paddingBottom: 0, height: 50, zIndex: 1, backgroundColor: 'black'
+                        flexDirection: 'row', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'flex-start', 
+                        paddingRight: 10, 
+                        paddingLeft: 7, 
+                        paddingTop: 0, 
+                        paddingBottom: 0, 
+                        height: 50, 
+                        zIndex: 1, 
+                        backgroundColor: 'black'
                     }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
                         <View
                             style={{
@@ -384,25 +395,17 @@ class PlayBar extends React.Component {
                         >
                             <View style={{
                                 backgroundColor: nowPlaying.showColor,
-                                borderRadius: 2
+                                borderRadius: 2,
+                                overflow: 'hidden',
                             }}>
-                                {/* <Image 
-                                    source={{ uri: nowPlaying.showImage }}
-                                    style={{
-                                        height: 30,
-                                        width: 30,
-                                        borderRadius: 2
-                                    }}
-                                /> */}
                                 {
                                     this.state.reStoreCompleted &&
                                     <OfflineImage
                                         key={nowPlaying.showImage}
                                         resizeMode={'contain'}
                                         style={{
-                                            height: 30,
-                                            width: 30,
-                                            borderRadius: 2,
+                                            height: 35,
+                                            width: 35,
                                             backgroundColor: nowPlaying.showColor
                                         }}
                                         source={{ uri: nowPlaying.showImage }}
@@ -410,7 +413,7 @@ class PlayBar extends React.Component {
                                 }
                             </View>
                         </View>
-                        <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
+                        <View style={{ paddingLeft: 5, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
                             {...this.panResponder.panHandlers} 
                         >
                             <View style={{ alignItems: 'flex-start', flex: 1 }}>
@@ -425,24 +428,15 @@ class PlayBar extends React.Component {
                                 alignItems: 'center', 
                                 height: '100%'
                             }}>
-                                <MaterialIndicator style={{ position: 'absolute' }} color={ bufferingStatus ? nowPlaying.showColor : 'transparent' } size={26} animationDuration={2000} />
-                                <View style={{
-                                    height: 35,
-                                    width: 35,
-                                    backgroundColor: `${nowPlaying.showColor}7F`,
-                                    borderRadius: 100,
-                                    position: 'absolute'
-                                }}></View>
-                                <View style={{
-                                    height: 15,
-                                    width: 15,
-                                    backgroundColor: tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white',
-                                    borderRadius: 100,
-                                    position: 'absolute'
-                                }}></View>
-                                {
-                                    <SvgUri width="33" height="33" source={(playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg'))} fill={nowPlaying.showColor} fillAll={true}/>
-                                }
+                                <CircleButton 
+                                    onPress={() => {
+                                        togglePlayback()
+                                    }}
+                                    icon={playing ? icons.pause : icons.play}
+                                    size={30}
+                                    spinner={false}
+                                    color={nowPlaying.showColor}
+                                />
                             </View>
                         </TouchableOpacity>
                     </Animated.View>
