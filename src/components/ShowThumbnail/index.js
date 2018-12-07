@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, Alert, Dimensions, ImageBackground, Animated } from 'react-native';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
+import { animate } from 'helpers/animations'
 
 const thumbnailSize = ( Dimensions.get('window').width / 3 ) - (10 / 3)
 
@@ -37,61 +38,59 @@ export default class ShowThumbnail extends React.Component {
 
     state = {
         reStoreComplete : false,
-        pressedScale: new Animated.Value(1)
+        pressedScale: new Animated.Value(1),
+        shadowOpacity: new Animated.Value(0.75)
     }
 
     _handlePress = () => {
-        Animated.spring(            
-            this.state.pressedScale,         
-            {
-                toValue: 0.95, 
-                speed: 20,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // Navigation.dismissOverlay(this.props.componentId)
-        });
-        // this.props.onPress();
-    }
 
-    _handleInitialPress = () => {
-        Animated.spring(            
-            this.state.pressedScale,         
+        animate([
             {
-                toValue: 0.95, 
-                speed: 50,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // Navigation.dismissOverlay(this.props.componentId)
-        });
+                property : this.state.shadowOpacity,
+                toValue : 0.25,
+            }, 
+            {
+                property : this.state.pressedScale,
+                toValue : 0.98
+            }
+        ]);
     }
 
     _handleRelease = () => {
+
         this.props.onPress();
-        Animated.timing(            
-            this.state.pressedScale,         
+
+        animate([
             {
-                toValue: 1, 
-                duration: 500,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // this.props.onPress();
-        });
+                property : this.state.pressedScale,
+                toValue : 1,
+                animation : 'timing',
+                duration : 500
+            },
+            {
+                property: this.state.shadowOpacity,
+                toValue : 0.75,
+                animation : 'timing',
+                duration: 500
+            }
+        ])
+
     }
 
     _handleCancel = () => {
-        Animated.spring(            
-            this.state.pressedScale,         
+        animate([
             {
-                toValue: 1, 
-                speed: 10,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // this.props.onPress();
-        });
+                property : this.state.pressedScale,
+                toValue : 1,
+                speed : 10
+            },
+            {
+                property : this.state.shadowOpacity,
+                toValue : 0.75,
+                animation : 'timing',
+                duration : 500
+            }
+        ])
     }
 
     componentDidMount() {
@@ -102,9 +101,6 @@ export default class ShowThumbnail extends React.Component {
         // debugMode: true,
         }, () => {
             this.setState({ reStoreCompleted: true });
-
-            // Preload images
-            // Note: We recommend call this method on `restore` completion!
             OfflineImageStore.preLoad(this.props.art);
         })
     }
@@ -114,13 +110,9 @@ export default class ShowThumbnail extends React.Component {
         const { art, featured, color, newIndicator } = this.props; 
 
         return (
-            <TouchableHighlight 
+            <Animated.View 
                 underlayColor={color}
-                // onPress={() => {this._handlePress()}} 
-                // onResponderGrant={() => {
-                //     Alert.alert('yeah')
-                // }}
-                style={[styles.container, this.props.style]}>
+                style={[styles.container, this.props.style, { shadowOpacity : this.state.shadowOpacity }]}>
                 <Animated.View
                     onStartShouldSetResponder={() => true}
                     onResponderGrant={() => {
@@ -186,7 +178,7 @@ export default class ShowThumbnail extends React.Component {
                         /> 
                     }
                 </Animated.View>
-            </TouchableHighlight>
+            </Animated.View>
         );
 
     }

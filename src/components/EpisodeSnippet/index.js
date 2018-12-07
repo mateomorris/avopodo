@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Anima
 import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
+import { animate } from 'helpers/animations'
 
 import icons from 'assets/generalIcons';
 
@@ -51,8 +52,6 @@ export class EpisodeSnippet extends React.Component {
         const month = theDate.toLocaleString('en-us', { month: "long" })
         const day = theDate.getDate()
         const year = theDate.getFullYear();
-
-        console.log(currentDate.getDate(), theDate.getDate())
 
         // Only show the year if it's past
         if (currentDate.toDateString() == theDate.toDateString()) {
@@ -156,58 +155,37 @@ export class EpisodeSnippet extends React.Component {
     }
 
     _handlePress = () => {
-        // this.props.onPress();
-        Animated.spring(            
-            this.state.pressedScale,         
+        animate([
             {
-                toValue: 0.95, 
-                speed: 20,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // Navigation.dismissOverlay(this.props.componentId)
-        });
-    }
-
-    _handleInitialPress = () => {
-        Animated.spring(            
-            this.state.pressedScale,         
-            {
-                toValue: 0.95, 
-                speed: 50,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // Navigation.dismissOverlay(this.props.componentId)
-        });
+                property : this.state.pressedScale,
+                toValue : 0.95,
+                speed : 20
+            }
+        ])
     }
 
     _handleRelease = () => {
         this.props.onThumbnailPress();
-        Animated.timing(            
-            this.state.pressedScale,         
+
+       animate([
             {
-                toValue: 1, 
-                duration: 500,
-                delay: 1000,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // this.props.onThumbnailPress();
-        });
+                property : this.state.pressedScale,
+                toValue : 1,
+                animation: 'timing',
+                delay : 1000
+            }
+        ])
     }
 
     _handleCancel = () => {
-        Animated.spring(            
-            this.state.pressedScale,         
+       animate([
             {
-                toValue: 1, 
-                speed: 10,
-                useNativeDriver: true
-            }    
-        ).start(() => {
-            // this.props.onPress();
-        });
+                property : this.state.pressedScale,
+                toValue : 1,
+                animation: 'spring',
+                speed : 10
+            }
+        ])
     }
 
     render() {

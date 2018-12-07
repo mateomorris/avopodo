@@ -3,6 +3,7 @@ import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert, Ani
 import { Navigation } from "react-native-navigation";
 import { BlurView } from 'react-native-blur';
 import * as Animatable from 'react-native-animatable';
+import { animate } from 'helpers/animations'
 
 export class LightBox extends Component {
 
@@ -13,27 +14,24 @@ export class LightBox extends Component {
     }
 
     componentDidMount() {
-        // Shrink to normal
-        Animated.timing(            
-            this.state.opacity,         
+        // Fade in
+        animate([
             {
-                toValue:1, 
-                duration: 200,
-                useNativeDriver: true
-            }    
-        ).start();
+                property : this.state.opacity,
+                toValue : 1,
+                duration : 200,
+            }
+        ]);
     }
 
     _closeLightbox = () => {
-
-        Animated.timing(            
-            this.state.opacity,         
+        animate([
             {
-                toValue:0, 
-                duration: 200,
-                useNativeDriver: true
-            }    
-        ).start(() => {
+                property : this.state.opacity,
+                toValue : 0,
+                duration : 200
+            }
+        ], () => {
             Navigation.dismissOverlay(this.props.componentId)
         });
     }
@@ -60,7 +58,7 @@ export class LightBox extends Component {
                         width: 25, 
                         height: 25,
                         position: 'absolute',
-                        top: 25,
+                        top: 35,
                         right: 20,
                         zIndex: 9
                     }} 
@@ -79,7 +77,7 @@ export class LightBox extends Component {
                 <View 
                 style={{
                     maxHeight: window.height - 30,
-                    paddingTop: 60
+                    paddingTop: 70
                 }}
                 onLayout={(e) => {
                     this.setState({
