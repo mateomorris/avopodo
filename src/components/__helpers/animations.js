@@ -21,7 +21,10 @@ export function animate (properties, callback = (() => {})) {
                 toValue, 
                 animation = 'spring', 
                 duration = 500, 
-                speed = 10,
+                tension,
+                friction,
+                speed,
+                bounciness,
                 delay = 0
             }) => {
             return Animated[animation](            
@@ -31,6 +34,9 @@ export function animate (properties, callback = (() => {})) {
                     speed,
                     duration,
                     delay,
+                    tension,
+                    friction,
+                    bounciness,
                     useNativeDriver: true
                 }    
             )

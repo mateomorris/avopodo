@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState, Animated } from 'react-native';
+import { Animated, Platform, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Dimensions, AppState } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BlurView } from 'react-native-blur';
@@ -15,6 +15,7 @@ import firebase from 'react-native-firebase';
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlayProgressBar from 'components/PlayProgressBar';
 import { PlaybackButtons } from 'components/PlaybackButtons';
+import { animate } from 'helpers/animations'; 
 
 import * as actions from 'actions'
 import NowPlayingHeader from 'components/NowPlayingHeader';
@@ -33,6 +34,8 @@ class PlayingScreen extends React.Component {
       2 : new Animated.Value(1)
     },
     carouselActive : false,
+    bottomButtonWiggle : new Animated.Value(0),
+    indicatorOpacity : new Animated.Value(0)
   }
 
   _handleFavoritePress = () => {
@@ -245,6 +248,23 @@ class PlayingScreen extends React.Component {
 
   }
 
+  _pingCloseButton = () => {
+
+    animate([
+      {
+        property : this.state.indicatorOpacity,
+        toValue : 1
+      }
+    ], () => {
+      animate([
+        {
+          property : this.state.indicatorOpacity,
+          toValue : 0
+        }
+      ])
+    })
+
+  }
 
   render() {
 
@@ -263,6 +283,16 @@ class PlayingScreen extends React.Component {
           flex: 1,
           paddingTop: this._isIphoneX() ? 50 : 0
       }}>
+        <TouchableOpacity style={{
+          position : 'absolute',
+          top: 0,
+          left: 0,
+          height: 80,
+          width: 80,
+          zIndex : 99999
+        }} onPress={() => {
+          this._pingCloseButton()
+        }}></TouchableOpacity>
         <NowPlayingHeader 
           componentId={this.props.componentId} 
           playlist={activePlaylist}
@@ -355,7 +385,7 @@ class PlayingScreen extends React.Component {
             buffering={bufferingStatus}
           />
         </View>
-        <View style={{
+        <Animated.View style={{
           position: 'absolute',
           bottom: 0
         }}>
@@ -363,8 +393,9 @@ class PlayingScreen extends React.Component {
             componentId={this.props.componentId}
             onPress={() => { this.props.onClose() }}
             color={nowPlaying.showColor}
+            indicatorOpacity={this.state.indicatorOpacity}
           />
-        </View>
+        </Animated.View>
       </View>
       || null
     );

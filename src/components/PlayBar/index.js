@@ -21,6 +21,8 @@ import trackDetails from 'utilities/tracks';
 import * as actions from 'actions'
 
 import { CircleButton } from 'components/Button'
+import { animate } from 'helpers/animations'
+import { TAB_HEIGHT, DIMENSIONS } from 'helpers/constants'
 import icons from 'assets/generalIcons';
 
 const styles = StyleSheet.create({
@@ -60,7 +62,7 @@ class PlayBar extends React.Component {
         },
         initialPlay: null,
         opacity: new Animated.Value(1),
-        height : new Animated.Value(Dimensions.get('window').height + 50),
+        height : new Animated.Value(DIMENSIONS.height + 50),
         bottomSpacing : new Animated.Value(0),
         expanded: false,
         tabHeight: 0,
@@ -78,8 +80,8 @@ class PlayBar extends React.Component {
     componentDidMount() {
 
         this.setState({
-            tabHeight: this._getTabHeight(),
-            window: Dimensions.get('window')
+            tabHeight: TAB_HEIGHT,
+            window: DIMENSIONS
         }, () => {
             console.log(this.state.tabHeight)
         })
@@ -112,93 +114,48 @@ class PlayBar extends React.Component {
         }
     }
 
-    _getTabHeight = () => {
-        const isIphoneX = () => {
-            let dimensions;
-            if (Platform.OS !== 'ios') {
-                return false;
-            }
-            if (Platform.isPad || Platform.isTVOS) {
-                return false;
-            }
-            dimensions = Dimensions.get('window');
-            if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
-                return true;
-            }
-            if (dimensions.height === 896 || dimensions.width === 896) { 
-                return true;
-            }
-            return false;
-        }
-
-        if (isIphoneX()) {
-            // Tab height is 84
-            return 82 * -1
-        } else if (Platform.OS === 'ios') {
-            // Tab height is 50
-            return 48 * -1
-        } else {
-            return 55 * -1
-        }
-    }
-
     _becomeVisible = () => {
-
-
-        // iPhone X: 375, 812
-        // iPhone 8 Plus: 414, 736
-        // iPhone 8: 667, 375
 
         this.state.bottomSpacing.setValue(this.state.tabHeight)
 
-
-        // Show PlayBar 
-        Animated.timing(this.state.height, {
-            toValue: this.state.window.height,
-            duration: 300,
-            delay: 200,
-            useNativeDriver: true
-        }).start();
-
-        this.setState({
-            visible : true
+        animate([
+            {
+                property : this.state.height,
+                toValue: this.state.window.height,
+                duration: 300,
+                delay: 200,  
+                animation : 'timing'
+            }
+        ], () => {
+            this.setState({
+                visible : true
+            })
         })
     }
 
     _closeModal = () => {
-        
-        // Shrink to normal
-        Animated.spring(            
-            this.state.height,         
-            {
-                toValue: this.state.window.height, 
-                tension: 0,
-                useNativeDriver: true
-            }    
-        ).start();
 
-        // Add bottom spacing
-        Animated.spring(            
-            this.state.bottomSpacing,         
+        animate([
             {
-                toValue: this.state.tabHeight, 
-                tension: 0,
-                useNativeDriver: true
-            }    
-        ).start();
-
-        // Show PlayBar 
-        Animated.timing(this.state.opacity, {
-            toValue: 1,
-            duration: 500,
-            delay: 200,
-            useNativeDriver: true
-        }).start(() => {
-        this.setState({
-            expanded: false,
-            triggered: false
+                property : this.state.height,
+                toValue: this.state.window.height
+            },
+            {
+                property : this.state.bottomSpacing,
+                toValue: this.state.tabHeight
+            },
+            {
+                property : this.state.opacity,
+                animation : 'timing',
+                duration: 500,
+                delay: 200,
+            }
+        ], () => {
+            this.setState({
+                expanded: false,
+                triggered: false
+            })
         })
-    })
 
     }
 
@@ -207,38 +164,41 @@ class PlayBar extends React.Component {
             triggered: true
         });
 
-        // Grow to full height
-        Animated.spring(            
-            this.state.height,         
+        animate([
             {
-                toValue:0, 
-                tension: 5,
-                useNativeDriver: true
-            }    
-        ).start();
-
-        // Remove bottom spacing
-        Animated.spring(            
-            this.state.bottomSpacing,         
+                property : this.state.height,
+                toValue : 0,
+                speed : 20,
+                bounciness : 0
+            },
             {
-                toValue: 0, 
-                tension: 5,
-                useNativeDriver: true
-            }    
-        ).start();
-
-
-        // Hide PlayBar 
-        Animated.timing(this.state.opacity, {
-            toValue: 0,
-            duration: 500,
-            delay: 200,
-            useNativeDriver: true
-        }).start(() => {
+                property : this.state.bottomSpacing,
+                toValue : 0,
+                speed : 20,
+                bounciness : 0
+            },
+            // {
+            //     property : this.state.opacity,
+            //     toValue: 0,
+            //     animation : 'timing',
+            //     duration: 500,
+            //     delay: 200,
+            // }
+        ], () => {
             this.setState({
                 expanded: true
             })
+
+            animate([
+                {
+                    property: this.state.opacity,
+                    toValue : 0,
+                    animation : 'timing',
+                    duration : 500
+                }
+            ])
         })
+
     }
 
     _removePlayBar = () => {
@@ -315,7 +275,6 @@ class PlayBar extends React.Component {
         });
         
         Navigation.dismissOverlay(this.props.componentId)
-
     }
 
 
@@ -325,9 +284,9 @@ class PlayBar extends React.Component {
         } else if (this.state.triggered) {
             return 0
         } else if (!this.props.state.active) {
-            return Dimensions.get('window').height
+            return DIMENSIONS.height
         } else {
-            return Dimensions.get('window').height - (60);
+            return DIMENSIONS.height - (60);
         }
     }
 
@@ -373,7 +332,7 @@ class PlayBar extends React.Component {
                     <PlayProgressIndicator 
                         color={nowPlaying.showColor}
                     />
-                    <Animated.View 
+                    <View 
                     style={{
                         flexDirection: 'row', 
                         justifyContent: 'space-between', 
@@ -439,15 +398,15 @@ class PlayBar extends React.Component {
                                 />
                             </View>
                         </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: Dimensions.get('window').height, width: '100%' }}>
+                    </View>
+                    <View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: DIMENSIONS.height, width: '100%' }}>
                         <PlayingScreen 
                             expanded={this.state.expanded} 
                             onClose={() => {
                                 this._closeModal()
                             }}
                         />
-                    </Animated.View>
+                    </View>
                 </Animated.View>
             </Animated.View>
 

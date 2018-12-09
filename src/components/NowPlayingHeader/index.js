@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert} from 'react-native';
+import { Animated, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
@@ -13,6 +13,9 @@ import playlistIcons from 'assets/newPlaylistIcons'
 import * as actions from 'actions'
 
 export class NowPlayingHeader extends React.Component {
+
+  state = {
+  }
 
   _handleFavoritePress = () => {
 
@@ -38,10 +41,6 @@ export class NowPlayingHeader extends React.Component {
   }
 
   render() {
-
-    this.state = {
-
-    };
 
     return (
         <View style={{

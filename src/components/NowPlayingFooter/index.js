@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView , Alert, Animated} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
@@ -30,12 +30,23 @@ class NowPlayingFooter extends React.Component {
         }}>
           <View style={{
               flexDirection: 'row',
-              justifyContent: 'flex-start'
+              justifyContent: 'flex-start',
+              paddingBottom : 10
           }}>
             <View style={{
                 padding: 10,
-                paddingBottom: 30
+                // paddingBottom: 30,
             }}>
+                <Animated.View style={{
+                  backgroundColor : 'yellow',
+                  opacity: this.props.indicatorOpacity,
+                  position : 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  borderRadius : 500,
+                }}></Animated.View>
                 {
                   <SvgUri style={{transform: [{rotate:'180deg'}]}} width="20" height="20" source={require('assets/interface-icons/up.svg')} fill={'#EEE'} fillAll={true}/>
                 }
