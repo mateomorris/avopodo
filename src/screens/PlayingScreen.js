@@ -17,6 +17,7 @@ import ShowThumbnail from 'components/ShowThumbnail';
 import PlayProgressBar from 'components/PlayProgressBar';
 import { PlaybackButtons } from 'components/PlaybackButtons';
 import { animate } from 'helpers/animations'; 
+import icons from 'assets/generalIcons';
 
 import * as actions from 'actions'
 import NowPlayingHeader from 'components/NowPlayingHeader';
@@ -327,6 +328,33 @@ class PlayingScreen extends React.Component {
               // firstItem={activeQueueItem}
             />
           }
+          <TouchableOpacity style={{
+            // backgroundColor: 'yellow',
+            height: '100%',
+            width: 50,
+            position: 'absolute',
+            right: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }} onPress={() => {
+            this._carousel.snapToNext()
+          }}>
+            <View style={{
+              padding: 20,
+              paddingLeft: 10,
+              paddingRight: 30,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              borderRadius: 5,
+              overflow: 'hidden'
+            }}>
+              <SvgUri style={{ 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  borderRadius: 500,
+                  zIndex: 0,
+              }} width={20} height={20} svgXmlData={icons.nextTrack} fill={'white'} fillAll={true}/>
+            </View>
+          </TouchableOpacity>
         </GestureRecognizer>
 
         <View style={{
