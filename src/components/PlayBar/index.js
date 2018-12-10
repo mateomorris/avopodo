@@ -393,7 +393,7 @@ class PlayBar extends React.Component {
                                     }}
                                     icon={playing ? icons.pause : icons.play}
                                     size={30}
-                                    spinner={false}
+                                    spinner={this.props.state.bufferingStatus}
                                     color={nowPlaying.showColor}
                                 />
                             </View>

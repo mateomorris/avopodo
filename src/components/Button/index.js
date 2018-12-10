@@ -66,9 +66,6 @@ export class CircleButton extends React.Component {
             <TouchableOpacity style={[
                     style,
                     {justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: size, height: size }]} onPress={this._handlePress}>
-                <MaterialIndicator color={ spinner ? color : 'transparent' } size={size} animationDuration={3000} style={{
-                    position: 'absolute',
-                }}/>
                 <View style={{ 
                     borderRadius: 500,
                     justifyContent: 'center', 
@@ -77,6 +74,14 @@ export class CircleButton extends React.Component {
                     position: 'absolute',
                     padding: size / 10,
                 }}>
+                    {
+                        spinner &&
+                        <MaterialIndicator color={ color } size={size * 1.2} animationDuration={3000} 
+                        style={{
+                            position: 'absolute',
+                            zIndex: 10
+                        }}/>
+                    }
                     <View style={{
                         height: size, 
                         width: size, 
@@ -85,6 +90,7 @@ export class CircleButton extends React.Component {
                         flex: 1,
                         backgroundColor: color, 
                         borderRadius: 500,
+                        zIndex: 20
                     }}>
                     {
                         !this.props.testing &&
