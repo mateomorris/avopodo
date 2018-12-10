@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from 'react-native';
 import { MaterialIndicator } from 'react-native-indicators';
 import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
+import { animate } from 'helpers/animations';
 
 const styles = StyleSheet.create({
     container: {
@@ -54,26 +55,125 @@ export default class Button extends React.Component {
 }
 
 export class CircleButton extends React.Component {
-    _handlePress = () => {
-        this.props.onPress();
+
+    state = {
+        pressed : false,
+        pressedInnerScale : new Animated.Value(1),
+        pressedOuterScale : new Animated.Value(1)
     }
+
+    _handlePress = () => {
+
+        this.setState({
+            pressed : true
+        })
+
+        animate([
+            {
+                property: this.state.pressedInnerScale,
+                toValue : 1.1,
+                tension: 1000,
+                friction: 100000
+            }, 
+            {
+                property: this.state.pressedOuterScale,
+                toValue : 0.9,
+                tension: 1000,
+                friction: 100000
+            }
+        ], () => {
+
+        })
+    }
+
+    _handleRelease = () => {
+
+        this.setState({
+            pressed : false
+        })
+
+
+        animate([
+            {
+                property: this.state.pressedInnerScale,
+                toValue : 1,
+                tension: 1000,
+                friction: 100000
+            }, 
+            {
+                property: this.state.pressedOuterScale,
+                toValue : 1,
+                tension: 1000,
+                friction: 100000
+            }
+        ], () => {
+
+        })
+
+        this.props.onPress();
+
+    }
+
+    _handleCancel = () => {
+
+        this.setState({
+            pressed : false
+        })
+
+        animate([
+            {
+                property: this.state.pressedInnerScale,
+                toValue : 1,
+                tension: 1000,
+                friction: 100000
+            }, 
+            {
+                property: this.state.pressedOuterScale,
+                toValue : 1,
+                tension: 1000,
+                friction: 100000
+            }
+        ], () => {
+
+        })
+    }
+
 
     render() {
 
         let { spinner, color, size, icon, style } = this.props
 
+        let { pressed } = this.state
+
         return (
-            <TouchableOpacity style={[
-                    style,
-                    {justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: size, height: size }]} onPress={this._handlePress}>
-                <View style={{ 
+            <View style={[
+                style,
+                {justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: size, height: size }]} 
+                onPress={this._handlePress}>
+                <Animated.View style={{ 
                     borderRadius: 500,
                     justifyContent: 'center', 
                     alignItems: 'center', 
                     backgroundColor: `${color}7F`,
                     position: 'absolute',
                     padding: size / 10,
-                }}>
+                    transform: [
+                        {
+                            scale: this.state.pressedOuterScale
+                        }
+                    ]
+                }}
+                onStartShouldSetResponder={() => true}
+                onResponderGrant={() => {
+                    this._handlePress()
+                }}
+                onResponderRelease={() => {
+                    this._handleRelease()
+                }}
+                onResponderTerminate={() => {
+                    this._handleCancel()
+                }}
+                >
                     {
                         spinner &&
                         <MaterialIndicator color={ color } size={size * 1.2} animationDuration={3000} 
@@ -82,7 +182,7 @@ export class CircleButton extends React.Component {
                             zIndex: 10
                         }}/>
                     }
-                    <View style={{
+                    <Animated.View style={{
                         height: size, 
                         width: size, 
                         justifyContent: 'center',
@@ -90,7 +190,12 @@ export class CircleButton extends React.Component {
                         flex: 1,
                         backgroundColor: color, 
                         borderRadius: 500,
-                        zIndex: 20
+                        zIndex: 20,
+                        transform: [
+                            {
+                                scale: this.state.pressedInnerScale
+                            }
+                        ]
                     }}>
                     {
                         !this.props.testing &&
@@ -111,9 +216,9 @@ export class CircleButton extends React.Component {
                             15
                         </Text>
                     }
-                    </View>
-                </View>
-            </TouchableOpacity>
+                    </Animated.View>
+                </Animated.View>
+            </View>
         );
 
     }

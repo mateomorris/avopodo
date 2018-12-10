@@ -80,9 +80,6 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
         const { position, duration, bufferedPosition, sliderTimePosition, sliderValue } = this.state;
 
-
-        console.log(bufferedPosition / duration)
-
         let trackProgress = this.getTrackProgress(position, duration)
 
         return (
@@ -179,7 +176,6 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                             TrackPlayer.getPosition().then((position) => {
                                 // new position = total duration (in seconds) * new percentage / total percentage (1)
                                 let newPosition = Math.floor(duration * this.state.sliderValue) || null
-                                console.log(newPosition, position, this.state.sliderValue, trackProgress)
                                 if (newPosition && trackProgress) {
                                     TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
                                 } 
