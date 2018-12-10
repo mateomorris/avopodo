@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BlurView } from 'react-native-blur';
 import SvgUri from 'react-native-svg-uri';
+import tinycolor from 'tinycolor2';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Carousel from 'react-native-snap-carousel';
@@ -363,12 +364,12 @@ class PlayingScreen extends React.Component {
           </View>
           <PlayProgressBar 
             color={nowPlaying.showColor}
+            textColor={tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white'}
             onProgressUpdate={(position) => {
               updateEpisodePlaybackPosition(nowPlaying.id, position);
             }} 
             onFinishTrack={() => { 
               // Dispatch action to mark the track as played
-              console.log('ON FINISH TRACK')
               this._markEpisodeAsPlayed(nowPlaying.id, this._carousel)
             }}
             onStartNewTrack={() => {
