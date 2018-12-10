@@ -61,7 +61,12 @@ class GenreDetailScreen extends React.Component {
     ]
   };
 
+  componentDidMount() {
+
+  }
+
   _subscribeToShow = (show) => {
+
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
       return subscribedShowId == show.id
     })
@@ -80,6 +85,7 @@ class GenreDetailScreen extends React.Component {
         this.props.actions.getDetailsAndSubscribe(show)
       })
     }
+
   }
 
   _checkIfSubscribed = (id) => {
@@ -135,7 +141,7 @@ class GenreDetailScreen extends React.Component {
                 this._subscribeToShow(item)
               }}>
                 <Image 
-                  source={ (this._checkIfSubscribed(item.id) ? require('assets/bookmark-black.png'): require('assets/bookmark.png')) } 
+                  source={ this._getSubscribeStatus(item.id) } 
                   style={{ width: 25, height: 25 }}
                 />
               </TouchableOpacity>
@@ -182,7 +188,6 @@ class GenreDetailScreen extends React.Component {
           if (!this.state.firstEpisodeReached) {
               this.setState({loadingAdditionalEpisodes : true})
               this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then((moreShows) => {
-                console.log(this.state)
                 this.setState({ 
                   shows : this.state.shows.concat(moreShows),
                   genreShowsPage : this.state.genreShowsPage + 1
@@ -234,12 +239,6 @@ class GenreDetailScreen extends React.Component {
             )}
           />
           { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
-
-
-
-          {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Trending Shows</Text>
-          { this._renderFavorites(this.state.favorites) }
-          { this._renderPlaylists(this.state.playlists) } */}
         </ScrollView>
       </View>
     );
