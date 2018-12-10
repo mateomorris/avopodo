@@ -78,7 +78,10 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
     render() {
 
-        const { position, duration, sliderTimePosition, sliderValue } = this.state;
+        const { position, duration, bufferedPosition, sliderTimePosition, sliderValue } = this.state;
+
+
+        console.log(bufferedPosition / duration)
 
         let trackProgress = this.getTrackProgress(position, duration)
 
@@ -118,58 +121,72 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                         fontWeight: '600'
                     }}>{ sliderTimePosition }</Text>
                 </Animated.View>
-                <Slider
-                    style={{
-                        width: '100%',
-                    }}
-                    trackStyle={[scrubber.track, {
-                        backgroundColor: 'rgba(250,250,250,0.1)'
-                    }]}
-                    thumbStyle={[scrubber.thumb, {
-                        backgroundColor: this.props.color,
-                        shadowColor: this.props.color,
-                        shadowOpacity: 0.5
-                    }]}
-                    minimumTrackTintColor={this.props.color}
-                    thumbTouchSize={{width: 50, height: 40}}
-                    value={this.state.settingtime ? sliderValue : trackProgress}
-                    onValueChange={(value) => {
-                        animate([
-                            {
-                                property : this.state.timeTellerOpacity,
-                                toValue : 1,
-                                speed : 200
-                            }
-                        ])
-                        this.setState({ 
-                            settingtime : true, 
-                            sliderTimePosition : this.formatTime(duration * value),
-                            sliderValue : value,
-                            timeTellerPosition : value * (this.state.width - 50)
-                        })
-                    }}
-                    onSlidingComplete={() => {
-                        animate([
-                            {
-                                property : this.state.timeTellerOpacity,
-                                toValue : 0
-                            }
-                        ])
-                        setTimeout(() => {
-                            this.setState({
-                                settingtime : false
+                <View style={{
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <View style={{
+                        height: 3,
+                        width: `${(bufferedPosition / duration) * 100}%`,
+                        backgroundColor: `${this.props.color}40`,
+                        position: 'absolute',
+                        left : 0
+                    }}>
+                    </View>
+                    <Slider
+                        style={{
+                            width: '100%',
+                        }}
+                        trackStyle={[scrubber.track, {
+                            backgroundColor: 'rgba(250,250,250,0.1)'
+                        }]}
+                        thumbStyle={[scrubber.thumb, {
+                            backgroundColor: this.props.color,
+                            shadowColor: this.props.color,
+                            shadowOpacity: 0.5
+                        }]}
+                        minimumTrackTintColor={this.props.color}
+                        thumbTouchSize={{width: 50, height: 40}}
+                        value={this.state.settingtime ? sliderValue : trackProgress}
+                        onValueChange={(value) => {
+                            animate([
+                                {
+                                    property : this.state.timeTellerOpacity,
+                                    toValue : 1,
+                                    speed : 200
+                                }
+                            ])
+                            this.setState({ 
+                                settingtime : true, 
+                                sliderTimePosition : this.formatTime(duration * value),
+                                sliderValue : value,
+                                timeTellerPosition : value * (this.state.width - 50)
                             })
-                        }, 1000)
-                        TrackPlayer.getPosition().then((position) => {
-                            // new position = total duration (in seconds) * new percentage / total percentage (1)
-                            let newPosition = Math.floor(duration * this.state.sliderValue) || null
-                            console.log(newPosition, position, this.state.sliderValue, trackProgress)
-                            if (newPosition && trackProgress) {
-                                TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
-                            } 
-                        })
-                    }}
-                />
+                        }}
+                        onSlidingComplete={() => {
+                            animate([
+                                {
+                                    property : this.state.timeTellerOpacity,
+                                    toValue : 0
+                                }
+                            ])
+                            setTimeout(() => {
+                                this.setState({
+                                    settingtime : false
+                                })
+                            }, 1000)
+                            TrackPlayer.getPosition().then((position) => {
+                                // new position = total duration (in seconds) * new percentage / total percentage (1)
+                                let newPosition = Math.floor(duration * this.state.sliderValue) || null
+                                console.log(newPosition, position, this.state.sliderValue, trackProgress)
+                                if (newPosition && trackProgress) {
+                                    TrackPlayer.seekTo(position * this.state.sliderValue / trackProgress);
+                                } 
+                            })
+                        }}
+                    />
+                </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 10 }}>
                     <Text style={{ fontSize: 12, color: '#93A8B3' }}>{this.formatTime(position)}</Text>
                     <Text style={{ fontSize: 12, color: '#93A8B3' }}>{this.formatTime(duration)}</Text>
