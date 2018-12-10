@@ -4,6 +4,7 @@ import Button from 'antd-mobile-rn/lib/button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
+import { MaterialIndicator } from 'react-native-indicators';
 
 import { PlaylistPicker } from 'components/PlaylistPicker'
 import IconPanel from 'components/IconPanel'
@@ -34,7 +35,8 @@ class PlaylistCreationScreen extends Component {
         shows: [],
         releaseRange: 'week',
         episodeLength: 'ten-minutes',
-        playFirst: null
+        playFirst: null,
+        creatingPlaylist : false
     }
 
 
@@ -125,7 +127,15 @@ class PlaylistCreationScreen extends Component {
     }
 
     _createPlaylist = () => {
+        this.setState({
+            creatingPlaylist : true
+        })
         this.props.actions.createPlaylistQueue(this.state).then((response) => {
+
+            this.setState({
+                creatingPlaylist : false
+            })
+
             if (response) {
                 this.props.actions.subscribeToPlaylist(this.state)
                 this.props.actions.setPlaylistQueue(this.state.playlistId, response.episodeList, response.episodeListDuration)
@@ -145,9 +155,24 @@ class PlaylistCreationScreen extends Component {
 
     render() {
 
-        return(
+        return (
             <KeyboardAvoidingView behavior="padding">
                 <LightBox componentId={this.props.componentId} style={{
+                    
+                }}>
+                    {
+                        this.state.creatingPlaylist ? 
+                        this.renderLoadingScreen() : 
+                        this.renderCreationScreen()
+                    }
+                </LightBox>
+            </KeyboardAvoidingView>
+        )
+    }
+
+    renderCreationScreen = () => {
+        return (
+                <View style={{
                     paddingBottom: 25
                 }}>
                     <Text style={{
@@ -261,11 +286,11 @@ class PlaylistCreationScreen extends Component {
                                 value: 'thirty-minutes'
                             },
                             {
-                                label: 'One hour',
+                                label: 'one hour',
                                 value: 'an-hour'
                             },
                             {
-                                label: 'An eternity',
+                                label: 'an eternity',
                                 value: 'an-eternity'
                             }
                         ]}
@@ -417,8 +442,30 @@ class PlaylistCreationScreen extends Component {
                             </Text>
                         </Button>
                     </View>
-                </LightBox>
-            </KeyboardAvoidingView>
+                </View>
+        )
+    }
+
+    renderLoadingScreen = () => {
+        return (
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingTop: 20,
+                paddingBottom: 30,
+                paddingLeft: 20,
+                paddingRight: 20
+            }}>
+                <MaterialIndicator color={ 'white' } size={100} animationDuration={3000} 
+                style={{
+                    padding: 50
+                }}/>
+                <Text style={{
+                    fontSize: 25,
+                    fontWeight: '600',
+                    color: 'white'
+                }}>Building your station,{`\n`}hang tight</Text>
+            </View>
         )
     }
 }
