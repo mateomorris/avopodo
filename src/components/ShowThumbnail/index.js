@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, Alert, Dimensions, I
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 import { animate } from 'helpers/animations'
 
+import { TouchableView } from 'components/Button'
+
 const thumbnailSize = ( Dimensions.get('window').width / 3 ) - (10 / 3)
 
 const styles = StyleSheet.create({
@@ -113,16 +115,12 @@ export default class ShowThumbnail extends React.Component {
             <Animated.View 
                 underlayColor={color}
                 style={[styles.container, this.props.style, { shadowOpacity : this.state.shadowOpacity }]}>
-                <Animated.View
-                    onStartShouldSetResponder={() => true}
-                    onResponderGrant={() => {
+                <TouchableView
+                    onInitialPress={() => {
                         this._handlePress()
                     }}
-                    onResponderRelease={() => {
-                        this._handleRelease()
-                    }}
-                    onResponderTerminate={() => {
-                        this._handleCancel()
+                    onRelease={(completed) => {
+                        completed ? this._handleRelease() : this._handleCancel()
                     }}
                     style={[
                         styles.thumbnail, 
@@ -177,7 +175,7 @@ export default class ShowThumbnail extends React.Component {
                             source={{ uri : art }}
                         /> 
                     }
-                </Animated.View>
+                </TouchableView>
             </Animated.View>
         );
 

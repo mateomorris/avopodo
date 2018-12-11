@@ -1,18 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, TouchableWithoutFeedback, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import SvgUri from 'react-native-svg-uri';
+import LinearGradient from 'react-native-linear-gradient';
 
 import playlistIcons from 'assets/newPlaylistIcons'
 import generalIcons from 'assets/generalIcons'
 
+import { TouchableView } from 'components/Button'
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import PlayBar from 'components/PlayBar';
 
+import {animate} from 'helpers/animations'
 import * as actions from 'actions'
 
 class PlaylistsScreen extends React.Component {
@@ -128,15 +131,29 @@ class PlaylistsScreen extends React.Component {
 
   }
 
-  _handleNewPlaylistsPress = (subscribedShows) => {
+  _handleNewStationInitialPress = () => {
+    animate([
+      {
+        property : this.state.newStationOpacity,
+        toValue : 0
+      },
+      {
+        property : this.state.newStationScale,
+        toValue : 0.99
+      }
+    ])
+  }
 
-    if (subscribedShows.length >= 2) {
+  _handleNewStationPress = () => {
+    this._resetNewStationButton();
+
+    if (this.props.subscribedShows.length >= 2) {
 
       Navigation.showOverlay({
         component: {
           name: 'example.PlaylistCreationScreen',
           passProps: { 
-            subscribedShows
+            subscribedShows : this.props.subscribedShows
           }, // simple serializable object that will pass as props to the lightbox (optional)
           options: {
             overlay: {
@@ -151,6 +168,18 @@ class PlaylistsScreen extends React.Component {
     }
   }
 
+  _resetNewStationButton = () => {
+    animate([
+      {
+        property : this.state.newStationOpacity,
+        toValue : 0.35
+      },
+      {
+        property : this.state.newStationScale,
+        toValue : 1
+      }
+    ])
+  }
 
   handleViewRef = ref => this.view = ref;
   
@@ -161,7 +190,9 @@ class PlaylistsScreen extends React.Component {
     this.state = {
       favorites: [],
       playlists: [],
-      homeFeed: []
+      homeFeed: [],
+      newStationOpacity : new Animated.Value(0.35),
+      newStationScale : new Animated.Value(1)
     };
 
     let { subscribedShows } = this.props;
@@ -172,49 +203,61 @@ class PlaylistsScreen extends React.Component {
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 10, paddingRight: 10 }}>
             { this._renderPlaylists(this.props.playlists, this.props.nowPlaying, this.props.activePlaylist) }
-            <View style={{
+            <TouchableView style={{
               backgroundColor: 'black',
-              marginTop: 5,
+              marginTop: 10,
               marginRight: 5,
               marginLeft: 5,
               borderRadius: 5,
+              overflow: 'hidden',
               backgroundColor: '#D8D8D8',
+              position: 'relative',
+              paddingTop: 20,
+              paddingBottom: 20,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 5,
+              overflow: 'visible',
+              shadowColor: 'black',
+              shadowOffset: {
+                  width: 0,
+                  height: 0
+              },
+              shadowRadius: 3,
+              shadowOpacity: this.state.newStationOpacity,
+              transform : [
+                { scale : this.state.newStationScale }
+              ]
+            }} onInitialPress={() => {
+              this._handleNewStationInitialPress()
+            }} onRelease={(completed) => {
+              completed ?
+              this._handleNewStationPress(this.props.subscribedShows) : 
+              this._resetNewStationButton()
             }}>
-            <TouchableOpacity style={{
-                backgroundColor: '#D8D8D8',
-                paddingTop: 20,
-                paddingBottom: 20,
-                paddingLeft: 15,
-                paddingRight: 15,
-                borderRadius: 5
-            }} onPress={() => {
-              this._handleNewPlaylistsPress(subscribedShows)
-            }}>
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: '#D8D8D8',
-              }}>
-                  <SvgUri 
-                      style={{ 
-                        paddingRight: 5
-                      }} 
-                      width="20" 
-                      height="20" 
-                      svgXmlData={generalIcons['plus']} 
-                      fill={'#666666'} 
-                      fillAll={true}
-                  />
-                <Text style={{
-                  fontWeight: '800',
-                  fontSize: 17,
-                  color: '#666666',
+                <View style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}>
-                  Add a New Station
-                </Text>
-              </View>
-            </TouchableOpacity>
-            </View>
+                    <SvgUri 
+                        style={{ 
+                          paddingRight: 5
+                        }} 
+                        width="20" 
+                        height="20" 
+                        svgXmlData={generalIcons['plus']} 
+                        fill={'#444'} 
+                        fillAll={true}
+                    />
+                  <Text style={{
+                    fontWeight: '800',
+                    fontSize: 17,
+                    color: '#444',
+                  }}>
+                    Make a New Station
+                  </Text>
+                </View>
+              </TouchableView>
           </View>
         </ScrollView>
       </View>

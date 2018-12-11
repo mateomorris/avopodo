@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated, Alert } from 'react-native';
 import { MaterialIndicator } from 'react-native-indicators';
 import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
@@ -17,6 +17,37 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.75
     },
 });
+
+export class TouchableView extends React.Component {
+    render() {
+        return (
+            <Animated.View
+                onStartShouldSetResponder={() => true}
+                onResponderGrant={() => {
+                    this.props.onInitialPress()
+                }}
+                onResponderRelease={() => {
+                    this.props.onRelease(true)
+                }}
+                onResponderTerminate={() => {
+                    this.props.onRelease(false)
+                }}
+                style={this.props.style}
+            >
+                { this.props.children }
+            </Animated.View>
+        )
+    }
+}
+
+TouchableView.defaultProps = {
+    onInitialPress : () => {
+        Alert.alert('Set onInitialPress')
+    },
+    onRelease : (completed) => {
+        Alert.alert('Set onRelease ' + completed)
+    },
+}
 
 export default class Button extends React.Component {
 
