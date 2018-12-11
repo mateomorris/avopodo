@@ -214,7 +214,7 @@ class PlaylistsScreen extends React.Component {
               position: 'relative',
               paddingTop: 20,
               paddingBottom: 20,
-              paddingLeft: 15,
+              paddingLeft: 27,
               paddingRight: 15,
               borderRadius: 5,
               overflow: 'visible',
@@ -245,7 +245,7 @@ class PlaylistsScreen extends React.Component {
                         }} 
                         width="20" 
                         height="20" 
-                        svgXmlData={generalIcons['plus']} 
+                        svgXmlData={generalIcons['station']} 
                         fill={'#444'} 
                         fillAll={true}
                     />
@@ -253,8 +253,9 @@ class PlaylistsScreen extends React.Component {
                     fontWeight: '800',
                     fontSize: 17,
                     color: '#444',
+                    paddingLeft: 7
                   }}>
-                    Make a New Station
+                    Create New Station
                   </Text>
                 </View>
               </TouchableView>
