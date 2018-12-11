@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated, TouchableHighlight } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
+
+import { TouchableView } from 'components/Button';
+import { animate } from 'helpers/animations';
 
 const styles = StyleSheet.create({
     containerOuter: { 
@@ -72,10 +75,13 @@ export default class PlaylistThumbnail extends React.Component {
     state = {
         pressStatus : false,
         containerHeight: 0,
-        reStoreCompleted: false
+        reStoreCompleted: false,
+        buttonOpacity : new Animated.Value(0.75),
+        buttonScale : new Animated.Value(1)
     }
 
     _handleRightPress = () => {
+        this._resetButton();
         this.props.onRightPress();
     }
 
@@ -139,6 +145,32 @@ export default class PlaylistThumbnail extends React.Component {
         )
     }
 
+    _handleInitialButtonPress = () => {
+        animate([
+            {
+                property : this.state.buttonOpacity,
+                toValue : 0
+            },
+            {
+                property : this.state.buttonScale,
+                toValue : 0.99
+            },    
+        ])
+    }
+
+    _resetButton = () => {
+        animate([
+            {
+                property : this.state.buttonOpacity,
+                toValue : 0.75
+            },
+            {
+                property : this.state.buttonScale,
+                toValue : 1
+            },    
+        ])
+    }
+
     render() {
 
         const { icon, title, duration, episodes, testing } = this.props; 
@@ -155,131 +187,139 @@ export default class PlaylistThumbnail extends React.Component {
         ]
 
         return (
-            <View style={{ overflow: 'hidden' }}>
-                <View style={[styles.containerOuter, { shadowOpacity: this.state.pressStatus ? 0.4 : 0.75 }]}>
-                    <View style={[styles.containerInner, {
-                        borderRadius: 4,
-                        backgroundColor: 'black'
+            <Animated.View style={[styles.containerOuter, {
+                shadowOpacity: this.state.buttonOpacity,
+                transform : [{ scale : this.state.buttonScale }]
+            }]}>
+                <View style={[styles.containerInner, {
+                    borderRadius: 4,
+                    backgroundColor: 'black'
+                }]}
+                onLayout={(e) => {
+                    this.setState({
+                        containerHeight: e.nativeEvent.layout.height,
+                    })
+                }}
+                >
+                    <TouchableView
+                    activeOpacity={1}
+                    onPress={() => this._handleRightPress()}
+                    style={[{ 
+                        width: '100%',
+                        position: 'absolute',
+                        borderRadius: 5,
+                        overflow: 'hidden',
                     }]}
-                    onLayout={(e) => {
-                        this.setState({
-                            containerHeight: e.nativeEvent.layout.height,
-                        })
-                    }}
-                    >
-                        <TouchableHighlight
-                        activeOpacity={1}
-                        onPress={() => this._handleRightPress()}
-                        style={{ 
-                            width: '100%',
-                            position: 'absolute',
-                            borderRadius: 5,
-                            overflow: 'hidden'
-                        }}
-                        onHideUnderlay={this._onHideUnderlay.bind(this)}
-                        onShowUnderlay={this._onShowUnderlay.bind(this)}
-                        >
-                            <View style={[{ width: '100%', flexDirection: 'row-reverse', justifyContent: 'flex-start' }]}>
-                                {
-                                    episodes ? episodes.slice(0,3).map((episode, index) => {
-                                        console.log(episode, this.props.playlist.name)
-                                        return (
-                                            <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
-                                            // <OfflineImage
-                                            //     key={index}
-                                            //     resizeMode={'contain'}
-                                            //     style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]}
-                                            //     source={{ uri: episode.showImage }}
-                                            // /> 
-                                        )
-                                    }) : null
-                                }
-                            </View>
-                        </TouchableHighlight>
-                        <LinearGradient style={[styles.infoContainer, {
-                            borderRadius: 5,
-                            overflow: 'hidden',
-                        }]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
-                            <TouchableOpacity 
-                                onPress={() => this._handleLeftPress()}
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}
-                                >
-                                <View style={{
-                                    paddingRight: 10
-                                }}>
-                                {
-                                    !this.props.testing &&
-                                    <SvgUri width="30" height="30" svgXmlData={icon} fill={'white'} fillAll={true}/>
-                                }
-                                </View>
-                                <View>
-                                    <Text style={ styles.title }>{ title.toUpperCase() }</Text>
-                                    <Text style={ styles.duration }>{ this._durationLabel(duration) }</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </LinearGradient>
-
-                        {
-                            this.props.currentPlaylist.id == this.props.playlist.id ? 
-                            <View pointerEvents="none" style={{ 
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                width: this.state.containerHeight,
-                                borderRadius: 4,
-                                borderTopLeftRadius : 0,
-                                borderBottomLeftRadius: 0,
-                                overflow: 'hidden'
+                    onHideUnderlay={this._onHideUnderlay.bind(this)}
+                    onShowUnderlay={this._onShowUnderlay.bind(this)}
+                    onInitialPress={() => {
+                        this._handleInitialButtonPress()
+                    }} 
+                    onRelease={(completed) => {
+                        completed ? 
+                        this._handleRightPress() : 
+                        this._resetButton()
+                    }}>
+                        <View style={[{ width: '100%', flexDirection: 'row-reverse', justifyContent: 'flex-start' }]}>
+                            {
+                                episodes ? episodes.slice(0,3).map((episode, index) => {
+                                    console.log(episode, this.props.playlist.name)
+                                    return (
+                                        <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
+                                        // <OfflineImage
+                                        //     key={index}
+                                        //     resizeMode={'contain'}
+                                        //     style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]}
+                                        //     source={{ uri: episode.showImage }}
+                                        // /> 
+                                    )
+                                }) : null
+                            }
+                        </View>
+                    </TouchableView>
+                    <LinearGradient style={[styles.infoContainer, {
+                        borderRadius: 5,
+                        overflow: 'hidden',
+                    }]} start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['black', 'rgba(0,0,0,0.9)', 'transparent']} locations={[0,0.8,1]}>
+                        <TouchableOpacity 
+                            onPress={() => this._handleLeftPress()}
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}
+                            >
+                            <View style={{
+                                paddingRight: 10
                             }}>
-                                {
-                                    !this.props.testing &&
-                                    <View style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        justifyContent: 'center', 
-                                        alignItems: 'center', 
-                                    }}>
-                                        <BlurView
-                                            style={{ 
-                                                width: '100%',
-                                                height: '100%',
-                                                position: 'absolute'
-                                            }}
-                                            viewRef={this.state.viewRef}
-                                            blurType="dark"
-                                            blurAmount={5}
-                                        />
-                                        <SvgUri style={
-                                            {
-                                                zIndex: 99999
-                                        }} width="35" height="35" source={this.props.playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg') } fill={'#EEE'} fillAll={true}/>
-                                    </View>
-                                }
-                            </View> 
-                            :
-                            <View pointerEvents="none" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                {
-                                    !this.props.testing &&
+                            {
+                                !this.props.testing &&
+                                <SvgUri width="30" height="30" svgXmlData={icon} fill={'white'} fillAll={true}/>
+                            }
+                            </View>
+                            <View>
+                                <Text style={ styles.title }>{ title.toUpperCase() }</Text>
+                                <Text style={ styles.duration }>{ this._durationLabel(duration) }</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </LinearGradient>
+
+                    {
+                        this.props.currentPlaylist.id == this.props.playlist.id ? 
+                        <View pointerEvents="none" style={{ 
+                            position: 'absolute',
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: this.state.containerHeight,
+                            borderRadius: 4,
+                            borderTopLeftRadius : 0,
+                            borderBottomLeftRadius: 0,
+                            overflow: 'hidden'
+                        }}>
+                            {
+                                !this.props.testing &&
+                                <View style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    justifyContent: 'center', 
+                                    alignItems: 'center', 
+                                }}>
+                                    <BlurView
+                                        style={{ 
+                                            width: '100%',
+                                            height: '100%',
+                                            position: 'absolute'
+                                        }}
+                                        viewRef={this.state.viewRef}
+                                        blurType="dark"
+                                        blurAmount={5}
+                                    />
                                     <SvgUri style={
                                         {
-                                            height: 20,
-                                            width: 20,
-                                            position: 'absolute',
-                                            right: 5,
-                                            bottom: 5,
                                             zIndex: 99999
-                                    }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
-                                }
-                            </View>
-                        }
+                                    }} width="35" height="35" source={this.props.playing ? require('assets/interface-icons/pause.svg') : require('assets/interface-icons/play.svg') } fill={'#EEE'} fillAll={true}/>
+                                </View>
+                            }
+                        </View> 
+                        :
+                        <View pointerEvents="none" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            {
+                                !this.props.testing &&
+                                <SvgUri style={
+                                    {
+                                        height: 20,
+                                        width: 20,
+                                        position: 'absolute',
+                                        right: 5,
+                                        bottom: 5,
+                                        zIndex: 99999
+                                }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                            }
+                        </View>
+                    }
 
-                    </View>
                 </View>
-            </View>          
+            </Animated.View>
         );
 
     }
