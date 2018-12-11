@@ -8,6 +8,7 @@ import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import GridView from 'react-native-super-grid';
 import SvgUri from 'react-native-svg-uri';
 
+import { DiscoverButton } from 'components/Button';
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
@@ -390,42 +391,31 @@ class DiscoverScreen extends React.Component {
               itemDimension={130}
               items={this.state.genres}
               renderItem={genre => (
-                <TouchableOpacity style={{
-                  backgroundColor: '#111',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 100,
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  borderRadius: 5,
-                }} onPress={() => {
-                  Navigation.push(this.props.componentId, {
+                <DiscoverButton 
+                  genre={genre} 
+                  icon={this._getIcon(genre)}
+                  onPress={() => {
+                    Navigation.push(this.props.componentId, {
                     component: {
-                      name: 'example.GenreDetailScreen',
-                      passProps: {
+                        name: 'example.GenreDetailScreen',
+                        passProps: {
                         genre
-                      },
-                      noBorder: false,
-                      options: {
+                        },
+                        noBorder: false,
+                        options: {
                         topBar: {
-                          title: {
+                            title: {
                             text: genre.name,
-                          }
+                            }
                         }
-                      }
+                        }
                     }
-                  });
-                }}>
-                  <SvgUri style={{
-                    paddingBottom: 5,
-                  }} width="20" height="20" svgXmlData={this._getIcon(genre)} fill={'#EEE'} fillAll={true}/>
-                  <Text style={{
-                    fontSize: 15,
-                    color: 'white',
-                    fontWeight: '600',
-                    textAlign: 'center'
-                  }}>{ genre.name }</Text>
-                </TouchableOpacity>
+                    });
+                  }}
+                  style={{
+
+                  }}
+                />
               )}
             />
           }

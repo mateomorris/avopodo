@@ -18,6 +18,72 @@ const styles = StyleSheet.create({
     },
 });
 
+export class DiscoverButton extends React.Component {
+
+    state = {
+        pressedScale : new Animated.Value(1)
+    }
+
+    _onPress = () => {
+        this._resetButton();
+        this.props.onPress();
+    }
+
+    _animateButton = () => {
+        animate([
+            {
+                property : this.state.pressedScale,
+                toValue : 0.95
+            }
+        ])
+    }
+
+    _resetButton = () => {
+        animate([
+            {
+                property : this.state.pressedScale,
+                toValue : 1
+            }
+        ])
+    }
+
+    render () {
+
+        let { genre, icon, style } = this.props 
+
+        return (
+            <TouchableView style={[{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 100,
+                paddingLeft: 10,
+                paddingRight: 10,
+                borderRadius: 5,
+                backgroundColor: '#111',
+                transform : [{ scale : this.state.pressedScale }]
+            }, style]} 
+            onInitialPress={() => {
+                this._animateButton()
+            }}
+            onRelease={(completed) => {
+                completed ? 
+                this._onPress() : 
+                this._resetButton()
+            }}>
+                <SvgUri style={{
+                paddingBottom: 5,
+                }} width="20" height="20" svgXmlData={this.props.icon} fill={'#EEE'} fillAll={true}/>
+                <Text style={{
+                fontSize: 15,
+                color: 'white',
+                fontWeight: '600',
+                textAlign: 'center'
+                }}>{ genre.name }</Text>
+            </TouchableView>
+        )
+    }
+}
+
 export class TouchableView extends React.Component {
     render() {
         return (
@@ -28,6 +94,7 @@ export class TouchableView extends React.Component {
                 }}
                 onResponderRelease={() => {
                     this.props.onRelease(true)
+                    this.props.onPress()
                 }}
                 onResponderTerminate={() => {
                     this.props.onRelease(false)
@@ -42,11 +109,14 @@ export class TouchableView extends React.Component {
 
 TouchableView.defaultProps = {
     onInitialPress : () => {
-        Alert.alert('Set onInitialPress')
+
     },
-    onRelease : (completed) => {
-        Alert.alert('Set onRelease ' + completed)
+    onRelease : () => {
+
     },
+    onPress : () => {
+
+    }
 }
 
 export default class Button extends React.Component {
