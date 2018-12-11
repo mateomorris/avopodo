@@ -161,6 +161,7 @@ class PlayBar extends React.Component {
 
     _expandModal = () => {
         this.setState({
+            expanded : true,
             triggered: true
         });
 
@@ -201,6 +202,48 @@ class PlayBar extends React.Component {
 
     }
 
+    _handlePlayBarTouch = () => {
+        animate([
+            {
+                property : this.state.height,
+                toValue: this.state.window.height + 5
+            },
+            {
+                property : this.state.bottomSpacing,
+                toValue: this.state.tabHeight
+            },
+            {
+                property : this.state.opacity,
+                animation : 'timing',
+                duration: 500,
+                delay: 200,
+            }
+        ], () => {
+
+        })
+    }
+
+    _resetPlayBar = () => {
+        animate([
+            {
+                property : this.state.height,
+                toValue: this.state.window.height
+            },
+            {
+                property : this.state.bottomSpacing,
+                toValue: this.state.tabHeight
+            },
+            {
+                property : this.state.opacity,
+                animation : 'timing',
+                duration: 500,
+                delay: 200,
+            }
+        ], () => {
+
+        })
+    }
+
     _removePlayBar = () => {
         this.props.actions.resetQueue()
         this.setState({
@@ -212,9 +255,10 @@ class PlayBar extends React.Component {
     panResponder = PanResponder.create({    
         onStartShouldSetPanResponder : () => true,
         onPanResponderGrant: (evt, gestureState) => {
-          this.setState({
-            draggingBar : true
-          })
+            this._handlePlayBarTouch()
+            this.setState({
+                draggingBar : true
+            })
         },
         onPanResponderMove : (e, gesture) => {
             if (this.state.expanded) {
@@ -231,8 +275,8 @@ class PlayBar extends React.Component {
 
                 if (!this.state.expanded) { // Unexpanded modal
                     
-                    if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15 ) { // Detect touch OR release high enough
-                        this._expandModal()
+                    if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15) { // Detect touch 
+                        this._expandModal();
                     } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
                         this._closeModal()
                     } else if (gesture.dy >= 50) { // If dragged down far enough
@@ -328,7 +372,9 @@ class PlayBar extends React.Component {
                             translateY: this.state.height
                         }
                     ]
-                }]}>
+                }]}
+                {...this.panResponder.panHandlers} 
+                >
                     <PlayProgressIndicator 
                         color={nowPlaying.showColor}
                     />
@@ -350,7 +396,6 @@ class PlayBar extends React.Component {
                                 height: '100%',
                                 justifyContent: 'center',
                             }}
-                            {...this.panResponder.panHandlers} 
                         >
                             <View style={{
                                 backgroundColor: nowPlaying.showColor,
@@ -373,7 +418,6 @@ class PlayBar extends React.Component {
                             </View>
                         </View>
                         <View style={{ paddingLeft: 5, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
-                            {...this.panResponder.panHandlers} 
                         >
                             <View style={{ alignItems: 'flex-start', flex: 1 }}>
                                 <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>

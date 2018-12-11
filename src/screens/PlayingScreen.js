@@ -80,7 +80,7 @@ class PlayingScreen extends React.Component {
   _openCarousel = () => {
     setTimeout(() => {
       this.setState({carouselActive: true}
-    )}, 0)
+    )}, 500)
   }
 
   _isIphoneX = () => {

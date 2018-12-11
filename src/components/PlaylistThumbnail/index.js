@@ -149,7 +149,7 @@ export default class PlaylistThumbnail extends React.Component {
         animate([
             {
                 property : this.state.buttonOpacity,
-                toValue : 0
+                toValue : 0.15
             },
             {
                 property : this.state.buttonScale,
