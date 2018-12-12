@@ -205,7 +205,7 @@ class PlaylistsScreen extends React.Component {
             { this._renderPlaylists(this.props.playlists, this.props.nowPlaying, this.props.activePlaylist) }
             <TouchableView style={{
               backgroundColor: 'black',
-              marginTop: 10,
+              marginTop: 5,
               marginRight: 5,
               marginLeft: 5,
               borderRadius: 5,

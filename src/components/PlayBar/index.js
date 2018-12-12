@@ -367,6 +367,14 @@ class PlayBar extends React.Component {
                     borderTopLeftRadius : 7,
                     borderTopRightRadius: 7,
                     backgroundColor: 'transparent',
+                    overflow: 'visible',
+                    shadowColor: 'black',
+                    shadowOffset: {
+                        width: 0,
+                        height: 0
+                    },
+                    shadowRadius: 3,
+                    shadowOpacity: 0.5,
                     transform: [
                         {
                             translateY: this.state.height
