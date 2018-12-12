@@ -210,7 +210,7 @@ class PlaylistsScreen extends React.Component {
               marginLeft: 5,
               borderRadius: 5,
               overflow: 'hidden',
-              backgroundColor: '#D8D8D8',
+              backgroundColor: '#222',
               position: 'relative',
               paddingTop: 20,
               paddingBottom: 20,
@@ -246,13 +246,13 @@ class PlaylistsScreen extends React.Component {
                         width="20" 
                         height="20" 
                         svgXmlData={generalIcons['station']} 
-                        fill={'#444'} 
+                        fill={'#aaa'} 
                         fillAll={true}
                     />
                   <Text style={{
                     fontWeight: '800',
                     fontSize: 17,
-                    color: '#444',
+                    color: '#eee',
                     paddingLeft: 7
                   }}>
                     Create New Station
