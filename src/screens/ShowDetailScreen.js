@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ScrollView, Alert, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
@@ -110,23 +110,24 @@ class ShowDetailScreen extends React.Component {
         }
     }
 
-    _renderEpisodeList = (title, image, imageHighRes, description, color, episodes) => {
-        if (this.state.loadingEpisodes) {
-            return <LoadingIndicator />
-        } else {
-            return episodes.map((episode) => {
-                return (
-                    <EpisodeRow 
-                        info={episode} 
-                        onDetailPress={() => { this._handleEpisodeDetailPress(episode) } } 
-                        onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, episode) }}
-                        finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
-                        playProgress={this._getPlayProgress(episode)}
-                    />  
-                );
-            })
-        }
-    }
+    // _renderEpisodeList = (title, image, imageHighRes, description, color, episodes) => {
+    //     if (this.state.loadingEpisodes) {
+    //         return <LoadingIndicator />
+    //     } else {
+    //         return episodes.map((episode) => {
+    //             return (
+    //                 <EpisodeRow 
+    //                     info={episode} 
+    //                     onDetailPress={() => { this._handleEpisodeDetailPress(episode) } } 
+    //                     onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, episode) }}
+    //                     finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
+    //                     playProgress={this._getPlayProgress(episode)}
+    //                     playing={}
+    //                 />  
+    //             );
+    //         })
+    //     }
+    // }
 
     _handlePress = () => {
         this.props.onPress();
@@ -267,7 +268,30 @@ class ShowDetailScreen extends React.Component {
                             />
                         }
                     >
-                        { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) }
+                        {/* { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) } */}
+                        {
+                            this.state.loadingEpisodes ? 
+                            <LoadingIndicator /> : 
+                            <FlatList
+                                data={this.state.episodes}
+                                onPress={() => {
+                                
+                                }}
+                                initialNumToRender={7}
+                                renderItem={({item, separators}) => (
+                                    <EpisodeRow 
+                                        info={item} 
+                                        onDetailPress={() => { this._handleEpisodeDetailPress(item) } } 
+                                        onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, item) }}
+                                        finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
+                                        playProgress={this._getPlayProgress(item)}
+                                        buttonColor={color}
+                                        playing={this.props.state.nowPlaying.id == item.id ? true : false}
+                                    />  
+                                )}
+                            />
+                        }
+
                         { this.state.loadingAdditionalEpisodes && <SmallLoadingIndicator /> }
                     </ScrollView>
                 }

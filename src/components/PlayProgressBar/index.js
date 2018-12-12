@@ -131,6 +131,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                         left : 0
                     }}>
                     </View>
+                    {/* TODO: Replace Slider with another Slider - Crashes app when playing episode from show detail */}
                     <Slider
                         style={{
                             width: '100%',

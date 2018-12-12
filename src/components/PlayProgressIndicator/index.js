@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, Dimensions, StyleSheet, Animated } from 'react-native'; 
 import TrackPlayer from 'react-native-track-player';
 import { Bar } from 'react-native-progress';
-import Slider from "react-native-slider";
 
 export default class PlayProgressIndicator extends TrackPlayer.ProgressComponent {
 

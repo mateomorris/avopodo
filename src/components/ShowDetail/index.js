@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
             height: 0
         },
         shadowRadius: 2,
-        shadowOpacity: 0.75
+        shadowOpacity: 0.5
     },
     thumbnail: { 
         width: 120, 

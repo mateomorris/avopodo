@@ -223,7 +223,6 @@ export default class PlaylistThumbnail extends React.Component {
                         <View style={[{ width: '100%', flexDirection: 'row-reverse', justifyContent: 'flex-start' }]}>
                             {
                                 episodes ? episodes.slice(0,3).map((episode, index) => {
-                                    console.log(episode, this.props.playlist.name)
                                     return (
                                         <Image source={{uri: episode.showImage, cache: 'force-cache'}} style={[styles.backgroundImage, { height: this.state.containerHeight, width: this.state.containerHeight }]} key={index}/>
                                         // <OfflineImage

@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ImageBackground
 import * as Progress from 'react-native-progress';
 import SvgUri from 'react-native-svg-uri';
 
+import { CircleButton } from 'components/Button';
+import icons from 'assets/generalIcons';
+
 const styles = StyleSheet.create({
     container: {
         margin: 5, 
@@ -41,7 +44,7 @@ export default class EpisodeRow extends React.Component {
 
     render() {
 
-        const { info, finished } = this.props
+        const { info, finished, buttonColor, playing } = this.props
         const theDate = this._getDate(info.publishDate);
 
         return (
@@ -52,14 +55,14 @@ export default class EpisodeRow extends React.Component {
                     borderBottomColor: '#CCC',
                     padding: 20,
                     paddingRight: 10,
-                    marginLeft: 10, 
+                    // marginLeft: 10, 
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     width: '100%',
                     height: 75
                 }} onPress={this.props.onDetailPress}>
                     <View style={{
-                        paddingRight: 35
+                        paddingRight: 45
                     }}>
                         <Text style={{
                             fontSize: 14,
@@ -69,64 +72,31 @@ export default class EpisodeRow extends React.Component {
                         <Text style={{
                             fontSize: 16,
                             fontWeight: "600",
-                            color: '#222'
+                            color: '#333'
                         }} ellipsizeMode='tail' numberOfLines={1}>{info.title}</Text>
                     </View>
-                    <TouchableOpacity style={{
+                    <View style={{
                         paddingLeft: 10,
-                        paddingRight: 30,
+                        paddingRight: 15,
                         position: 'absolute',
-                        right: 15,
+                        right: 0,
                         alignItems: 'center',
                         alignContent: 'center',
                         justifyContent: 'center',
                         bottom: 0,
                         top: 0,
                         zIndex: 9,
-                    }} onPress={() => {
-                        this.props.onPlayPress()
                     }}>
-                        {/* <Image
-                            source={require('assets/play-gray.png')}
-                            resizeMode={'center'}
-                            style={{
-                                position: 'absolute',
-                                width: 20,
-                                height: 20,
-                                padding: 10
+                        <CircleButton 
+                            onPress={() => {
+                                this.props.onPlayPress()
                             }}
-                        /> */}
-                        {
-                            !this.props.testing &&
-                            <SvgUri 
-                                style={{ 
-                                    position: 'absolute',
-                                    // width: 20,
-                                    // height: 20,
-                                    // padding: 10
-                                }} 
-                                width="20" 
-                                height="20" 
-                                source={require('assets/interface-icons/play.svg')} 
-                                fill={info.showColor} 
-                                fillAll={true}
-                            />
-                        }
-                        <Progress.Circle 
-                            style={{
-                                position: 'absolute',
-                                opacity: 0.5
-                                // top: -2,
-                                // bottom: 0,
-                                // left: -2,
-                                // right: 0
-                            }}
-                            borderWidth={0}
-                            size={24} 
-                            color={info.showColor} 
-                            progress={this.props.playProgress}
+                            icon={playing ? icons.pause : icons.play}
+                            size={20}
+                            spinner={false}
+                            color={buttonColor}
                         />
-                    </TouchableOpacity>
+                    </View>
                 </TouchableOpacity>
             </View>
         );

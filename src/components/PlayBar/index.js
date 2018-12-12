@@ -393,7 +393,7 @@ class PlayBar extends React.Component {
                         paddingBottom: 0, 
                         height: 50, 
                         zIndex: 1, 
-                        backgroundColor: 'black',
+                        backgroundColor: '#010101',
                         flexDirection: 'row'
                     }}>
                         <View 
@@ -401,7 +401,8 @@ class PlayBar extends React.Component {
                             flexDirection: 'row', 
                             justifyContent: 'flex-start', 
                             alignItems: 'center', 
-                            flex: 1
+                            paddingRight: 40,
+                            flex: 1,
                         }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
                             <View
                                 style={{
