@@ -378,70 +378,71 @@ class PlayBar extends React.Component {
                     <PlayProgressIndicator 
                         color={nowPlaying.showColor}
                     />
-                    <View 
-                    style={{
-                        flexDirection: 'row', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'flex-start', 
+                    <View style={{
                         paddingRight: 10, 
                         paddingLeft: 7, 
                         paddingTop: 0, 
                         paddingBottom: 0, 
                         height: 50, 
                         zIndex: 1, 
-                        backgroundColor: 'black'
-                    }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
-                        <View
-                            style={{
-                                height: '100%',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <View style={{
-                                backgroundColor: nowPlaying.showColor,
-                                borderRadius: 2,
-                                overflow: 'hidden',
-                            }}>
-                                {
-                                    this.state.reStoreCompleted &&
-                                    <OfflineImage
-                                        key={nowPlaying.showImage}
-                                        resizeMode={'contain'}
-                                        style={{
-                                            height: 35,
-                                            width: 35,
-                                            backgroundColor: nowPlaying.showColor
-                                        }}
-                                        source={{ uri: nowPlaying.showImage }}
-                                    /> 
-                                }
+                        backgroundColor: 'black',
+                        flexDirection: 'row'
+                    }}>
+                        <View 
+                        style={{
+                            flexDirection: 'row', 
+                            justifyContent: 'flex-start', 
+                            alignItems: 'center', 
+                            flex: 1
+                        }} pointerEvents={this.state.expanded ? 'none' : 'auto'}>
+                            <View
+                                style={{
+                                    height: '100%',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <View style={{
+                                    backgroundColor: nowPlaying.showColor,
+                                    borderRadius: 2,
+                                    overflow: 'hidden',
+                                }}>
+                                    {
+                                        this.state.reStoreCompleted &&
+                                        <OfflineImage
+                                            key={nowPlaying.showImage}
+                                            resizeMode={'contain'}
+                                            style={{
+                                                height: 35,
+                                                width: 35,
+                                                backgroundColor: nowPlaying.showColor
+                                            }}
+                                            source={{ uri: nowPlaying.showImage }}
+                                        /> 
+                                    }
+                                </View>
+                            </View>
+                            <View style={{ paddingLeft: 5, paddingRight: 10, paddingTop: 10, overflow: 'hidden', backgroundColor: 'transparent', height: '100%' }}>
+                                <View style={{ alignItems: 'flex-start', flex: 1 }}>
+                                    <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
+                                    <Text style={{ color: '#EEE', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
+                                </View>
                             </View>
                         </View>
-                        <View style={{ paddingLeft: 5, paddingRight: 10, paddingTop: 10, overflow: 'hidden', flex: 1, backgroundColor: 'transparent', height: '100%' }}
-                        >
-                            <View style={{ alignItems: 'flex-start', flex: 1 }}>
-                                <Text style={{ color: 'white', fontWeight: '700', fontSize: 12, height: 16 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.title }</Text>
-                                <Text style={{ color: '#EEE', fontSize: 10 }} numberOfLines={1} ellipsizeMode={'tail'}>{ nowPlaying.showTitle }</Text>
-                            </View>
+                        <View style={{
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            height: '100%',
+                        }}>
+                            <CircleButton 
+                                onPress={() => {
+                                    togglePlayback()
+                                }}
+                                icon={playing ? icons.pause : icons.play}
+                                size={30}
+                                spinner={this.props.state.bufferingStatus}
+                                color={nowPlaying.showColor}
+                            />
                         </View>
-                        {/* </TouchableOpacity> */}
-                        <TouchableOpacity onPress={() => {togglePlayback()}} style={{ zIndex: 9 }}>
-                            <View style={{
-                                justifyContent: 'center', 
-                                alignItems: 'center', 
-                                height: '100%'
-                            }}>
-                                <CircleButton 
-                                    onPress={() => {
-                                        togglePlayback()
-                                    }}
-                                    icon={playing ? icons.pause : icons.play}
-                                    size={30}
-                                    spinner={this.props.state.bufferingStatus}
-                                    color={nowPlaying.showColor}
-                                />
-                            </View>
-                        </TouchableOpacity>
                     </View>
                     <View pointerEvents={this.state.expanded ? 'auto' : 'none'} style={{ height: DIMENSIONS.height, width: '100%' }}>
                         <PlayingScreen 
