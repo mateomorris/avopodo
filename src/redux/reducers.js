@@ -183,7 +183,8 @@ function reducer(state = initialState, action) {
                         TrackPlayer.CAPABILITY_PAUSE,
                         TrackPlayer.CAPABILITY_STOP,
                         TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS
+                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+                        TrackPlayer.CAPABILITY_SEEK_TO
                     ]
                 });
             });
