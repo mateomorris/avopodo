@@ -18,6 +18,7 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-animatable": "^1.3.0",
+    "react-native-autolink": "^1.5.0",
     "react-native-blur": "^3.2.2",
     "react-native-draggable": "^1.0.14",
     "react-native-firebase": "^4.3.8",

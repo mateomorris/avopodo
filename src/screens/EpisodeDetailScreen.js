@@ -3,6 +3,7 @@ import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity, Alert } fr
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Navigation } from "react-native-navigation";
+import Autolink from 'react-native-autolink';
 
 import { LightBox } from 'components/LightBox';
 
@@ -20,6 +21,8 @@ class ShowPreviewScreen extends Component {
 
         const screenWidth = Dimensions.get('window').width;
         const screenHeight = Dimensions.get('window').height;
+
+        console.log(description)
 
         return(
             
@@ -77,8 +80,19 @@ class ShowPreviewScreen extends Component {
                         borderRadius: 5
                     }}
                 ></View>
+                <Autolink
+                    style={{
+                        color: '#fafafa'
+                    }}
+                    linkStyle={{
+                        color: 'skyblue',
+                        textDecorationLine: 'underline'
+                    }}
+                    text={description}
+                    hashtag="instagram"
+                    mention="twitter" />
                 <Text style={{ color: 'whitesmoke', fontSize: 15 }}>
-                    { description }
+                    {/* { description } */}
                 </Text>
                 <View style={{
                     alignItems: 'flex-end',
