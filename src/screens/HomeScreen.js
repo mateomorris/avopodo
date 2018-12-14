@@ -299,15 +299,6 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  _renderPopularFeed = () => {
-    return (
-      <View style={{flex:1}}>
-        <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20 }}>Popular New Episodes</Text>
-        <Text>This is the popular feed</Text>
-      </View>
-    )
-  }
-
   _onRefresh = () => {
       this.setState({refreshing: true});
       this.props.actions.getNewestFromSubscribed().then((fetchSuccessful) => {

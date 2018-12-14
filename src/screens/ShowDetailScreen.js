@@ -283,7 +283,7 @@ class ShowDetailScreen extends React.Component {
                                         info={item} 
                                         onDetailPress={() => { this._handleEpisodeDetailPress(item) } } 
                                         onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, item) }}
-                                        finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
+                                        finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == item.id) ? true : false}
                                         playProgress={this._getPlayProgress(item)}
                                         buttonColor={color}
                                         playing={this.props.state.nowPlaying.id == item.id ? true : false}

@@ -1,5 +1,5 @@
-import { AppRegistry, Platform } from 'react-native';
-import { setupPlayer, setCurrentTrackPosition, updatePlayQueue } from '../finalware'
+import { AppRegistry, Platform, Alert } from 'react-native';
+import { setupPlayer, setCurrentTrackPosition, updatePlayQueue, markEpisodeAsPlayed } from '../finalware'
 import { playNextItemInQueue, syncPlayQueue } from '../middleware'
 import TrackPlayer, {PlayerStore} from 'react-native-track-player';
 
@@ -26,9 +26,17 @@ export function startPlayer() {
 
             Platform.OS == 'ios' && 
             TrackPlayer.registerEventHandler(async (data) => {
-                console.log(data)
                 if (data.type === 'playback-track-changed') {
                     dispatch(syncPlayQueue()) 
+
+                    let { nowPlaying, episodePlaybackPositions } = getState(); // Get updated values
+
+                    if (episodePlaybackPositions[data.track] >= nowPlaying.duration - 120) { // Episode finished
+                        dispatch(markEpisodeAsPlayed(data.track)) 
+                    } else {
+                        console.log('NOT marking episode as played')
+                        // TODO: Add to 'Unfinished'
+                    }
                 } 
                 else if(data.type == 'remote-seek') {
                     console.log('Remote seek')
@@ -54,6 +62,8 @@ export function startPlayer() {
                     //     console.log('Setting current track position')
                     //     dispatch(setCurrentTrackPosition(nowPlayingEpisodeId))
                     // }
+                } else if (data.type == 'playback-queue-ended') {
+                    dispatch(markEpisodeAsPlayed(data.track)) 
                 } else {
                     console.log(`No matching condition for `, data)
                 }

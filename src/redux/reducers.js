@@ -382,7 +382,7 @@ function reducer(state = initialState, action) {
             return state;
         case UPDATE_EPISODE_PLAYBACK_POSITION: 
 
-            if (state.episodePlaybackPositions[action.episodeId] == action.position) {
+            if (state.episodePlaybackPositions[action.episodeId] == action.position) { // No difference in values
                 return state;
             } else {
                 return {
