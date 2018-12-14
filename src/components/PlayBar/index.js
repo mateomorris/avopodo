@@ -159,12 +159,7 @@ class PlayBar extends React.Component {
 
     }
 
-    _expandModal = () => {
-        this.setState({
-            expanded : true,
-            triggered: true
-        });
-
+    _resetModal = () => {
         animate([
             {
                 property : this.state.height,
@@ -178,27 +173,41 @@ class PlayBar extends React.Component {
                 speed : 20,
                 bounciness : 0
             },
-            // {
-            //     property : this.state.opacity,
-            //     toValue: 0,
-            //     animation : 'timing',
-            //     duration: 500,
-            //     delay: 200,
-            // }
-        ], () => {
-            this.setState({
-                expanded: true
-            })
+        ])
+    }
 
+    _expandModal = () => {
+        this.setState({
+            triggered: true
+        }, () => {
             animate([
                 {
-                    property: this.state.opacity,
+                    property : this.state.height,
                     toValue : 0,
-                    animation : 'timing',
-                    duration : 500
-                }
-            ])
-        })
+                    speed : 20,
+                    bounciness : 0
+                },
+                {
+                    property : this.state.bottomSpacing,
+                    toValue : 0,
+                    speed : 20,
+                    bounciness : 0
+                },
+            ], () => {
+                this.setState({
+                    expanded: true
+                }, () => {
+                    animate([
+                        {
+                            property: this.state.opacity,
+                            toValue : 0,
+                            animation : 'timing',
+                            duration : 500
+                        }
+                    ])
+                })
+            })
+        });
 
     }
 
@@ -255,43 +264,57 @@ class PlayBar extends React.Component {
     panResponder = PanResponder.create({    
         onStartShouldSetPanResponder : () => true,
         onPanResponderGrant: (evt, gestureState) => {
-            this._handlePlayBarTouch()
+            !this.state.expanded && this._handlePlayBarTouch()
             this.setState({
                 draggingBar : true
             })
         },
         onPanResponderMove : (e, gesture) => {
-            if (this.state.expanded) {
-                gesture.dy > 0 && this.state.height.setValue(this.state.window.height - gesture.dy) // If swiping down, set `height` 
+            if (this.state.expanded && gesture.dy > 0) {
+                animate([
+                        {
+                            property : this.state.height,
+                            toValue : gesture.moveY
+                        }
+                ])
             } else {
-                this.state.height.setValue((this.state.window.height + gesture.dy))
+                // Could hook up functionality to scroll down on playing screen from here
+                // this.state.height.setValue((this.state.window.height + gesture.dy))
             }
         },
         onPanResponderRelease : (e, gesture) => {
 
                 this.setState({
                     draggingBar : false
+                }, () => {
+
                 })
 
-                if (!this.state.expanded) { // Unexpanded modal
-                    
-                    if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15) { // Detect touch 
-                        this._expandModal();
-                    } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
-                        this._closeModal()
-                    } else if (gesture.dy >= 50) { // If dragged down far enough
-                        this._removePlayBar()
-                    }
+                    if (!this.state.expanded) { // Unexpanded modal
+                        
+                        if (Math.abs(gesture.dx) < 5 && Math.abs(gesture.dy) < 5 || gesture.dy < -15) { // Detect touch 
+                            console.log('Expanding modal')
+                            this._expandModal();
+                        } else if (gesture.dy > -15 && gesture.dy < 50) { // If released too low, spring back
+                            console.log('Closing modal')
+                            this._closeModal()
+                        } else if (gesture.dy >= 50) { // If dragged down far enough
+                            console.log('Removing play bar')
+                            this._removePlayBar()
+                        }
 
-                } else if (this.state.expanded) { // Expanded modal
+                    } else if (this.state.expanded) { // Expanded modal
 
-                    if (gesture.dy > 50 ) { // If dragged down far enough
-                        this._closeModal()
-                    } else { 
-                        this._expandModal()
-                    }
+                        if (gesture.dy > 50 ) { // If dragged down far enough
+                            console.log('Closing modal')
+                            this._closeModal()
+                        } else { 
+                            console.log('Already expanded, expanding modal again')
+                            // this._expandModal()
+                            this._resetModal()
+                        }
 
-                } 
+                    } 
         } 
     });
 
