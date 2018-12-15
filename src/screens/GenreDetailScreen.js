@@ -104,6 +104,16 @@ class GenreDetailScreen extends React.Component {
     Alert.alert('test');
   }
 
+  _goToSubscribed = () => { 
+    console.log('Gone to subscribe')
+    Navigation.mergeOptions(this.props.componentId, {
+      bottomTabs: {
+        currentTabIndex: 3
+      }
+    });
+  }
+
+
   _onSearchResultPress = (item) => {
 
     Navigation.showOverlay({
@@ -112,7 +122,10 @@ class GenreDetailScreen extends React.Component {
         passProps: { 
           item,
           subscribed: this.props.actions.checkIfSubscribed(item.id),
-          onSubscribe: () => {this._subscribeToShow(item)}
+          goToSubscribed: () => {this._goToSubscribed()},
+          onSubscribe: () => {
+          console.log('Now what')
+          this._subscribeToShow(item)}
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {

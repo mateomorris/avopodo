@@ -25,7 +25,10 @@ class ShowPreviewScreen extends Component {
         }) 
     }
 
-    
+    _goToSubscribed = () => {
+        Navigation.dismissOverlay(this.props.componentId);
+        this.props.goToSubscribed()
+    }    
 
     componentWillMount() {
         if (this.props.subscribed) {
@@ -101,39 +104,39 @@ class ShowPreviewScreen extends Component {
                 }}>
                         {
                             this.state.subscribed ? 
-                            <Button 
-                                style={{
-                                    marginRight: 10
-                                }}
-                                onPress={() => {
-                                    this.setState({
-                                        subscribed: false
-                                    });
-                                    Navigation.dismissOverlay(this.props.componentId);
-                                }}
-                                label={'Unsubscribe'}
-                                icon={require('assets/bookmark.png')}
-                            />
                             // <Button 
                             //     style={{
                             //         marginRight: 10
                             //     }}
                             //     onPress={() => {
-                            //         // this.setState({
-                            //         //     subscribed: true
-                            //         // });
-                            //         this._goToShow();
+                            //         this.setState({
+                            //             subscribed: false
+                            //         });
+                            //         Navigation.dismissOverlay(this.props.componentId);
                             //     }}
-                            //     label={'Go to Show'}
-                            //     icon={require('assets/next.png')}
+                            //     label={'Unsubscribe'}
+                            //     icon={require('assets/bookmark.png')}
                             // />
+                            <Button 
+                                style={{
+                                    marginRight: 10
+                                }}
+                                onPress={() => {
+                                    // this.setState({
+                                    //     subscribed: true
+                                    // });
+                                    this._goToSubscribed();
+                                }}
+                                label={'Go to Subscribed'}
+                                icon={require('assets/next.png')}
+                            />
                             : 
                             <Button 
                                 onPress={() => {
                                     this.setState({
                                         subscribed: true
                                     });
-                                    Navigation.dismissOverlay(this.props.componentId);
+                                    // Navigation.dismissOverlay(this.props.componentId);
                                 }}
                                 label={'Subscribe'}
                                 icon={require('assets/bookmark.png')}

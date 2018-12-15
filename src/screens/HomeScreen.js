@@ -126,7 +126,7 @@ export class HomeScreen extends React.Component {
   componentWillMount = () => {
 
     this.props.actions.startPlayer(); // reactivate
-        
+
     // this.setState({
     //     nowPlaying: this.props.state.nowPlaying,
     //     playing: this.props.state.playing,

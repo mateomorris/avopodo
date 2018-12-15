@@ -201,7 +201,7 @@ class PlaylistsScreen extends React.Component {
       <View style={{flex:1, overflow: 'visible', paddingTop: 10, backgroundColor: '#fafafa'}}>
         <ScrollView contentContainerStyle={styles.container}>
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
-          <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 10, paddingRight: 10 }}>
+          <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 5, paddingRight: 5 }}>
             { this._renderPlaylists(this.props.playlists, this.props.nowPlaying, this.props.activePlaylist) }
             <TouchableView style={{
               backgroundColor: 'black',

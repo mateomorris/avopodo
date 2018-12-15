@@ -79,9 +79,9 @@ class GenreListScreen extends React.Component {
   //   return getHighResArtwork( itunesId );
   // }
 
-  _testSubscribe = () => {
-    Alert.alert('test');
-  }
+  // _testSubscribe = () => {
+  //   Alert.alert('test');
+  // }
 
   _onSearchResultPress = (item) => {
 
@@ -91,7 +91,11 @@ class GenreListScreen extends React.Component {
         passProps: { 
           item,
           subscribed: this._checkIfSubscribed(item.id),
-          onSubscribe: () => {this._subscribeToShow(item)}
+          goToSubscribed: () => {this._goToSubscribed()},
+          onSubscribe: () => {
+            console.log('Now what')
+            this._subscribeToShow(item)
+          }
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {

@@ -54,7 +54,7 @@ class DiscoverScreen extends React.Component {
   };
 
   _subscribeToShow = (show) => {
-    
+
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
       return subscribedShowId == show.id
     })
@@ -79,6 +79,14 @@ class DiscoverScreen extends React.Component {
     return this.props.actions.checkIfSubscribed(id)
   }
 
+  _goToSubscribed = () => { 
+    Navigation.mergeOptions(this.props.componentId, {
+      bottomTabs: {
+        currentTabIndex: 3
+      }
+    });
+  }
+
   _onSearchResultPress = (item) => {
 
     Navigation.showOverlay({
@@ -87,7 +95,10 @@ class DiscoverScreen extends React.Component {
         passProps: { 
           item,
           subscribed: this._checkIfSubscribed(item.id),
-          onSubscribe: () => {this._subscribeToShow(item)}
+          goToSubscribed: () => {this._goToSubscribed()},
+          onSubscribe: () => {
+            this._subscribeToShow(item)
+          }
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
@@ -226,7 +237,7 @@ class DiscoverScreen extends React.Component {
           passProps: { 
             item : result,
             subscribed: this._checkIfSubscribed(result.id),
-            onSubscribe: () => {this._subscribeToShow(result)}
+            onSubscribe: () => {this._subscribeToShow(result)},
           }, // simple serializable object that will pass as props to the lightbox (optional)
           options: {
             overlay: {

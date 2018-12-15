@@ -59,59 +59,61 @@ export function syncPlaylists(playing) {
                     return b.publishDate - a.publishDate
                 })
 
-                if (showEpisodesInQueue[0] && showEpisodesInQueue[0].id !== show.episodeList[0].id) {
+                if (showEpisodesInQueue.length > 0 && show.episodeList) {
 
-                    let length = {
-                        'ten-minutes' : 600,
-                        'thirty-minutes' : 1800,
-                        'an-hour' : 3600,
-                        'an-eternity' : 9999999999
-                    }[playlist.length]
+                    if (showEpisodesInQueue[0] && showEpisodesInQueue[0].id !== show.episodeList[0].id) {
+                        let length = {
+                            'ten-minutes' : 600,
+                            'thirty-minutes' : 1800,
+                            'an-hour' : 3600,
+                            'an-eternity' : 9999999999
+                        }[playlist.length]
 
-                    if (show.episodeList.find((episode) => {
-                        if (episode.duration >= length) {
-                            return episode
+                        if (show.episodeList.find((episode) => {
+                            if (episode.duration >= length) {
+                                return episode
+                            }
+                        })) {
+                            console.log('FOUND AN OUT OF DATE EPISODE IN ', show)
+                            dispatch(createPlaylistQueue({ 
+                                episodeLength : playlist.length, 
+                                playFirst : playlist.playFirst, 
+                                releaseRange : playlist.released, 
+                                shows : playlist.shows
+                                })).then((newPlaylistQueue) => {
+
+                                    let newQueueDuration = newQueue.map((episode) => {
+                                        return episode.duration
+                                    }).reduce((accumulator, currentValue) => {
+                                        return accumulator + currentValue
+                                    })
+                                    console.log(newPlaylistQueue, newQueueDuration)
+                                    dispatch(setPlaylistQueue(playlist.id, newPlaylistQueue, newQueueDuration))
+                            })
                         }
-                    })) {
-                        console.log('FOUND AN OUT OF DATE EPISODE IN ', show)
-                        dispatch(createPlaylistQueue({ 
-                            episodeLength : playlist.length, 
-                            playFirst : playlist.playFirst, 
-                            releaseRange : playlist.released, 
-                            shows : playlist.shows
-                            })).then((newPlaylistQueue) => {
 
-                                let newQueueDuration = newQueue.map((episode) => {
-                                    return episode.duration
-                                }).reduce((accumulator, currentValue) => {
-                                    return accumulator + currentValue
-                                })
-                                console.log(newPlaylistQueue, newQueueDuration)
-                                dispatch(setPlaylistQueue(playlist.id, newPlaylistQueue, newQueueDuration))
-                        })
-                    }
+                        // if (length >= show.episodeList[0].duration) {
+                        //     console.log('Latest episode in show should be in list', showEpisodesInQueue[0], show.episodeList[0])
+                        //     console.log(playlist)
+                        //     dispatch(createPlaylistQueue({ 
+                        //         episodeLength : playlist.length, 
+                        //         playFirst : playlist.playFirst, 
+                        //         releaseRange : playlist.released, 
+                        //         shows : playlist.shows
+                        //         })).then((newPlaylistQueue) => {
+                        //             console.log(newPlaylistQueue.episodeList, newQueue)
 
-                    // if (length >= show.episodeList[0].duration) {
-                    //     console.log('Latest episode in show should be in list', showEpisodesInQueue[0], show.episodeList[0])
-                    //     console.log(playlist)
-                    //     dispatch(createPlaylistQueue({ 
-                    //         episodeLength : playlist.length, 
-                    //         playFirst : playlist.playFirst, 
-                    //         releaseRange : playlist.released, 
-                    //         shows : playlist.shows
-                    //         })).then((newPlaylistQueue) => {
-                    //             console.log(newPlaylistQueue.episodeList, newQueue)
+                        //             let newQueueDuration = newQueue.map((episode) => {
+                        //                 return episode.duration
+                        //             }).reduce((accumulator, currentValue) => {
+                        //                 return accumulator + currentValue
+                        //             })
 
-                    //             let newQueueDuration = newQueue.map((episode) => {
-                    //                 return episode.duration
-                    //             }).reduce((accumulator, currentValue) => {
-                    //                 return accumulator + currentValue
-                    //             })
+                        //             dispatch(setPlaylistQueue(playlist.id, newPlaylistQueue, newQueueDuration))
+                        //     })
+                        // }
 
-                    //             dispatch(setPlaylistQueue(playlist.id, newPlaylistQueue, newQueueDuration))
-                    //     })
-                    // }
-
+                    } 
                 }
 
             })
