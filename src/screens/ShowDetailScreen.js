@@ -134,14 +134,21 @@ class ShowDetailScreen extends React.Component {
     }
 
     _fetchNextTenEpisodes = () => {
-        const oldestEpisodeDate = this.state.episodes[this.state.episodes.length-1].publishDate
-        return this.props.actions.getNextTenEpisodes(this.props.id, oldestEpisodeDate).then(((episodeList) => {
+        if (this.state.episodes) {
+            const oldestEpisodeDate = this.state.episodes[this.state.episodes.length-1].publishDate
+            return this.props.actions.getNextTenEpisodes(this.props.id, oldestEpisodeDate).then(((episodeList) => {
+                this.setState({
+                    episodes : this.state.episodes.concat(episodeList),
+                    loadingAdditionalEpisodes : false,
+                    firstEpisodeReached : episodeList.length == 0 ? true : false
+                })
+            }))
+        } else {
             this.setState({
-                episodes : this.state.episodes.concat(episodeList),
                 loadingAdditionalEpisodes : false,
-                firstEpisodeReached : episodeList.length == 0 ? true : false
             })
-        }))
+        }
+
     }
 
     _checkIfBottomReached = (e) => {
@@ -256,6 +263,25 @@ class ShowDetailScreen extends React.Component {
                     color={color}
                     onPress={() => {this._showShowDetailLightbox(this.props)}}
                 />
+                {
+                    !this.state.episodes &&
+                    <View style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: 10,
+                        height: '100%'
+                    }}>
+                        <Text style={{
+                            color : 'white',
+                            fontWeight: '600',
+                            fontSize: 18,
+                            textAlign: 'left',
+                            color: '#555',
+                            textAlign: 'center'
+                        }}>This show hasn't published any episodes, isn't that strange</Text>
+                    </View>
+                }
                 {
                     this.state.loaded &&
                     <ScrollView 

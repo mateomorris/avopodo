@@ -140,7 +140,9 @@ export default class PlaylistThumbnail extends React.Component {
 
                 // Preload images
                 // Note: We recommend call this method on `restore` completion!
-                OfflineImageStore.preLoad(this.props.episodes.map(episode => episode.showImage));
+                if (this.props.episodes) {
+                    OfflineImageStore.preLoad(this.props.episodes.map(episode => episode.showImage));
+                }
             }
         )
     }

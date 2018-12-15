@@ -28,11 +28,17 @@ export function syncPlaylists(playing) {
 
             if (episodeList.length !== newQueue.length && episodeList.length !== 0) {
                 
-                let queueDuration = newQueue.map((episode) => {
-                    return episode.duration
-                }).reduce((accumulator, currentValue) => {
-                    return accumulator + currentValue
-                })
+                console.log(newQueue, newQueue.length)
+
+                let queueDuration = 0;
+
+                if (newQueue.length > 0) {
+                    queueDuration = newQueue.map((episode) => {
+                        return episode.duration
+                    }).reduce((accumulator, currentValue) => {
+                        return accumulator + currentValue
+                    })
+                }
                 
                 console.log(newQueue, queueDuration)
                 dispatch(setPlaylistQueue(playlist.id, newQueue, queueDuration))
