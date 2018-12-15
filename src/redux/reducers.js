@@ -235,7 +235,7 @@ function reducer(state = initialState, action) {
                 playing: true,
                 active: true,
                 activePlaylist: action.playlist,
-                bufferingStatus: false, 
+                bufferingStatus: true, 
                 nowPlaying: action.playlist.episodeQueue.episodeList[0],
                 playQueue: action.playlist.episodeQueue.episodeList
             }

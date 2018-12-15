@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import SvgUri from 'react-native-svg-uri';
 import LinearGradient from 'react-native-linear-gradient';
+import TrackPlayer from 'react-native-track-player';
 
 import playlistIcons from 'assets/newPlaylistIcons'
 import generalIcons from 'assets/generalIcons'
@@ -44,6 +45,19 @@ class PlaylistsScreen extends React.Component {
   }
 
   _playAudio = (playlist) => {
+
+    this.props.actions.toggleBufferingStatus(true)
+
+    this.interval = setInterval(() => { 
+        TrackPlayer.getBufferedPosition().then((buffered) => {
+            TrackPlayer.getPosition().then((position) => {
+            if (buffered > position) {
+              clearInterval(this.interval);
+              this.props.actions.toggleBufferingStatus(false)
+            } 
+          })
+        })
+    }, 500);
     
     this.props.actions.addPlaylistToQueue(playlist)
     // this.props.actions.toggleBufferingStatus(false)
@@ -164,7 +178,10 @@ class PlaylistsScreen extends React.Component {
       });
       
     } else {
-      Alert.alert(`You must subscribe to at least three shows before creating a station`, `otherwise, what's the point?`);
+      Alert.alert(
+        `Stations are curated from your subscribed shows. Try subscribing to three shows before creating a Station.`, 
+        `Apologies for the inconvenience`
+      );
     }
   }
 
