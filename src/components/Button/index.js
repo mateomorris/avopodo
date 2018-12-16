@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Animated, Alert } from 'react-native';
+import { PanResponder, StyleSheet, Text, View, Image, TouchableOpacity, Animated, Alert } from 'react-native';
 import { MaterialIndicator } from 'react-native-indicators';
 import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
@@ -85,9 +85,14 @@ export class DiscoverButton extends React.Component {
 }
 
 export class TouchableView extends React.Component {
+    onLayout = (e) => {
+        this.props.onLayout(e.nativeEvent.layout)
+    }
+
     render() {
         return (
             <Animated.View
+                onLayout={this.onLayout.bind(this)}
                 onStartShouldSetResponder={() => true}
                 onResponderGrant={() => {
                     this.props.onInitialPress()
@@ -100,6 +105,7 @@ export class TouchableView extends React.Component {
                     this.props.onRelease(false)
                 }}
                 style={this.props.style}
+                { ...this.props.panHandlers }
             >
                 { this.props.children }
             </Animated.View>
@@ -108,6 +114,10 @@ export class TouchableView extends React.Component {
 }
 
 TouchableView.defaultProps = {
+    panHandlers : PanResponder.create({}),
+    onLayout : () => {
+
+    },
     onInitialPress : () => {
 
     },

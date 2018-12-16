@@ -36,6 +36,15 @@ class PlaylistsScreen extends React.Component {
     };
   }
 
+  state = {
+    activelySwiped : null,
+    favorites: [],
+    playlists: [],
+    homeFeed: [],
+    newStationOpacity : new Animated.Value(0.35),
+    newStationScale : new Animated.Value(1) 
+  }
+
   componentDidMount() {
     this.props.actions.syncPlaylists()
   }
@@ -64,8 +73,23 @@ class PlaylistsScreen extends React.Component {
 
   }
 
-  _handlePlaylistDetailPress = (playlist) => {
+  _handlePlaylistEditPress = (playlist) => {
+    Navigation.showOverlay({
+      component: {
+        name: 'example.PlaylistCreationScreen',
+        passProps: { 
+          playlist
+        }, // simple serializable object that will pass as props to the lightbox (optional)
+        options: {
+          overlay: {
+            interceptTouchOutside: false
+          }
+        }
+      }
+    });
+  }
 
+  _handlePlaylistDetailPress = (playlist) => {
     Navigation.showOverlay({
       component: {
         name: 'example.PlaylistDetailScreen',
@@ -117,8 +141,16 @@ class PlaylistsScreen extends React.Component {
               icon={playlistIcons[item.icon]} 
               episodes={item.episodeQueue.episodeList.length > 0 ? item.episodeQueue.episodeList : null} 
               currentPlaylist={nowPlayingPlaylist}
-              onRightPress={() => {this._handlePlaylistPlayPress(item)}} 
-              onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
+              // onLeftPress={() => {this._handlePlaylistDetailPress(item)}} 
+              onPress={() => {this._handlePlaylistPlayPress(item)}}
+              onQueuePress={() => {this._handlePlaylistDetailPress(item)}} 
+              onEditPress={() => {this._handlePlaylistEditPress(item)}}
+              onSwipe={() => {
+                this.setState({
+                  activelySwiped : index
+                })
+              }}
+              swipeStatus={index == this.state.activelySwiped ? true : false}
             />
           )
         })}
@@ -167,7 +199,7 @@ class PlaylistsScreen extends React.Component {
         component: {
           name: 'example.PlaylistCreationScreen',
           passProps: { 
-            subscribedShows : this.props.subscribedShows
+
           }, // simple serializable object that will pass as props to the lightbox (optional)
           options: {
             overlay: {
@@ -204,27 +236,26 @@ class PlaylistsScreen extends React.Component {
 
   render() {
 
-    this.state = {
-      favorites: [],
-      playlists: [],
-      homeFeed: [],
-      newStationOpacity : new Animated.Value(0.35),
-      newStationScale : new Animated.Value(1)
-    };
-
     let { subscribedShows } = this.props;
 
     return (
       <View style={{flex:1, overflow: 'visible', paddingTop: 10, backgroundColor: '#fafafa'}}>
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView 
+          contentContainerStyle={styles.container}
+          onScrollBeginDrag={() => {
+            this.setState({
+              activelySwiped : null
+            })
+          }}
+        >
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 5, paddingRight: 5 }}>
             { this._renderPlaylists(this.props.playlists, this.props.nowPlaying, this.props.activePlaylist) }
             <TouchableView style={{
               backgroundColor: 'black',
-              marginTop: 5,
-              marginRight: 5,
-              marginLeft: 5,
+              marginTop: 0,
+              marginRight: 0,
+              marginLeft: 0,
               borderRadius: 5,
               overflow: 'hidden',
               backgroundColor: '#222',

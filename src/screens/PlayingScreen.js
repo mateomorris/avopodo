@@ -393,7 +393,7 @@ class PlayingScreen extends React.Component {
               {/* <Text style={{color:'#93A8B3', textAlign: 'center'}}>{nowPlaying.showTitle}</Text> */}
             </TouchableOpacity>
           </View>
-          <PlayProgressBar 
+          {/* <PlayProgressBar 
             color={nowPlaying.showColor}
             textColor={tinycolor(nowPlaying.showColor).isLight() ? 'black' : 'white'}
             onProgressUpdate={(position) => {
@@ -407,7 +407,7 @@ class PlayingScreen extends React.Component {
               this._startNewTrack()
             }}
             playingNextEpisode={this.state.playingNextEpisode}
-          />
+          /> */}
           <PlaybackButtons 
             color={nowPlaying.showColor}
             playbackStatus={playing}

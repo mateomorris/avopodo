@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Picker, Platform } from 'react-native'
 
 export class PlaylistPicker extends React.Component {
     state = {
-        value: this.props.items[0]['value']
+        value: this.props.selectedValue
     }
 
     _renderIOS = () => {
