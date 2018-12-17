@@ -212,7 +212,7 @@ export default class PlaylistThumbnail extends React.Component {
 
             if (!this.state.stuckLeft && Math.abs(gestureState.dx) < 5 && Math.abs(gestureState.dy) < 5) {
                 this.props.onPress()
-            } else if (gestureState.dx < -80) {
+            } else if (gestureState.dx < -40) {
                 this.props.onSwipe()
                 this.setState({
                     stuckLeft : true

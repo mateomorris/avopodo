@@ -189,6 +189,7 @@ class ShowDetailScreen extends React.Component {
         component: {
             name: 'example.ShowPreviewScreen',
             passProps: { 
+              canUnsubscribe: true,
               item : show,
               subscribed: this._checkIfSubscribed(show.id),
               onSubscribe: () => {this._subscribeToShow(show)}  

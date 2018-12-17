@@ -45,7 +45,7 @@ export class ShowDetail extends React.Component {
                     paddingTop: 10, 
                     paddingBottom: 10,
                     borderBottomWidth: 5, 
-                    borderBottomColor: color
+                    borderBottomColor: `${color}7F`
                 }}> 
                 <View style={styles.container}>
                     <Image source={{uri: image, cache: 'force-cache'}} style={[styles.thumbnail, {backgroundColor: color}]} />

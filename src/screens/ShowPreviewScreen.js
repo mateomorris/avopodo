@@ -51,6 +51,60 @@ class ShowPreviewScreen extends Component {
         }
     }
 
+    _getButton = () => {
+
+        if (this.props.canUnsubscribe && this.state.subscribed) {
+            return (
+                <Button 
+                    style={{
+                        marginRight: 10
+                    }}
+                    onPress={() => {
+                        this.setState({
+                            subscribed: false
+                        });
+                        // Navigation.dismissOverlay(this.props.componentId);
+                    }}
+                    label={'Unsubscribe'}
+                    icon={require('assets/bookmark.png')}
+                />
+            )
+        } else if (this.state.subscribed) {
+            return (
+                <Button 
+                    style={{
+                        marginRight: 10
+                    }}
+                    onPress={() => {
+                        // this.setState({
+                        //     subscribed: true
+                        // });
+                        this._goToSubscribed();
+                    }}
+                    label={'Go to Subscribed'}
+                    icon={require('assets/next.png')}
+                />
+            )
+        } else {
+            return (
+                <Button 
+                    onPress={() => {
+                        this.setState({
+                            subscribed: true
+                        });
+                        // Navigation.dismissOverlay(this.props.componentId);
+                    }}
+                    label={'Subscribe'}
+                    icon={require('assets/bookmark.png')}
+                />
+            )
+        }
+    }
+
+    componentDidUpdate() {
+        console.log(this.state)
+    }
+
     render() {
         const { title, publisher, description, image, imageHighRes } = this.props.item;
 
@@ -115,46 +169,7 @@ class ShowPreviewScreen extends Component {
                     marginBottom: 20,
                     marginTop: 20
                 }}>
-                        {
-                            this.state.subscribed ? 
-                            // <Button 
-                            //     style={{
-                            //         marginRight: 10
-                            //     }}
-                            //     onPress={() => {
-                            //         this.setState({
-                            //             subscribed: false
-                            //         });
-                            //         Navigation.dismissOverlay(this.props.componentId);
-                            //     }}
-                            //     label={'Unsubscribe'}
-                            //     icon={require('assets/bookmark.png')}
-                            // />
-                            <Button 
-                                style={{
-                                    marginRight: 10
-                                }}
-                                onPress={() => {
-                                    // this.setState({
-                                    //     subscribed: true
-                                    // });
-                                    this._goToSubscribed();
-                                }}
-                                label={'Go to Subscribed'}
-                                icon={require('assets/next.png')}
-                            />
-                            : 
-                            <Button 
-                                onPress={() => {
-                                    this.setState({
-                                        subscribed: true
-                                    });
-                                    // Navigation.dismissOverlay(this.props.componentId);
-                                }}
-                                label={'Subscribe'}
-                                icon={require('assets/bookmark.png')}
-                            />
-                        }
+                    { this._getButton() }
                 </View>
             </LightBox>
         )

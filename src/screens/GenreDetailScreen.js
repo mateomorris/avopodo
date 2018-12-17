@@ -124,7 +124,6 @@ class GenreDetailScreen extends React.Component {
           subscribed: this.props.actions.checkIfSubscribed(item.id),
           goToSubscribed: () => {this._goToSubscribed()},
           onSubscribe: () => {
-          console.log('Now what')
           this._subscribeToShow(item)}
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
