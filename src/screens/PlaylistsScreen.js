@@ -37,6 +37,7 @@ class PlaylistsScreen extends React.Component {
   }
 
   state = {
+    swiping : false,
     activelySwiped : null,
     favorites: [],
     playlists: [],
@@ -247,6 +248,7 @@ class PlaylistsScreen extends React.Component {
               activelySwiped : null
             })
           }}
+          scrollEnabled={this.state.swiping ? false : true}
         >
           {/* <Text style={{ color: '#666666', fontWeight: '600', fontSize: 20, paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}>My Playlists</Text> */}
           <View style={{ flexDirection: 'column', flex: 1, paddingLeft: 5, paddingRight: 5 }}>
@@ -277,11 +279,18 @@ class PlaylistsScreen extends React.Component {
                 { scale : this.state.newStationScale }
               ]
             }} onInitialPress={() => {
+              this.setState({
+                swiping : true
+              })
               this._handleNewStationInitialPress()
             }} onRelease={(completed) => {
               completed ?
               this._handleNewStationPress(this.props.subscribedShows) : 
               this._resetNewStationButton()
+
+              this.setState({
+                swiping : false
+              })
             }}>
                 <View style={{
                   flexDirection: 'row',
