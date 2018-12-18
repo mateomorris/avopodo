@@ -332,7 +332,7 @@ class DiscoverScreen extends React.Component {
 
         <ScrollView contentContainerStyle={[styles.container, 
         {
-          paddingBottom: this.props.details.active ? 30 : 0
+          paddingBottom: this.props.details.active ? 70 : 0
         }]}>
           <View style={{
             paddingLeft: 10,
@@ -430,6 +430,17 @@ class DiscoverScreen extends React.Component {
               )}
             />
           }
+              <View style={{
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                  <Image 
+                  resizeMode={'contain'}
+                  source={require('assets/listen-notes.png')} style={{
+                      width: 200,
+                      height: 20,
+                  }}/>
+              </View>
         </ScrollView>
       </View>
     );
