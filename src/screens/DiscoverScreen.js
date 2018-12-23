@@ -332,7 +332,7 @@ class DiscoverScreen extends React.Component {
 
         <ScrollView contentContainerStyle={[styles.container, 
         {
-          paddingBottom: this.props.details.active ? 70 : 0
+          paddingBottom: this.props.details.active ? 70 : 20
         }]}>
           <View style={{
             paddingLeft: 10,
@@ -432,7 +432,7 @@ class DiscoverScreen extends React.Component {
           }
               <View style={{
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
               }}>
                   <Image 
                   resizeMode={'contain'}

@@ -135,6 +135,11 @@ class PlayBar extends React.Component {
 
     _closeModal = () => {
 
+        this.setState({
+            expanded: false,
+            triggered: false
+        })
+
         animate([
             {
                 property : this.state.height,
@@ -150,12 +155,7 @@ class PlayBar extends React.Component {
                 duration: 500,
                 delay: 200,
             }
-        ], () => {
-            this.setState({
-                expanded: false,
-                triggered: false
-            })
-        })
+        ])
 
     }
 
