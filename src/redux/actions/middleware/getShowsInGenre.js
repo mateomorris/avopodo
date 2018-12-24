@@ -12,7 +12,12 @@ export function getShowsInGenre (genreId, page = 1) {
               show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
               return show
             })
-            return responseJson.channels;
+
+            if (responseJson.has_next) {
+              return responseJson.channels;
+            } else {
+              return false
+            }
           })
           .catch((error) =>{
             console.error('Error getting shows in genre');

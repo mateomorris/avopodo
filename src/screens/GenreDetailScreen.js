@@ -23,7 +23,6 @@ class GenreDetailScreen extends React.Component {
   state = {
     loading : true,
     shows: [],
-    genres: ['blue','red'],
     showSearchResults: false,
     searching: false,
     search: '',
@@ -194,16 +193,22 @@ class GenreDetailScreen extends React.Component {
 
 
   _checkIfBottomReached = (e) => {
-      let paddingToBottom = 0;
+      let paddingToBottom = 100;
       paddingToBottom += e.nativeEvent.layoutMeasurement.height;
       if(e.nativeEvent.contentOffset.y >= e.nativeEvent.contentSize.height - paddingToBottom) {
           if (!this.state.firstEpisodeReached) {
               this.setState({loadingAdditionalEpisodes : true})
               this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then((moreShows) => {
-                this.setState({ 
-                  shows : this.state.shows.concat(moreShows),
-                  genreShowsPage : this.state.genreShowsPage + 1
-                })
+                if (moreShows) {
+                  this.setState({ 
+                    shows : this.state.shows.concat(moreShows),
+                    genreShowsPage : this.state.genreShowsPage + 1
+                  })
+                } else {
+                  this.setState({
+                    loadingAdditionalEpisodes : false
+                  })
+                }
               })
           }
       }
