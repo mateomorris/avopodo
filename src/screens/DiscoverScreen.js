@@ -245,7 +245,7 @@ class DiscoverScreen extends React.Component {
   render() {
 
     return (
-      <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      <View style={{ flex: 1, backgroundColor: '#fafafa', marginTop: 10 }}>
         <Search
           style={{
 
@@ -342,8 +342,8 @@ class DiscoverScreen extends React.Component {
           paddingBottom: this.props.details.active ? 70 : 20
         }]}>
           <View style={{
-            paddingLeft: 10,
-            paddingRight: 10
+            paddingLeft: 0,
+            paddingRight: 0
           }}>
             {
               this.state.typeAheadShows.length > 0 &&
@@ -406,10 +406,15 @@ class DiscoverScreen extends React.Component {
           {
             this.state.showGenres &&
             <GridView
-              style={{
-
+              itemContainerStyle={{
+              //   backgroundColor: 'red',
+              //   padding: 0,
+              //   margin: 0
               }}
-              spacing={20}
+              style={{
+                // backgroundColor: 'yellow'
+              }}
+              spacing={10}
               itemDimension={130}
               items={this.state.genres}
               renderItem={genre => (

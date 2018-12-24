@@ -389,6 +389,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     alignItems: 'stretch',
     justifyContent: 'center',
-    padding: 10
+    padding: 5
   },
 });

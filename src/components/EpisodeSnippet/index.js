@@ -10,6 +10,7 @@ import icons from 'assets/generalIcons';
 const styles = StyleSheet.create({
     container: {
         margin: 5, 
+        shadowRadius: 2,
         shadowOffset:{  width: 0,  height: 0,  },
         shadowColor: 'black',
         shadowOpacity: 0.5,

@@ -273,7 +273,7 @@ class PlaylistsScreen extends React.Component {
                   width: 0,
                   height: 0
               },
-              shadowRadius: 3,
+              shadowRadius: 2,
               shadowOpacity: this.state.newStationOpacity,
               transform : [
                 { scale : this.state.newStationScale }
@@ -349,5 +349,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     alignItems: 'stretch',
     justifyContent: 'center',
+    paddingLeft : 5,
+    paddingRight: 5
   },
 });
