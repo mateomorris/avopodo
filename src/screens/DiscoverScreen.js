@@ -42,7 +42,7 @@ class DiscoverScreen extends React.Component {
   state = {
     noResultsFound : false,
     genres: [],
-    showSearchResults: false,
+    showSearchResults: null,
     showGenres : true,
     searching: false,
     search: '',
@@ -140,6 +140,7 @@ class DiscoverScreen extends React.Component {
           return result.title.toLowerCase() == term.toLowerCase()
       })
 
+      // Move the perfect match to the top, if there is one
       if (perfectMatch) {
           searchResults = searchResults.filter(item => item.title !== perfectMatch.title);
           searchResults.unshift(perfectMatch);
@@ -164,14 +165,6 @@ class DiscoverScreen extends React.Component {
       }
 
     })
-  }
-
-  _searchForTerm = (term) => {
-
-    // this.searchBar.blur();
-
-    this.setState({searching: true, showSearchResults: false });
-    this._getSearchResults(term);
   }
 
   _getChildGenres = (parentGenre) => {
@@ -254,44 +247,54 @@ class DiscoverScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <Search
+          style={{
+
+          }}
           ref={(ref) => { this.myTextInput = ref }}
           onChangeText={(text) => {
             return new Promise((resolve, reject) => {
                 clearTimeout(this.change);
 
-                this.setState({ search: text }, () => {
-                  if (text.length > 5) {
-                    this.setState({
-                      searching: true,
-                      showGenres: false,
-                      showSuggestions: false
-                    })
-                    this.change = setTimeout(() => {
-                      this.props.actions.getTypeAhead(text).then((result) => {
-                        this.setState({
-                          typeAheadShows : result,
-                          searching: false,
-                          showSuggestions: true
-                        }, () => {
+                // 
+                if (!this.state.showSearchResults && !this.state.searching) {
+                  this.setState({ search: text }, () => {
+                    if (text.length > 5) {
+                      this.setState({
+                        // searching: true,
+                        showGenres: false,
+                        showSuggestions : true,
+                        // showSuggestions: this.state.showSuggestions === true ? false : null
+                      })
+                      this.change = setTimeout(() => {
+                        this.props.actions.getTypeAhead(text).then((result) => {
                           this.setState({
-                            noResultsFound : this.state.typeAheadShows.length > 0 ? false : true
+                            typeAheadShows : result,
+                            searching: false,
+                            showSuggestions: this.state.showSuggestions === false ? null : true
+                          }, () => {
+                            this.setState({
+                              noResultsFound : this.state.typeAheadShows.length > 0 ? false : true
+                            })
                           })
                         })
-                      })
-                    }, 500)
-                  }
-                });
+                      }, 500)
+                    }
+                  });
+                }
 
                 resolve();
             });
           }}
           onSearch={() => {
             return new Promise((resolve, reject) => {
-              this._searchForTerm(this.state.search);
               this.setState({
-                showSuggestions: false
+                searching : true,
+                showSearchResults : false,
+                showSuggestions: this.state.showSuggestions === true ? false : null
+              }, () => {
+                this._getSearchResults(this.state.search);
+                resolve();
               })
-              resolve();
             });
           }}
           onCancel={()=>{ 
@@ -299,13 +302,17 @@ class DiscoverScreen extends React.Component {
               this.setState({
                 showSearchResults: false,
                 showGenres: true,
-                showSuggestions: false
+                showSuggestions: null,
+                typeAheadShows : []
               })
               resolve();
             });
           }}
           onDelete={() => {
             return new Promise((resolve, reject) => {
+              this.setState({
+                typeAheadShows : []
+              })
               this.myTextInput.focus()
               resolve();
             });
@@ -342,7 +349,8 @@ class DiscoverScreen extends React.Component {
               this.state.typeAheadShows.length > 0 &&
               this.state.showSuggestions > 0 &&
               <View style={{
-                flexDirection : 'column'
+                flexDirection : 'column',
+                paddingBottom: 20
               }}>
                 <Headline text={'Search Suggestions'}/>
                 <View
@@ -398,6 +406,9 @@ class DiscoverScreen extends React.Component {
           {
             this.state.showGenres &&
             <GridView
+              style={{
+
+              }}
               spacing={20}
               itemDimension={130}
               items={this.state.genres}
