@@ -24,6 +24,26 @@ export class DiscoverButton extends React.Component {
         pressedScale : new Animated.Value(1)
     }
 
+    genreColors = {
+        'Arts' : '#D57866',
+        'Business' : '#335C81',
+        'Comedy' : '#402A2C',
+        'Education' : '#C47335',
+        'Games & Hobbies' : '#56351E',
+        'Government & Organizations' : '#66666E',
+        'Health' : '#FB3640',
+        'Kids & Family' : '#266DD3',
+        'Music' : '#4C3B4D',
+        'News & Politics' : '#575366',
+        'Personal Finance' : '#9D9171',
+        'Religion & Spirituality' : '#242038',
+        'Science & Medicine' : '#4C3B4D',
+        'Society & Culture' : '#312F2F',
+        'Sports & Recreation' : '#C47335',
+        'TV & Film' : '#56351E',
+        'Technology' : '#335C81',
+    }
+
     _onPress = () => {
         this._resetButton();
         this.props.onPress();
@@ -59,7 +79,7 @@ export class DiscoverButton extends React.Component {
                 paddingLeft: 10,
                 paddingRight: 10,
                 borderRadius: 5,
-                backgroundColor: '#111',
+                backgroundColor: this.genreColors[genre.name] || '#222',
                 transform : [{ scale : this.state.pressedScale }]
             }, style]} 
             onInitialPress={() => {
