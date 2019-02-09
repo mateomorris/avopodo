@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../node_modules/react-native/React/React.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:avopodo.xcodeproj">
    </FileRef>
    <FileRef

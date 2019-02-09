@@ -69,14 +69,14 @@ persistStore(store, null, () => {
                   }],
                   options: {
                     bottomTab: {
-                      text: 'Home',
-                      icon: require('./src/assets/tab-icons/home.png'),
-                      selectedIcon: require('./src/assets/tab-icons/home-active.png'),
+                      text: 'Feed',
+                      icon: require('./src/assets/tab-icons/feed.png'),
+                      selectedIcon: require('./src/assets/tab-icons/feed-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     },
                     topBar: {
                       title: {
-                        text: 'Home',
+                        text: 'Feed',
                         // component: {
                         //   name: 'example.TopBar',
                         //   alignment: 'center'
@@ -112,32 +112,32 @@ persistStore(store, null, () => {
                   }
                 }
               },
-              {
-                stack: {
-                  children: [
-                    {
-                      component: {
-                        name: 'example.PlaylistsScreen',
-                        passProps: {
-                          text: 'This is tab 1'
-                        }
-                      }
-                  }],
-                  options: {
-                    bottomTab: {
-                      text: 'Stations',
-                      icon: require('./src/assets/tab-icons/stations.png'),
-                      selectedIcon: require('./src/assets/tab-icons/stations-active.png'),
-                      testID: 'SECOND_TAB_BAR_BUTTON'
-                    },
-                    topBar: {
-                      title: {
-                        text: 'Stations',
-                      },
-                    }
-                  }
-                }
-              },
+              // {
+              //   stack: {
+              //     children: [
+              //       {
+              //         component: {
+              //           name: 'example.PlaylistsScreen',
+              //           passProps: {
+              //             text: 'This is tab 1'
+              //           }
+              //         }
+              //     }],
+              //     options: {
+              //       bottomTab: {
+              //         text: 'Stations',
+              //         icon: require('./src/assets/tab-icons/stations.png'),
+              //         selectedIcon: require('./src/assets/tab-icons/stations-active.png'),
+              //         testID: 'SECOND_TAB_BAR_BUTTON'
+              //       },
+              //       topBar: {
+              //         title: {
+              //           text: 'Stations',
+              //         },
+              //       }
+              //     }
+              //   }
+              // },
               {
                 stack: {
                   children: [

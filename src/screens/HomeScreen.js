@@ -30,7 +30,7 @@ export class HomeScreen extends React.Component {
       topBar: {
         noBorder: true,
         title: {
-          text: 'Home'
+          text: 'Feed'
         },
         background: {
           color: '#fafafa',

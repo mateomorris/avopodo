@@ -550,7 +550,9 @@ function reducer(state = initialState, action) {
                 subscribedShows: updatedSubscribedShows
             }
         case PLAY_EPISODE: 
-            var track = trackDetails(action.episode);    
+
+            console.log(action)
+            var track = trackDetails(action.episode);  
             // TrackPlayer.reset();
             // #NEXT: Add the track at the current spot in the queue (as opposed to at the beginning)
             TrackPlayer.add([track]).then(function() {
