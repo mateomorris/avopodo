@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet, Animated } from 'react-native'; 
+import { View, Text, Dimensions, StyleSheet, Animated, Alert } from 'react-native'; 
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Bar } from 'react-native-progress';
 import Slider from "react-native-slider";
+import CustomSlider from 'components/CustomSlider/CustomSlider';
 
 import { animate } from 'helpers/animations';
 
 export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
     state = {
+        settingtime : false,
         sliderValue : 0,
+        // sliderValue : new Animated.Value(0),
         timeTellerPosition : 0,
         timeTellerOpacity : new Animated.Value(0),
         width : 0
@@ -65,8 +68,16 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
     })();
 
     componentDidUpdate () {
-        if (this.state.position > 0) {
-            this.props.onProgressUpdate(Math.floor(this.state.position));
+
+    }
+
+    _updateTrackProgress = () => {
+        console.log('Beginning track position update')
+        if (((this.state.sliderValue / this.state.width) * this.state.duration) > 0) {
+            console.log('Updating track position')
+            this.props.onProgressUpdate(Math.floor((this.state.sliderValue / this.state.width) * this.state.duration));
+        } else {
+            console.log('NOT updating track position')
         }
     }
 
@@ -78,15 +89,16 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
 
     render() {
 
-        const { position, duration, bufferedPosition, sliderTimePosition, sliderValue } = this.state;
-
+        const { duration, position, bufferedPosition, sliderTimePosition, sliderValue, width } = this.state;
+        
         let trackProgress = this.getTrackProgress(position, duration)
 
         return (
             <View style={{ 
-                padding: 20, 
                 paddingTop: 10, 
                 paddingBottom: 0, 
+                marginLeft: 10,
+                marginRight: 10,
                 justifyContent: 'center', 
                 alignItems: 'center', 
                 width : Dimensions.get('window').width - 100
@@ -95,7 +107,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                     position: 'absolute',
                     flex: 1,
                     left : 0,
-                    bottom : 80,
+                    bottom : 40,
                     backgroundColor: this.props.color,
                     padding: 10,
                     borderRadius : 500,
@@ -109,7 +121,7 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                     opacity : this.state.timeTellerOpacity,
                     transform : [
                         {
-                            translateX : this.state.timeTellerPosition
+                            translateX : this.state.timeTellerPosition - 25
                         }
                     ]
                 }}>
@@ -118,21 +130,65 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                         fontWeight: '600'
                     }}>{ sliderTimePosition }</Text>
                 </Animated.View>
-                <View style={{
+                <CustomSlider 
+                    disabled={false}
+                    color={this.props.color}
+                    buffered={bufferedPosition ? `${(bufferedPosition / duration) * 100}%` : null}
+                    scrubbingPosition={sliderValue}
+                    playingPosition={new Animated.Value(trackProgress * width)}
+                    // position={sliderValue}
+                    position={this.state.settingtime ? sliderValue : (trackProgress * width)}
+                    onScrubStart={() => {
+                        this.setState({
+                            settingtime : true,
+                            sliderValue : ( position / duration ) * width
+                        })
+                        animate([
+                            {
+                                property : this.state.timeTellerOpacity,
+                                toValue : 1
+                            },
+                        ])
+                    }}
+                    onScrub={(dx) => {
+                        this.setState({ 
+                            sliderTimePosition : this.formatTime((dx / width) * duration),
+                            timeTellerPosition: dx,
+                            sliderValue : dx
+                        })
+                        // this.state.sliderValue.setValue(dx);
+                        // this.state.timeTellerPosition.setValue(dx);
+                    }}
+                    onScrubComplete={() => {
+                        animate([
+                            {
+                                property : this.state.timeTellerOpacity,
+                                toValue : 0
+                            }
+                        ])
+                        setTimeout(() => {
+                            this.setState({
+                                settingtime : false
+                            })
+                        }, 1000)
+                        TrackPlayer.getPosition().then((currentPosition) => {
+                            let newPosition = Math.floor(duration * this.state.sliderValue) || null
+                            if (newPosition && trackProgress) {
+                                this._updateTrackProgress(newPosition);
+                                TrackPlayer.seekTo(duration * (this.state.sliderValue / width));
+                            } 
+                        })
+                    }}
+                />
+                {/* <View style={{
                     width: '100%',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <View style={{
-                        height: 3,
-                        width: `${(bufferedPosition / duration) * 100}%`,
-                        backgroundColor: `${this.props.color}40`,
-                        position: 'absolute',
-                        left : 0
-                    }}>
-                    </View>
+
                     {/* TODO: Replace Slider with another Slider - Crashes app when playing episode from show detail */}
-                    <Slider
+
+                    {/* <Slider
                         style={{
                             width: '100%',
                         }}
@@ -182,11 +238,11 @@ export default class PlayProgressBar extends TrackPlayer.ProgressComponent {
                                 } 
                             })
                         }}
-                    />
-                </View>
+                    /> */}
+                {/* </View>  */}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 10 }}>
-                    <Text style={{ fontSize: 12, color: '#93A8B3' }}>{this.formatTime(position)}</Text>
-                    <Text style={{ fontSize: 12, color: '#93A8B3' }}>{this.formatTime(duration)}</Text>
+                    <Text style={{ fontSize: 12, color: '#93A8B3' }}>{position == duration ? '--:--' : this.formatTime(position)}</Text>
+                    <Text style={{ fontSize: 12, color: '#93A8B3' }}>{position == duration ? '--:--' : this.formatTime(duration)}</Text>
                 </View>
             </View>
         );
