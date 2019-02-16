@@ -280,6 +280,9 @@ class DiscoverScreen extends React.Component {
                       }, 500)
                     }
                   });
+                } else {
+                  this.setState({ search : text })
+                  console.log('________', !this.state.showSearchResults, !this.state.searching)
                 }
 
                 resolve();
@@ -342,8 +345,8 @@ class DiscoverScreen extends React.Component {
           paddingBottom: this.props.details.active ? 70 : 20
         }]}>
           <View style={{
-            paddingLeft: 0,
-            paddingRight: 0
+            paddingLeft: 10,
+            paddingRight: 10
           }}>
             {
               this.state.typeAheadShows.length > 0 &&
