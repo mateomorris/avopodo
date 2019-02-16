@@ -25,23 +25,24 @@ export class DiscoverButton extends React.Component {
     }
 
     genreColors = {
-        'Arts' : '#D57866',
-        'Business' : '#335C81',
-        'Comedy' : '#402A2C',
-        'Education' : '#C47335',
-        'Games & Hobbies' : '#56351E',
-        'Government & Organizations' : '#66666E',
-        'Health' : '#FB3640',
-        'Kids & Family' : '#266DD3',
-        'Music' : '#4C3B4D',
-        'News & Politics' : '#575366',
-        'Personal Finance' : '#9D9171',
-        'Religion & Spirituality' : '#242038',
-        'Science & Medicine' : '#4C3B4D',
-        'Society & Culture' : '#312F2F',
-        'Sports & Recreation' : '#C47335',
-        'TV & Film' : '#56351E',
-        'Technology' : '#335C81',
+
+        'Arts' : '#F97F51',
+        'Business' : '#1B9CFC',
+        'Comedy' : '#58B19F',
+        'Education' : '#B33771',
+        'Games & Hobbies' : '#FEA47F',
+        'Government & Organizations' : '#3B3B98',
+        'Health' : '#FC427B',
+        'Kids & Family' : '#82589F',
+        'Music' : '#2C3A47',
+        'News & Politics' : '#182C61',
+        'Personal Finance' : '#BDC581',
+        'Religion & Spirituality' : '#B33771',
+        'Science & Medicine' : '#1B9CFC',
+        'Society & Culture' : '#182C61',
+        'Sports & Recreation' : '#BDC581',
+        'TV & Film' : '#EAB543',
+        'Technology' : '#2C3A47',
     }
 
     _onPress = () => {
@@ -80,7 +81,14 @@ export class DiscoverButton extends React.Component {
                 paddingRight: 10,
                 borderRadius: 5,
                 backgroundColor: this.genreColors[genre.name] || '#222',
-                transform : [{ scale : this.state.pressedScale }]
+                transform : [{ scale : this.state.pressedScale }],
+                shadowColor: '#000000',
+                shadowOffset: {
+                    width: 0,
+                    height: 0
+                },
+                shadowRadius: 2,
+                shadowOpacity: 0.25,
             }, style]} 
             onInitialPress={() => {
                 this._animateButton()
@@ -95,9 +103,12 @@ export class DiscoverButton extends React.Component {
                 }} width="20" height="20" svgXmlData={this.props.icon} fill={'#EEE'} fillAll={true}/>
                 <Text style={{
                 fontSize: 15,
-                color: 'white',
+                color: '#EEE',
                 fontWeight: '600',
-                textAlign: 'center'
+                textAlign: 'center',
+                // textShadowColor: 'rgba(0, 0, 0, 0.25)',
+                // textShadowOffset: {width: -1, height: 1},
+                // textShadowRadius: 2.5
                 }}>{ genre.name }</Text>
             </TouchableView>
         )
