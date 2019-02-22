@@ -104,10 +104,10 @@ class GenreDetailScreen extends React.Component {
   }
 
   _goToSubscribed = () => { 
-    console.log('Gone to subscribe')
+    console.log(this.props.componentId)
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
-        currentTabIndex: 3
+        currentTabIndex: 2
       }
     });
   }

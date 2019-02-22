@@ -82,7 +82,7 @@ class DiscoverScreen extends React.Component {
   _goToSubscribed = () => { 
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
-        currentTabIndex: 3
+        currentTabIndex: 2
       }
     });
   }
@@ -429,6 +429,7 @@ class DiscoverScreen extends React.Component {
                     component: {
                         name: 'example.GenreDetailScreen',
                         passProps: {
+                        componentId: this.props.componentId,
                         genre
                         },
                         noBorder: false,
