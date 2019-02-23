@@ -1,8 +1,8 @@
-export function getSearchResults (term) {
+export function getSearchResults (term, type = 'podcast') {
     return dispatch => {
         term = term.toLowerCase().replace(/ /g, "+");
 
-        return fetch(`https://listennotes.p.mashape.com/api/v1/search?q=${term}&type=podcast`, 
+        return fetch(`https://listennotes.p.mashape.com/api/v1/search?q=${term}&type=${type}`, 
         {
             headers: {
             'X-Mashape-Key' : 'xGqxpKDt1rmshDkDCHU7rUGMqWxqp1oEyY5jsnYTD6AGzqmQlb',
@@ -13,6 +13,7 @@ export function getSearchResults (term) {
                 return response.json()
             })
             .then((responseJson) => {
+            console.log(responseJson)
             let searchResults = responseJson.results.map((item) => {
                 return {
                     id: item.id, 

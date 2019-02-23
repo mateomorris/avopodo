@@ -7,6 +7,7 @@ import Search from 'react-native-search-box';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import GridView from 'react-native-super-grid';
 import SvgUri from 'react-native-svg-uri';
+import Tabs from 'react-native-tabs';
 
 import { DiscoverButton } from 'components/Button';
 import ShowThumbnail from 'components/ShowThumbnail';
@@ -14,6 +15,8 @@ import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
 import { ShowRow } from 'components/ShowRow';
 import { LoadingIndicator } from 'components/SimpleComponents'
+
+import SearchResults from './SearchResults';
 import { Headline } from 'components/Headline'
 
 import icons from 'assets/genre-icons';
@@ -40,6 +43,8 @@ class DiscoverScreen extends React.Component {
   }
 
   state = {
+    page: 'podcast',
+    activeSearchResults : 'shows',
     noResultsFound : false,
     genres: [],
     showSearchResults: null,
@@ -107,64 +112,6 @@ class DiscoverScreen extends React.Component {
         }
       }
     });
-  }
-
-  _renderSearchResults = (items) => {
-
-    if (items) {
-      return (
-        items.map((item, index) => {
-          return (
-            <ShowRow 
-                index={index}
-                item={item}
-                subscribed={this._checkIfSubscribed(item.id)}
-                subscribeToShow={() => {
-                  this._subscribeToShow(item)
-                }}
-                onSearchResultPress={() => {
-                  this._onSearchResultPress(item)
-                }}
-              />
-          );
-        })
-      );
-    } 
-
-  }
-
-  _getSearchResults = (term) => {
-    return this.props.actions.getSearchResults(term).then((searchResults) => {
-
-      let perfectMatch = searchResults.find((result) => {
-          return result.title.toLowerCase() == term.toLowerCase()
-      })
-
-      // Move the perfect match to the top, if there is one
-      if (perfectMatch) {
-          searchResults = searchResults.filter(item => item.title !== perfectMatch.title);
-          searchResults.unshift(perfectMatch);
-      }
-
-      if (searchResults.length > 0) {
-        this.setState({
-          searchResults,
-          searching: false,
-          showSearchResults: true
-        });
-      } else {
-        this.setState({
-          noResultsFound : true,
-          searching: false,
-          showSearchResults: false
-        }); 
-
-        setTimeout(() => {
-            this.setState({noResultsFound: false}
-        )}, 5000)
-      }
-
-    })
   }
 
   _getChildGenres = (parentGenre) => {
@@ -242,6 +189,40 @@ class DiscoverScreen extends React.Component {
     })
   }
 
+  _getSearchResults = (term, type) => {
+    return this.props.actions.getSearchResults(term, type).then((searchResults) => {
+
+      let perfectMatch = searchResults.find((result) => {
+          return result.title.toLowerCase() == term.toLowerCase()
+      })
+
+      // Move the perfect match to the top, if there is one
+      if (perfectMatch) {
+          searchResults = searchResults.filter(item => item.title !== perfectMatch.title);
+          searchResults.unshift(perfectMatch);
+      }
+
+      if (searchResults.length > 0) {
+        this.setState({
+          searchResults,
+          searching: false,
+          showSearchResults: true
+        });
+      } else {
+        this.setState({
+          noResultsFound : true,
+          searching: false,
+          showSearchResults: false
+        }); 
+
+        setTimeout(() => {
+            this.setState({noResultsFound: false}
+        )}, 5000)
+      }
+
+    })
+  }
+
   render() {
 
     return (
@@ -260,7 +241,7 @@ class DiscoverScreen extends React.Component {
                   this.setState({ search: text }, () => {
                     if (text.length > 5) {
                       this.setState({
-                        // searching: true,
+                        searching: true,
                         showGenres: false,
                         showSuggestions : true,
                         // showSuggestions: this.state.showSuggestions === true ? false : null
@@ -322,6 +303,161 @@ class DiscoverScreen extends React.Component {
           }}
         />
         {
+          this.state.showSearchResults &&
+          <View>
+              <Tabs 
+                selected={this.state.page} 
+                style={{backgroundColor:'white', position: 'relative', zIndex: 99}}
+                selectedStyle={{color:'red'}} 
+                onSelect={(el)=>{
+                  console.log('TAB SELECTED')
+                  this.setState({
+                    page:el.props.name,
+                  }, () => {
+                    this._getSearchResults(this.state.search, this.state.page)
+                  })
+              }}>
+                  <Text name="podcast" selectedIconStyle={{borderBottomWidth:2,borderTopColor:'red'}}>Shows</Text>
+                  <Text name="episode" selectedIconStyle={{borderBottomWidth:2,borderTopColor:'red'}}>Episodes</Text>
+              </Tabs>
+              <SearchResults 
+                active={this.props.details.active}
+                searchResults={this.state.searchResults} 
+                subscribeToShow={(show) => { 
+                  this._subscribeToShow(show) 
+                }}
+                onSearchResultPress={(result) => {
+                  this._onSearchResultPress(result)
+                }}
+                checkIfSubscribed={(itemId) => {
+                  this._checkIfSubscribed(itemId)
+                }}
+              > 
+                    <View style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                        <Image 
+                        resizeMode={'contain'}
+                        source={require('assets/listen-notes.png')} style={{
+                            width: 200,
+                            height: 20,
+                        }}/>
+                    </View>
+              </SearchResults> 
+          </View>
+        }
+
+        <ScrollView contentContainerStyle={[styles.container, 
+        {
+          paddingBottom: this.props.details.active ? 70 : 20
+        }]}>
+          <View style={{
+            paddingLeft: 10,
+            paddingRight: 10
+          }}>
+            {
+              this.state.typeAheadShows.length > 0 &&
+              this.state.showSuggestions > 0 &&
+              <View style={{
+                flexDirection : 'column',
+                paddingBottom: 20
+              }}>
+                <Headline text={'Search Suggestions'}/>
+                <View
+                  style={{
+                    flexDirection: 'row'
+                  }}
+                  onLayout={(e) => {
+                      this.setState({
+                          containerWidth: e.nativeEvent.layout.width,
+                      })
+                  }}
+                >
+                  {
+                    this.state.typeAheadShows.map((show) => {
+                      return (
+                        <ShowThumbnail
+                        style={{
+                          height: this.state.containerWidth / 5,
+                          width: this.state.containerWidth / 5,
+                          opacity: this.state.containerWidth > 0 ? 1 : 0
+                        }}
+                        art={show.thumbnail}
+                        color={'black'}
+                        onPress={() => {
+                          this._getShowDetails(show)
+                        }}
+                        />  
+                      )
+                    })
+                  }
+                </View>
+              </View>
+            }
+            { 
+              this.state.searching && 
+              <LoadingIndicator /> 
+            }
+          </View>
+          {
+            this.state.showGenres &&
+            <GridView
+              itemContainerStyle={{
+              //   backgroundColor: 'red',
+              //   padding: 0,
+              //   margin: 0
+              }}
+              style={{
+                // backgroundColor: 'yellow'
+              }}
+              spacing={10}
+              itemDimension={130}
+              items={this.state.genres}
+              renderItem={genre => (
+                <DiscoverButton 
+                  genre={genre} 
+                  icon={this._getIcon(genre)}
+                  onPress={() => {
+                    Navigation.push(this.props.componentId, {
+                    component: {
+                        name: 'example.GenreDetailScreen',
+                        passProps: {
+                        componentId: this.props.componentId,
+                        genre
+                        },
+                        noBorder: false,
+                        options: {
+                        topBar: {
+                            title: {
+                            text: genre.name,
+                            }
+                        }
+                        }
+                    }
+                    });
+                  }}
+                  style={{
+
+                  }}
+                />
+              )}
+            />
+          }
+              <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                  <Image 
+                  resizeMode={'contain'}
+                  source={require('assets/listen-notes.png')} style={{
+                      width: 200,
+                      height: 20,
+                  }}/>
+              </View>
+        </ScrollView> 
+
+        {
           this.state.noResultsFound &&
           <View
           style={{
@@ -340,7 +476,7 @@ class DiscoverScreen extends React.Component {
           </View>
         }
 
-        <ScrollView contentContainerStyle={[styles.container, 
+        {/* <ScrollView contentContainerStyle={[styles.container, 
         {
           paddingBottom: this.props.details.active ? 70 : 20
         }]}>
@@ -461,7 +597,7 @@ class DiscoverScreen extends React.Component {
                       height: 20,
                   }}/>
               </View>
-        </ScrollView>
+        </ScrollView>  */}
       </View>
     );
   }

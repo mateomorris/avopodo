@@ -9,6 +9,8 @@ export function getShowsInGenre (genreId, page = 1) {
           .then((response) => response.json())
           .then((responseJson) => {
 
+            console.log('searched for ', `https://listennotes.p.mashape.com/api/v1/best_podcasts?genre_id=${genreId}&page=${page}`)
+
             if (responseJson.has_next) {
               // return responseJson.channels.map((show) => {
               //   show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
