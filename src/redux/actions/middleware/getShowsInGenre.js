@@ -8,13 +8,19 @@ export function getShowsInGenre (genreId, page = 1) {
         }})
           .then((response) => response.json())
           .then((responseJson) => {
-            responseJson.channels.map((show) => {
-              show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
-              return show
-            })
 
             if (responseJson.has_next) {
-              return responseJson.channels;
+              // return responseJson.channels.map((show) => {
+              //   show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
+              //   return show
+              // });
+              return {
+                nextGenrePage : responseJson.next_page_number,
+                moreShows: responseJson.channels.map((show) => {
+                  show.description = show.description.trim().replace(/(<([^>]+)>)/ig,"")
+                  return show
+                })
+              }
             } else {
               return false
             }

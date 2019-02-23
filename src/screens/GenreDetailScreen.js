@@ -30,7 +30,7 @@ class GenreDetailScreen extends React.Component {
     subscribedShows: this.props.details.subscribedShows.map((show) => {
       return show.id
     }),
-    genreShowsPage : 2,
+    genreShowsPage : 1,
     refreshing : false,
     firstEpisodeReached: false,
     bufferedPosition: null,
@@ -196,13 +196,14 @@ class GenreDetailScreen extends React.Component {
       let paddingToBottom = 100;
       paddingToBottom += e.nativeEvent.layoutMeasurement.height;
       if(e.nativeEvent.contentOffset.y >= e.nativeEvent.contentSize.height - paddingToBottom) {
-          if (!this.state.firstEpisodeReached) {
+          if (!this.state.firstEpisodeReached && !this.state.loadingAdditionalEpisodes ) {
               this.setState({loadingAdditionalEpisodes : true})
-              this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then((moreShows) => {
+              this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then(({ nextGenrePage, moreShows}) => {
                 if (moreShows) {
                   this.setState({ 
-                    shows : this.state.shows.concat(moreShows),
-                    genreShowsPage : this.state.genreShowsPage + 1
+                    shows : [ ...this.state.shows, ...moreShows ],
+                    genreShowsPage : nextGenrePage,
+                    loadingAdditionalEpisodes : false
                   })
                 } else {
                   this.setState({
@@ -215,10 +216,11 @@ class GenreDetailScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getShowsInGenre(this.props.genre.id).then((shows) => {
+    this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then(({ nextGenrePage, moreShows}) => {
       this.setState({ 
-        shows,
-        loading: false
+        shows : moreShows,
+        loading: false,
+        genreShowsPage : nextGenrePage
       })
     })
   }
