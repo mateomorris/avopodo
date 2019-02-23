@@ -7,8 +7,6 @@ export default class SearchResults extends React.Component {
 
   _renderSearchResults = (items) => {
 
-    console.log('rendering search results', items)
-
     if (items) {
       return (
         items.map((item, index) => {
@@ -49,7 +47,7 @@ export default class SearchResults extends React.Component {
                     paddingLeft: 10,
                     paddingRight: 10
                 }}>
-                    {              
+                    {          
                         this._renderSearchResults(this.props.searchResults) 
                     }
                 </View>

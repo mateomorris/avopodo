@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
 export class ShowRow extends React.Component {
 
   state = {
-    subscribed : this.props.subscribed
+    subscribed : this.props.subscribed,
+    loading: true
   }
 
   _subscribeToShow = () => {
@@ -38,7 +39,18 @@ export class ShowRow extends React.Component {
               onPress={() => {this.props.onSearchResultPress()}}
             >
               <View style={{ marginRight: 10 }}>
-                <Image source={{ uri: this.props.item.image }} style={{ width: 75, height: 75, borderRadius: 5, backgroundColor: '#EEEEEE' }}/>
+                <View style={{backgroundColor: '#EEEEEE', borderRadius: 5}}>
+                  <Image source={{ uri: this.props.item.image }} style={{ opacity: this.state.loading ? 0 : 1, width: 75, height: 75, borderRadius: 5 }} 
+                    onLoadStart={(e) => this.setState({loading: true}, () => {
+                      console.log('Loading an image')
+                    })}
+                    onLoadEnd={(e) => {
+                      console.log('Finished loading the image')
+                      this.setState({
+                        loading: false
+                      })
+                    }}/>
+                </View>
               </View>
               <View style={{flex: 1}}>
                 <Text style={{ fontSize: 15, fontWeight: '700' }} ellipsizeMode={'tail'} numberOfLines={1}>{this.props.item.title}</Text>

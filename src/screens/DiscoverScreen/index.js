@@ -13,7 +13,6 @@ import { DiscoverButton } from 'components/Button';
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
 import { EpisodeSnippet } from 'components/EpisodeSnippet';
-import { ShowRow } from 'components/ShowRow';
 import { LoadingIndicator } from 'components/SimpleComponents'
 
 import SearchResults from './SearchResults';
@@ -207,6 +206,10 @@ class DiscoverScreen extends React.Component {
           searchResults,
           searching: false,
           showSearchResults: true
+        }, () => {
+          this.setState({
+            loading : false
+          })
         });
       } else {
         this.setState({
@@ -310,9 +313,9 @@ class DiscoverScreen extends React.Component {
                 style={{backgroundColor:'white', position: 'relative', zIndex: 99}}
                 selectedStyle={{color:'red'}} 
                 onSelect={(el)=>{
-                  console.log('TAB SELECTED')
                   this.setState({
                     page:el.props.name,
+                    loading : true
                   }, () => {
                     this._getSearchResults(this.state.search, this.state.page)
                   })
@@ -322,6 +325,7 @@ class DiscoverScreen extends React.Component {
               </Tabs>
               <SearchResults 
                 active={this.props.details.active}
+                loading={this.state.loading}
                 searchResults={this.state.searchResults} 
                 subscribeToShow={(show) => { 
                   this._subscribeToShow(show) 
@@ -332,19 +336,7 @@ class DiscoverScreen extends React.Component {
                 checkIfSubscribed={(itemId) => {
                   this._checkIfSubscribed(itemId)
                 }}
-              > 
-                    <View style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                        <Image 
-                        resizeMode={'contain'}
-                        source={require('assets/listen-notes.png')} style={{
-                            width: 200,
-                            height: 20,
-                        }}/>
-                    </View>
-              </SearchResults> 
+              /> 
           </View>
         }
 
