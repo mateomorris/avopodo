@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import Search from 'react-native-search-box';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import { genreColors } from 'utilities/constants';
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
@@ -60,10 +61,6 @@ class GenreDetailScreen extends React.Component {
     ]
   };
 
-  componentDidMount() {
-
-  }
-
   _subscribeToShow = (show) => {
 
     let alreadySubscribed = this.state.subscribedShows.find((subscribedShowId) => {
@@ -104,7 +101,6 @@ class GenreDetailScreen extends React.Component {
   }
 
   _goToSubscribed = () => { 
-    console.log(this.props.componentId)
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
         currentTabIndex: 2
@@ -216,6 +212,7 @@ class GenreDetailScreen extends React.Component {
   }
 
   componentWillMount() {
+
     this.props.actions.getShowsInGenre(this.props.genre.id, this.state.genreShowsPage).then(({ nextGenrePage, moreShows}) => {
       this.setState({ 
         shows : moreShows,
@@ -223,6 +220,47 @@ class GenreDetailScreen extends React.Component {
         genreShowsPage : nextGenrePage
       })
     })
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          color: '#222',
+        },
+        background: {
+          animate: true,
+          color: genreColors[this.props.genre.name],
+          translucent: false
+        },
+        backButton: {
+          color: 'red'
+        }
+      },
+    });
+    // Navigation.mergeOptions(this.props.componentId, {
+    //   topBar: {
+    //     title: {
+    //       color: '#FAFAFA',
+    //     },
+    //     statusBarBackgroundColor: 'light',
+    //     background: {
+    //       animate: true,
+    //       color: genreColors[this.props.genre.name],
+    //       translucent: false
+    //     }
+    //   },
+    //   statusBarStyle: 'light',
+    //   statusBar: {
+    //     visible: true,
+    //     style: "dark",
+    //     backgroundColor: "red"
+    //   },
+    // });
   }
 
   render() {

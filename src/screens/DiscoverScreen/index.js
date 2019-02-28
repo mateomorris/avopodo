@@ -8,6 +8,7 @@ import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import GridView from 'react-native-super-grid';
 import SvgUri from 'react-native-svg-uri';
 import Tabs from 'react-native-tabs';
+import { genreColors } from 'utilities/constants';
 
 import { DiscoverButton } from 'components/Button';
 import ShowThumbnail from 'components/ShowThumbnail';
@@ -31,15 +32,21 @@ class DiscoverScreen extends React.Component {
       topBar: {
         noBorder: true,
         title: {
-          text: 'Discover'
+          text: 'Discover',
+          color: '#222222',
         },
         background: {
-          color: '#fafafa',
-          blur: true
+          animate: true,
+          color: '#FAFAFA',
+          translucent: false
+        },
+        backButton: {
+          color: '#FAFAFA'
         }
       }
     };
   }
+
 
   state = {
     page: 'podcast',
@@ -153,6 +160,7 @@ class DiscoverScreen extends React.Component {
   }
 
   componentDidMount() {
+
     // console.log(this.props.details);
     this.props.actions.getGenres().then(({ genres }) => {
       const filteredGenres = genres.filter((genre) => {
@@ -224,6 +232,19 @@ class DiscoverScreen extends React.Component {
       }
 
     })
+  }
+
+  componentWillMount() {
+    // Navigation.mergeOptions(this.props.componentId, {
+    //   topBar: {
+    //     title: {
+    //       color: '#222222',
+    //     },
+    //     background: {
+    //       color: '#FAFAFA',
+    //     }
+    //   },
+    // });
   }
 
   render() {
@@ -415,16 +436,22 @@ class DiscoverScreen extends React.Component {
                     component: {
                         name: 'example.GenreDetailScreen',
                         passProps: {
-                        componentId: this.props.componentId,
-                        genre
+                          componentId: this.props.componentId,
+                          genre
                         },
                         noBorder: false,
                         options: {
-                        topBar: {
-                            title: {
-                            text: genre.name,
-                            }
-                        }
+                          topBar: {
+                              title: {
+                                text: genre.name,
+                                color: '#FAFAFA',
+                              },
+                              background: {
+                                animate: true,
+                                color: genreColors[genre.name],
+                                translucent: false
+                              },
+                          }
                         }
                     }
                     });

@@ -4,6 +4,7 @@ import { MaterialIndicator } from 'react-native-indicators';
 import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
 import { animate } from 'helpers/animations';
+import { genreColors } from 'utilities/constants';
 
 const styles = StyleSheet.create({
     container: {
@@ -22,27 +23,6 @@ export class DiscoverButton extends React.Component {
 
     state = {
         pressedScale : new Animated.Value(1)
-    }
-
-    genreColors = {
-
-        'Arts' : '#F97F51',
-        'Business' : '#1B9CFC',
-        'Comedy' : '#58B19F',
-        'Education' : '#B33771',
-        'Games & Hobbies' : '#FEA47F',
-        'Government & Organizations' : '#3B3B98',
-        'Health' : '#FC427B',
-        'Kids & Family' : '#82589F',
-        'Music' : '#2C3A47',
-        'News & Politics' : '#182C61',
-        'Personal Finance' : '#BDC581',
-        'Religion & Spirituality' : '#B33771',
-        'Science & Medicine' : '#1B9CFC',
-        'Society & Culture' : '#182C61',
-        'Sports & Recreation' : '#BDC581',
-        'TV & Film' : '#EAB543',
-        'Technology' : '#2C3A47',
     }
 
     _onPress = () => {
@@ -80,7 +60,7 @@ export class DiscoverButton extends React.Component {
                 paddingLeft: 10,
                 paddingRight: 10,
                 borderRadius: 5,
-                backgroundColor: this.genreColors[genre.name] || '#222',
+                backgroundColor: genreColors[genre.name] || '#222',
                 transform : [{ scale : this.state.pressedScale }],
                 shadowColor: '#000000',
                 shadowOffset: {

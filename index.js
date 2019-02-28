@@ -98,17 +98,12 @@ persistStore(store, null, () => {
                       }
                   }],
                   options: {
-                    topBar: {
-                      title: {
-                        text: 'Discover',
-                      },
-                    },
                     bottomTab: {
                       text: 'Discover',
                       icon: require('./src/assets/tab-icons/discover.png'),
                       selectedIcon: require('./src/assets/tab-icons/discover-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
-                    },
+                    }
                   }
                 }
               },
