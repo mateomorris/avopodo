@@ -28,8 +28,7 @@ export function getShowsInGenre (genreId, page = 1) {
             }
           })
           .catch((error) =>{
-            console.error('Error getting shows in genre');
-            console.error(error);
+            console.log('Error getting shows in genre', error);
           });
     }
 }

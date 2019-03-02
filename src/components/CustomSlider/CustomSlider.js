@@ -73,7 +73,6 @@ export default class CustomSlider extends React.Component {
     render() {
 
         // console.log(this.props.position._value === null ? 'Is null' : 'NOT NULL')
-        console.log(this.props.buffered)
 
         return (
             <View style={{

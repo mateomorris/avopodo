@@ -13,7 +13,7 @@ export function getTypeAhead (text) {
             return responseJson.podcasts
           })
           .catch((error) =>{
-            console.error('Error fetching typeAhead');
+            console.log('Error fetching typeAhead');
           });
     }
   }

@@ -69,7 +69,7 @@ export function getEpisodeListForShow(showId, ageLimit = 0, nextEpisodeDate = ne
           })
           .catch((error) =>{
             console.log('Error fetching episode list');
-            console.error(error);
+            // console.error(error);
           });
     }
   }

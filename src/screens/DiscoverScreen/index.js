@@ -300,7 +300,7 @@ class DiscoverScreen extends React.Component {
                 showSearchResults : false,
                 showSuggestions: this.state.showSuggestions === true ? false : null
               }, () => {
-                this._getSearchResults(this.state.search);
+                this._getSearchResults(this.state.search, this.state.page);
                 resolve();
               })
             });

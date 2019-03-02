@@ -4,6 +4,7 @@ import SvgUri from 'react-native-svg-uri';
 import { BlurView } from 'react-native-blur';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 import { animate } from 'helpers/animations'
+import { Circle } from 'react-native-progress';
 
 import icons from 'assets/generalIcons';
 
@@ -66,77 +67,129 @@ export class EpisodeSnippet extends React.Component {
         }
     }
 
-    _renderActiveOverlay = () => {
-        return (
-            <View 
-                style={{ 
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    zIndex: 9,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }} 
-            >
-                <BlurView
+    _renderOverlay = (active, duration, playing, downloadProgress = -1) => {
+        if (active && downloadProgress >= 0) {
+            return (
+                <View 
                     style={{ 
                         width: '100%',
                         height: '100%',
                         position: 'absolute',
-                        zIndex: 9
-                    }}
-                    viewRef={this.state.viewRef}
-                    blurType="dark"
-                    blurAmount={2.5}
-                />
-                {
-                    !this.props.testing &&
-                    <SvgUri style={{
-                            zIndex: 10
-                        }} width="40" height="40" svgXmlData={this.props.playing ? icons.pause : icons.play} fill={'#EEE'} fillAll={true}/>
-                }
-            </View>
-        )
-    }
-
-    _renderInactiveOverlay = (duration) => {
-        return (
-            <View 
-                style={{ 
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    zIndex: 9,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }} 
-            >
+                        zIndex: 9,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }} 
+                >
+                    <BlurView
+                        style={{ 
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            zIndex: 9
+                        }}
+                        viewRef={this.state.viewRef}
+                        blurType="dark"
+                        blurAmount={2.5}
+                    />
+                    {
+                        <SvgUri style={{
+                                zIndex: 10
+                            }} width="40" height="40" svgXmlData={playing ? icons.pause : icons.play} fill={'#EEE'} fillAll={true}/>
+                    }
+                </View>
+            )
+        } else if (downloadProgress !== null && downloadProgress >= 0 && downloadProgress < .99) { // Download in progress
+            return (
                 <View 
                     style={{ 
-                        backgroundColor: 'black', 
-                        borderBottomLeftRadius: 5,
-                        borderTopRightRadius: 5,
-                        paddingLeft: 5, 
-                        paddingRight: 5, 
-                        alignSelf: 'flex-start', 
-                        marginLeft: 5 ,
+                        width: '100%',
+                        height: '100%',
                         position: 'absolute',
-                        right: 0,
-                        top: 0
-                    }}>
-                    <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
+                        zIndex: 9,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }} 
+                >
+                    <BlurView
+                        style={{ 
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            zIndex: 9
+                        }}
+                        viewRef={this.state.viewRef}
+                        blurType="dark"
+                        blurAmount={2.5}
+                    />
+                        <Circle 
+                            style={{
+                                zIndex: 10,
+                                position: 'absolute'
+                            }} 
+                            indeterminate={downloadProgress == 0 ? true : false}
+                            progress={downloadProgress}
+                            size={75} 
+                            color={'#FAFAFA'}
+                            // borderWidth={0}
+                            borderColor={downloadProgress == 0 ? 'rgba(250,250,250,0.5)' : 'rgba(250,250,250,0.1)'}
+                        />
+                        <SvgUri style={{
+                                zIndex: 10,
+                                position: 'absolute'
+                            }} width="40" height="40" svgXmlData={icons.download} fill={'#EEE'} fillAll={true}/>
                 </View>
-                <SvgUri style={
-                    {
-                        height: 20,
-                        width: 20,
+            )
+        } else {
+            return (
+                <View 
+                    style={{ 
+                        width: '100%',
+                        height: '100%',
                         position: 'absolute',
-                        right: 3,
-                        bottom: 3,
-                        zIndex: 99999
-                }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
-            </View>
-        )
+                        zIndex: 9,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }} 
+                >
+                    <View 
+                        style={{ 
+                            backgroundColor: 'black', 
+                            borderBottomLeftRadius: 5,
+                            borderTopRightRadius: 5,
+                            paddingLeft: 5, 
+                            paddingRight: 5, 
+                            alignSelf: 'flex-start', 
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            marginLeft: 5 ,
+                            position: 'absolute',
+                            right: 0,
+                            top: 0
+                        }}>
+                        {
+                            downloadProgress > 0.99 &&
+                            <SvgUri style={{
+                                    paddingRight: 2
+                                }} 
+                                width="12"
+                                height="12" 
+                                source={require('assets/interface-icons/download.svg')} fill={'#EEE'} fillAll={true}/>
+                        }
+                        <Text style={{ color: 'white', fontWeight: '900' }}>{this._normalizeDuration(duration)}</Text>
+                    </View>
+                    <SvgUri style={
+                        {
+                            height: 20,
+                            width: 20,
+                            position: 'absolute',
+                            right: 3,
+                            bottom: 3,
+                            zIndex: 99999
+                    }} width="20" height="20" source={require('assets/interface-icons/play.svg')} fill={'#EEE'} fillAll={true}/>
+                </View>
+            )
+        }
     }
 
     componentDidMount() {
@@ -225,11 +278,20 @@ export class EpisodeSnippet extends React.Component {
                             }
                             source={{ uri: showImageHighRes || showImage }}
                         /> 
-                        {
-                            this.props.active ?
-                            this._renderActiveOverlay() :
-                            this._renderInactiveOverlay(duration)
-                        }
+                        <View 
+                            style={{ 
+                                width: '100%',
+                                height: '100%',
+                                position: 'absolute',
+                                zIndex: 9,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }} 
+                        >
+                            {
+                                this._renderOverlay(this.props.active, duration, this.props.playing, this.props.downloadProgress)
+                            }
+                        </View>
                     </View>
                 </Animated.View>
                 <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => { this.props.onDetailPress() }}>

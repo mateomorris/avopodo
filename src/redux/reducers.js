@@ -26,7 +26,12 @@ import {
     UPDATE_PLAY_QUEUE,
     UPDATE_NOW_PLAYING,
     UPDATE_PLAYLIST_EPISODE_LIST,
-    SET_SHOW_AS_NEW
+    SET_SHOW_AS_NEW,
+    DOWNLOAD_EPISODE,
+    STORE_EPISODE,
+    UPDATE_EPISODE_DOWNLOAD_PROGRESS,
+    SET_EPISODE_AS_DOWNLOADING,
+    UNSTORE_EPISODE
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -36,6 +41,8 @@ import TrackPlayer from 'react-native-track-player';
 import trackDetails from '../utilities/tracks';
 
 const initialState = {
+  downloadsInProgress : [],
+  downloadedEpisodes: [],
   subscribedShows: [],
   nowPlaying: {},
   playing: false,
@@ -46,11 +53,66 @@ const initialState = {
   currentTrackPosition: 0,
   playlists: [],
   finishedEpisodes : [],
-  trackSynced : false
+  trackSynced : false,
 };
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case SET_EPISODE_AS_DOWNLOADING: 
+            return {
+                ...state,
+                downloadsInProgress : [
+                    ...state.downloadsInProgress,
+                    {
+                        episodeId : action.episode.id.toString(),
+                        progress: 0
+                    }
+                ],
+                downloadedEpisodes : [
+                    ...state.downloadedEpisodes.filter((download) => {
+                        return download.id !== action.episode.id.toString()
+                    }),
+                    action.episode
+                ]
+            }
+        case UPDATE_EPISODE_DOWNLOAD_PROGRESS: 
+            return {
+                ...state,
+                downloadsInProgress: [
+                    {
+                        episodeId : action.episodeId.toString(),
+                        progress : action.progress
+                    },
+                    ...state.downloadsInProgress.filter(download => download.episodeId !== action.episodeId.toString()),
+                ]
+            }
+        case UNSTORE_EPISODE: 
+            return {
+                ...state,
+                downloadsInProgress: state.downloadsInProgress.filter(download => download.episodeId !== action.episodeId),
+                downloadedEpisodes: state.downloadedEpisodes.filter(download => download.id !== action.episodeId),
+            }
+        case STORE_EPISODE: 
+            return {
+                ...state,
+                downloadsInProgress: [
+                    {
+                        episodeId : action.episode.id.toString(),
+                        progress : 1
+                    },
+                    ...state.downloadsInProgress.filter(download => download.episodeId !== action.episode.id.toString()),
+                ],
+                downloadedEpisodes : [
+                    {
+                        ...action.episode,
+                        audio: action.location,
+                        // originalAudio: action.episode.audio // Might use later, depending on strategy
+                    },
+                    ...state.downloadedEpisodes.filter((download) => {
+                        return download.id !== action.episode.id
+                    })
+                ]
+            }
         case SET_SHOW_AS_NEW: 
             return {
                 ...state,
@@ -102,7 +164,6 @@ function reducer(state = initialState, action) {
                 playQueue: action.newPlayQueue
             }
         case SYNC_PLAY_STATUS: 
-            console.log('playing STATUS')
             return {
                 ...state,
                 playing: action.playing
@@ -551,8 +612,19 @@ function reducer(state = initialState, action) {
             }
         case PLAY_EPISODE: 
 
-            console.log(action)
-            var track = trackDetails(action.episode);  
+            let episode = action.episode;
+            let downloadedEpisode = state.downloadedEpisodes.find(d => d.id == episode.id)
+
+            // If it exists, swap out network audio for local audio
+            if (downloadedEpisode) {
+                episode = {
+                    ...episode,
+                    audio: downloadedEpisode.audio
+                }
+            }
+
+
+            var track = trackDetails(episode);  
             // TrackPlayer.reset();
             // #NEXT: Add the track at the current spot in the queue (as opposed to at the beginning)
             TrackPlayer.add([track]).then(function() {

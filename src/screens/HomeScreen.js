@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert, Net
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import SvgUri from 'react-native-svg-uri';
+import Tabs from 'react-native-tabs';
 
 import { Navigation } from "react-native-navigation";
 
@@ -22,12 +23,14 @@ import { WebView } from 'react-native';
 import { LoadingIndicator } from 'components/SimpleComponents';
 
 import OfflineBanner from 'components/OfflineBanner';
+import RNFetchBlob from 'rn-fetch-blob'
 
 export class HomeScreen extends React.Component {
 
   static options(passProps) {
     return {
       topBar: {
+        visible: false,
         noBorder: true,
         title: {
           text: 'Feed'
@@ -41,6 +44,7 @@ export class HomeScreen extends React.Component {
   }
 
   state = {
+    page: 'newest',
     refreshing: false,
     buffered: false,
     active: false,
@@ -103,6 +107,22 @@ export class HomeScreen extends React.Component {
 
   }
 
+  _handleEpisodeDownload = (episode) => {
+    let downloadedEpisode = this.props.downloadsInProgress.filter(d => d.episodeId == episode.id)[0]
+
+    if (!downloadedEpisode) { // Not even started
+      this.props.actions.downloadEpisode(episode);
+    } else if (downloadedEpisode.progress < 0.99) {  // Started but not finished
+      // Cancel download functionality -> https://github.com/joltup/rn-fetch-blob#cancel-request
+      
+      // this.props.pauseEpisodeDownload(episode);
+    } else if (downloadedEpisode.progress >= 0.99){
+      this.props.actions.removeEpisodeDownload(episode);
+    } else {
+      // Alert.alert('None of the above');
+    }
+  }
+
   _handleEpisodeDetailPress = (episode) => {
 
     Navigation.showOverlay({
@@ -110,8 +130,10 @@ export class HomeScreen extends React.Component {
         name: 'example.EpisodeDetailScreen',
         passProps: { 
           episode,
+          downloadProgress : this.props.state.downloadsInProgress.filter(download => download.episodeId == episode.id)[0],
           playing : this.props.state.nowPlaying.id == episode.id ? true : false,
-          onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)}
+          onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)},
+          onDownloadPress : () => {this._handleEpisodeDownload(episode)}
         }, // simple serializable object that will pass as props to the lightbox (optional)
         options: {
           overlay: {
@@ -258,16 +280,17 @@ export class HomeScreen extends React.Component {
 
   _renderHomeFeed = (episodes) => {
     // Get list from redux store instead of local state
+
     if (episodes) {
       return (
         <View style={{flex: 1}}>
-          <Headline 
+          {/* <Headline 
             text={'Newest from Subscribed'}
             style={{
               marginTop: 0,
               marginBottom: 10,
             }}
-          />
+          /> */}
           <FlatList 
             data={
               episodes.filter((episode) => {
@@ -281,6 +304,13 @@ export class HomeScreen extends React.Component {
             initialNumToRender={5}
             renderItem={({item}) => {
               let isActive = this.props.nowPlaying.id == item.id ? true : false
+              // console.log(this.props.downloadsInProgress)
+              let download = this.props.downloadsInProgress.filter((download) => {
+                return download.episodeId == item.id ? download : null
+              })[0]
+              // console.log(download)
+              let downloadProgress = download ? download.progress : null;
+              // console.log(downloadProgress)
               return (
                 <EpisodeSnippet 
                   data={item}
@@ -288,6 +318,7 @@ export class HomeScreen extends React.Component {
                   onDetailPress={() => this._handleEpisodeDetailPress(item)}
                   active={isActive}
                   playing={this.props.playing}
+                  downloadProgress={downloadProgress}
                 />
               )
             }}
@@ -315,8 +346,24 @@ export class HomeScreen extends React.Component {
     let { nowPlaying, playing } = this.props.state
     let { togglePlayback } = this.props.actions
 
+
     return (
-      <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      <View style={{ flex: 1, backgroundColor: '#fafafa', paddingTop: 20 }}>
+      <Tabs 
+        selected={this.state.page} 
+        style={{backgroundColor:'white', position: 'relative', zIndex: 99}}
+        selectedStyle={{color:'red'}} 
+        onSelect={(el)=>{
+          this.setState({
+            page:el.props.name,
+            loading : true
+          }, () => {
+            // this._getSearchResults(this.state.search, this.state.page)
+          })
+      }}>
+          <Text name="newest" selectedIconStyle={{borderBottomWidth:3,borderTopColor:'lightgray'}}>Newest</Text>
+          <Text name="downloaded" selectedIconStyle={{borderBottomWidth:3,borderTopColor:'lightgray'}}>Downloaded</Text>
+      </Tabs>
       {
         this.props.state.subscribedShows.length == 0 &&
         <View style={{
@@ -352,7 +399,11 @@ export class HomeScreen extends React.Component {
               />
           }
         >
-          { this.props.state.subscribedShows.length > 0 ? this._renderHomeFeed(this.props.state.newestFromSubscribed) : null }
+          { 
+            this.props.state.subscribedShows.length > 0 ? 
+            this._renderHomeFeed(this.state.page == 'newest' ? this.props.state.newestFromSubscribed : 
+            this.props.state.downloadedEpisodes) : null 
+          }
         </ScrollView>
       }
       </View>
@@ -369,7 +420,9 @@ function mapStateToProps(state, ownProps) {
 	return {
 		state: state,
     nowPlaying : state.nowPlaying,
-    playing : state.playing
+    playing : state.playing,
+    downloadsInProgress : state.downloadsInProgress,
+    downloadedEpisodes : state.downloadedEpisodes
 	};
 }
 

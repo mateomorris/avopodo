@@ -31,7 +31,7 @@ export function getSearchResults (term, type = 'podcast') {
             .then()
             .catch((error) =>{
                 console.log('Error fetching search results');
-                console.error(error);
+                // console.error(error);
             });
     }
 }

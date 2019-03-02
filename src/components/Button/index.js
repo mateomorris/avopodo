@@ -19,6 +19,43 @@ const styles = StyleSheet.create({
     },
 });
 
+export class GhostButton extends React.Component {
+    state = {}
+
+    render() {
+
+        let { label, icon } = this.props;
+        return (
+            <TouchableOpacity style={[{
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 5,
+                paddingBottom: 5,
+                borderColor: 'whitesmoke',
+                borderWidth: 2,
+                borderRadius: 35,
+                flexDirection: 'row',
+                // marginBottom: 10
+            }, this.props.style]} 
+            onPress={() => {this.props.onPress()}}>
+                <Text style={{
+                    color: 'white',
+                    fontWeight: '900'
+                }}>{ label }</Text>
+                {
+                    icon &&
+                    <Image style={{
+                        height: 15,
+                        width: 15,
+                        marginTop: 2,
+                        marginLeft: 5,
+                    }} source={ icon } />
+                }
+            </TouchableOpacity>
+        )
+    }
+}
+
 export class DiscoverButton extends React.Component {
 
     state = {

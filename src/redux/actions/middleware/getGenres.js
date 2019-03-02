@@ -17,7 +17,7 @@ export function getGenres () {
             .then()
             .catch((error) =>{
                 console.log('error fetching genres');
-                console.error(error);
+                // console.error(error);
             });
     }
 }

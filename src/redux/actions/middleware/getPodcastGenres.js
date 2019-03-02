@@ -18,7 +18,7 @@ export function getPodcastGenres () {
           .then()
           .catch((error) =>{
             console.log('Error fetching genres');
-            console.error(error);
+            // console.error(error);
           });
     }
   }

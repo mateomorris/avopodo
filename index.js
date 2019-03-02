@@ -76,7 +76,8 @@ persistStore(store, null, () => {
                     },
                     topBar: {
                       title: {
-                        text: 'Feed',
+                        visible: false
+                        // text: 'Feed',
                         // component: {
                         //   name: 'example.TopBar',
                         //   alignment: 'center'

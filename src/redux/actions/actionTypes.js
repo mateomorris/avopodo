@@ -31,3 +31,7 @@ export const UPDATE_PLAY_QUEUE = 'Update play queue';
 export const UPDATE_NOW_PLAYING = 'Update now playing';
 export const UPDATE_PLAYLIST_EPISODE_LIST = 'Update playlist episode list';
 export const SET_SHOW_AS_NEW = 'Set show as new';
+export const STORE_EPISODE = 'Store episode';
+export const UPDATE_EPISODE_DOWNLOAD_PROGRESS = 'Update episode download progress';
+export const SET_EPISODE_AS_DOWNLOADING = 'Set episode as downloading';
+export const UNSTORE_EPISODE = 'Unstore episode';

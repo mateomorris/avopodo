@@ -9,8 +9,8 @@ export function fetchHighResArtwork(id, itunesId) {
           dispatch(setHighResArtwork(id, artwork))
         })
         .catch((error) =>{
-          console.log('fetching error');
-          console.error(error);
+          console.log('Error fetching high res artwork');
+          // console.error(error);
         });
     }
 }

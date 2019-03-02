@@ -50,6 +50,8 @@ const persistConfig = {
 }
 
 const initialState = {
+  downloadsInProgress : [],
+  downloadedEpisodes: [],
   subscribedShows: [],
   nowPlaying: {},
   playing: false,

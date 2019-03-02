@@ -238,7 +238,7 @@ class GenreDetailScreen extends React.Component {
           translucent: false
         },
         backButton: {
-          color: 'red'
+          color: '#FAFAFA' // This is the one
         }
       },
     });

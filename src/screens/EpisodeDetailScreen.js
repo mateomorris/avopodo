@@ -6,6 +6,7 @@ import { Navigation } from "react-native-navigation";
 import Autolink from 'react-native-autolink';
 
 import { LightBox } from 'components/LightBox';
+import { GhostButton } from 'components/Button';
 
 import * as specialActions from 'actions';
 
@@ -15,6 +16,19 @@ class ShowPreviewScreen extends Component {
         playing : this.props.playing
     }
 
+    _getDownloadLabel = (downloadProgress = { progress : -1 }) => {
+        if (downloadProgress.progress >= 0.99 ) {
+            console.log('REMOVE DOWNLOAd')
+            return 'Remove Download';
+        } else if (downloadProgress.progress >= 0) {
+            console.log('PAUSE DOWNLOAD')
+            return 'Downloading'
+        } else {
+            console.log('DOWNLOAD')
+            return 'Download'
+        }
+    }
+
     render() {
 
         const { showColor, showTitle, showImage, title, description, duration, showPublisher, publishDate } = this.props.episode;
@@ -22,7 +36,7 @@ class ShowPreviewScreen extends Component {
         const screenWidth = Dimensions.get('window').width;
         const screenHeight = Dimensions.get('window').height;
 
-        console.log(description)
+        console.log(this.props)
 
         return(
             
@@ -95,40 +109,39 @@ class ShowPreviewScreen extends Component {
                     {/* { description } */}
                 </Text>
                 <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
                     alignItems: 'flex-end',
+                    // flexDirection: 'column',
+                    // justifyContent: 'center',
+                    // alignItems: 'flex-end',
                     marginTop: 20
                 }}>
+                    <GhostButton 
+                        label={this._getDownloadLabel(this.props.downloadProgress)}
+                        icon={require('assets/download.png')}
+                        onPress={() => {
+                            Navigation.dismissOverlay(this.props.componentId)
+                            this.props.onDownloadPress()
+                        }}
+                        style={{
+                            marginRight: 10
+                            // marginBottom: 10
+                        }}
+                    />
                     {
                         !this.state.playing &&
-                        <TouchableOpacity style={{
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            paddingTop: 5,
-                            paddingBottom: 5,
-                            borderColor: 'whitesmoke',
-                            borderWidth: 2,
-                            borderRadius: 35,
-                            flexDirection: 'row',
-                            marginBottom: 10
-                        }} 
-                        onPress={() => { 
-                            this.setState({
-                                playing : this.state.playing ? false : true
-                            })
-                            Navigation.dismissOverlay(this.props.componentId)
-                            this.props.onPlayPress() 
-                        }}>
-                            <Text style={{
-                                color: 'white',
-                                fontWeight: '900'
-                            }}>Play</Text>
-                            <Image style={{
-                                height: 15,
-                                width: 15,
-                                marginTop: 2,
-                                marginLeft: 5,
-                            }} source={require('assets/play.png')} />
-                        </TouchableOpacity>
+                        <GhostButton 
+                            label={'Play'}
+                            icon={require('assets/play.png')}
+                            onPress={() => { 
+                                this.setState({
+                                    playing : this.state.playing ? false : true
+                                })
+                                Navigation.dismissOverlay(this.props.componentId)
+                                this.props.onPlayPress() 
+                            }}
+                        />
                     }
                 </View>
             </LightBox>

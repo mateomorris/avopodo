@@ -23,7 +23,7 @@ export function getShowDetails (showId) {
 
           })
           .catch((error) =>{
-            console.error('Unable to fetch show details', error);
+            console.log('Unable to fetch show details', error);
           });
     }
   }
