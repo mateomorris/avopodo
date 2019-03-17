@@ -114,7 +114,7 @@ export class HomeScreen extends React.Component {
       this.props.actions.downloadEpisode(episode);
     } else if (downloadedEpisode.progress < 0.99) {  // Started but not finished
       // Cancel download functionality -> https://github.com/joltup/rn-fetch-blob#cancel-request
-      
+      this.props.actions.cancelEpisodeDownload(episode);
       // this.props.pauseEpisodeDownload(episode);
     } else if (downloadedEpisode.progress >= 0.99){
       this.props.actions.removeEpisodeDownload(episode);

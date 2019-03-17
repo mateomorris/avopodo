@@ -21,8 +21,7 @@ class ShowPreviewScreen extends Component {
             console.log('REMOVE DOWNLOAd')
             return 'Remove Download';
         } else if (downloadProgress.progress >= 0) {
-            console.log('PAUSE DOWNLOAD')
-            return 'Downloading'
+            return 'Cancel Download'
         } else {
             console.log('DOWNLOAD')
             return 'Download'

@@ -49,7 +49,7 @@ const persistConfig = {
   storage,
 }
 
-const initialState = {
+export const initialState = {
   downloadsInProgress : [],
   downloadedEpisodes: [],
   subscribedShows: [],
@@ -62,7 +62,8 @@ const initialState = {
   currentTrackPosition: 0,
   playlists: [],
   finishedEpisodes : [],
-  trackSynced : false
+  trackSynced : false,
+  canceledEpisodes : []
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer.reducer)

@@ -31,7 +31,8 @@ import {
     STORE_EPISODE,
     UPDATE_EPISODE_DOWNLOAD_PROGRESS,
     SET_EPISODE_AS_DOWNLOADING,
-    UNSTORE_EPISODE
+    UNSTORE_EPISODE,
+    CANCEL_EPISODE_DOWNLOAD
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -40,27 +41,45 @@ import firebase from 'react-native-firebase';
 import TrackPlayer from 'react-native-track-player';
 import trackDetails from '../utilities/tracks';
 
-const initialState = {
-  downloadsInProgress : [],
-  downloadedEpisodes: [],
-  subscribedShows: [],
-  nowPlaying: {},
-  playing: false,
-  active: false,
-  activePlaylist : {},
-  playQueue: [],
-  episodePlaybackPositions: {},
-  currentTrackPosition: 0,
-  playlists: [],
-  finishedEpisodes : [],
-  trackSynced : false,
-};
+import initialState from './store';
+
+// const initialState = {
+//   downloadsInProgress : [],
+//   downloadedEpisodes: [],
+//   subscribedShows: [],
+//   nowPlaying: {},
+//   playing: false,
+//   active: false,
+//   activePlaylist : {},
+//   playQueue: [],
+//   episodePlaybackPositions: {},
+//   currentTrackPosition: 0,
+//   playlists: [],
+//   finishedEpisodes : [],
+//   trackSynced : false,
+//   canceledEpisodes : []
+// };
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case CANCEL_EPISODE_DOWNLOAD: 
+            return {
+                ...state,
+                canceledEpisodes : [
+                    ...state.canceledEpisodes,
+                    action.episodeId
+                ],
+                downloadsInProgress : state.downloadsInProgress.filter((download) => {
+                    return download.episodeId !== action.episodeId
+                }),
+                downloadedEpisodes : state.downloadedEpisodes.filter((download) => {
+                    return download.id !== action.episodeId
+                })
+            }
         case SET_EPISODE_AS_DOWNLOADING: 
             return {
                 ...state,
+                canceledEpisodes : state.canceledEpisodes.filter(episodeId => episodeId !== action.episode.id),
                 downloadsInProgress : [
                     ...state.downloadsInProgress,
                     {

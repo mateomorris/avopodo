@@ -35,3 +35,4 @@ export const STORE_EPISODE = 'Store episode';
 export const UPDATE_EPISODE_DOWNLOAD_PROGRESS = 'Update episode download progress';
 export const SET_EPISODE_AS_DOWNLOADING = 'Set episode as downloading';
 export const UNSTORE_EPISODE = 'Unstore episode';
+export const CANCEL_EPISODE_DOWNLOAD = 'Cancel episode download';
