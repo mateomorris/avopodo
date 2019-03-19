@@ -32,7 +32,8 @@ import {
     UPDATE_EPISODE_DOWNLOAD_PROGRESS,
     SET_EPISODE_AS_DOWNLOADING,
     UNSTORE_EPISODE,
-    CANCEL_EPISODE_DOWNLOAD
+    CANCEL_EPISODE_DOWNLOAD,
+    SUBSCRIBE_TO_MULTIPLE_SHOWS
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -62,6 +63,14 @@ import initialState from './store';
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case SUBSCRIBE_TO_MULTIPLE_SHOWS: 
+            return {
+                ...state,
+                subscribedShows : [
+                    ...action.shows,
+                    ...state.subscribedShows,
+                ]
+            }
         case CANCEL_EPISODE_DOWNLOAD: 
             return {
                 ...state,
