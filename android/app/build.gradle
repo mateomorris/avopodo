@@ -147,6 +147,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-document-picker')
     compile project(':rn-fetch-blob')
     compile project(':react-native-track-player')
     compile project(':react-native-svg')

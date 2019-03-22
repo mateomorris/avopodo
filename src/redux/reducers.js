@@ -63,6 +63,11 @@ import initialState from './store';
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'Clear shows': 
+            return {
+                ...state,
+                subscribedShows : []
+            }
         case SUBSCRIBE_TO_MULTIPLE_SHOWS: 
             return {
                 ...state,

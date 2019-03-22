@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Navigation } from 'react-native-navigation';
 import XMLParser from 'react-xml-parser';
 import { parseString } from 'react-native-xml2js';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import RNFetchBlob from 'rn-fetch-blob'
 
 import ShowThumbnail from 'components/ShowThumbnail';
 import PlaylistThumbnail from 'components/PlaylistThumbnail';
@@ -68,8 +70,111 @@ class SubscribedScreen extends React.Component {
   }
 
   importShows = () => {
-    // var xml = new XMLParser().parseFromString(xmlText);    // Assume xmlText contains the example XML
-    // console.log(xml);
+
+
+DocumentPicker.show({
+      filetype: [DocumentPickerUtil.allFiles()],
+    },(error,res) => {
+      // Android
+      console.log(
+         res.uri,
+         res.type, // mime type
+         res.fileName,
+         res.fileSize
+      );
+
+        const dirs = RNFetchBlob.fs.dirs
+
+        let downloadId = Math.random() * 9999999
+
+
+        let THE_DOWNLOAD = RNFetchBlob
+        .config({
+            // add this option that makes response data to be stored as a file,
+            // this is much more performant.
+            // path: `${dirs.MainBundleDir}/${episode.id}.mp3`,
+            path: `${dirs.CacheDir}/${downloadId}.xml`,
+            fileCache : true,
+            appendExt : 'xml'
+        })
+        // .fetch('GET', 'https://content.production.cdn.art19.com/episodes/3bd93e04-1373-4737-b877-c8236061bb45/33ee05ed7b83dfe04a5d8ece7f33be550daa2554d695560398ad22d93bde6c98904b9472d45cdf479f85812a7e852f941e16d520ba538a1a9ce34a1f91df42a9/Change%20Agent_TRAILER_MIX%20BF.mp3', {
+        .fetch('GET', res.uri)
+        .then(({ data }) => {
+          console.log(data)
+
+            let arr = data.split('/')
+            filePath = `${dirs.CacheDir}/${arr[arr.length - 1]}`
+
+            RNFetchBlob.fs.readFile(filePath, 'utf8')
+            .then((data) => {
+              // handle the data ..
+              console.log(data)
+
+                parseString(data, (err, { opml }) => {
+                  
+                  console.log(opml);
+
+                  let theShows = eachRecursive(opml.body)
+                  .map(node => node.$.xmlUrl)
+
+                  console.log(theShows)
+
+                  function eachRecursive(obj) {
+                      for (var k in obj) {
+                        if (typeof obj[k] == "object" && obj[k] !== null && (k == 0 || k == 'outline')){
+                          if (Array.isArray(obj) && obj.length > 2) {
+                            console.log('Returning obj', obj, k)
+                            return obj
+                          } else {
+                            return eachRecursive(obj[k]);
+                          }
+                        } 
+                      }
+                  }
+
+                  // this.props.actions.importShows(theShows);
+                })
+
+            })
+            .catch((err) => {
+              console.log(err)
+              Alert.alert('That file is invalid', `That's all we know`);
+            })
+
+        })
+
+
+
+      // RNFetchBlob.fs.createFile(`${dirs.CacheDir}/podcast-import.opml`, res.uri, 'uri')
+      // .then((something)=>{
+
+      //   console.log(something)
+
+      //   // const dirs = RNFetchBlob.fs.dirs
+      //   filePath = `${dirs.CacheDir}/podcast-import.opml`
+
+      //   RNFetchBlob.fs.readFile(filePath, 'base64')
+      //   .then((data) => {
+      //     // handle the data ..
+      //     console.log(data)
+
+      //       parseString(res.uri, (err, { opml }) => {
+      //         let showUrls = opml.body[0].outline[0].outline
+      //         .map(show => show.$)
+      //         .map((show) => show.xmlUrl)
+
+      //         console.log(showUrls)
+
+
+      //         // this.props.actions.importShows(showUrls);
+      //       });
+
+      //   })
+        
+      // })
+
+    });
+
 
     var xml = `
       <opml version="1.0">
@@ -153,13 +258,15 @@ class SubscribedScreen extends React.Component {
       </opml>
     `
 
-    parseString(xml, (err, { opml }) => {
-      let showUrls = opml.body[0].outline[0].outline
-      .map(show => show.$)
-      .map((show) => show.xmlUrl)
+    // parseString(res.uri, (err, { opml }) => {
+    //   let showUrls = opml.body[0].outline[0].outline
+    //   .map(show => show.$)
+    //   .map((show) => show.xmlUrl)
 
-      this.props.actions.importShows(showUrls);
-    });
+    //   console.log(showUrls)
+
+    //   // this.props.actions.importShows(showUrls);
+    // });
 
   }
 
@@ -180,6 +287,11 @@ class SubscribedScreen extends React.Component {
               this.importShows()
             }}>
               <Text>Import your subscribed shows</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              this.props.clearShows()
+            }}>
+              <Text>Clear shows</Text>
             </TouchableOpacity>
           </View>
           <FlatList 
@@ -230,7 +342,12 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators(actions, dispatch)
+		actions: bindActionCreators(actions, dispatch),
+    clearShows : () => {
+      dispatch({
+        type : 'Clear shows'
+      })
+    }
 	};
 }
 
