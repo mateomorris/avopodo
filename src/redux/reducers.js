@@ -284,7 +284,6 @@ function reducer(state = initialState, action) {
             });
 
             let currentEpisodePosition = state.playQueue.map(episode => episode.id).indexOf(state.nowPlaying.id)
-
             if ('id' in state.nowPlaying) {
                 let playQueue = state.playQueue.slice(currentEpisodePosition).map((episode) => {
                     return trackDetails(episode)

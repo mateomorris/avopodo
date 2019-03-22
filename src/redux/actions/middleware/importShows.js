@@ -1,4 +1,5 @@
 import { subscribeToMultipleShows } from '../finalware'
+import { fetchArtworkColor, getDetailsAndSubscribe } from '../middleware'
 
 export function importShows (showUrls) {
     return (dispatch, getState) => {
@@ -21,7 +22,12 @@ export function importShows (showUrls) {
             let formattedShows = shows.map(show => {
                 return formatShow(show)
             } )
-            dispatch(subscribeToMultipleShows(formattedShows))
+            // dispatch(subscribeToMultipleShows(formattedShows))
+            shows.forEach(show => {
+                dispatch(getDetailsAndSubscribe(show))
+                // dispatch(fetchArtworkColor(show.id, show.image))
+            })
+
         }
 
         function formatShow (show) {

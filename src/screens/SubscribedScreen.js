@@ -132,7 +132,7 @@ DocumentPicker.show({
                       }
                   }
 
-                  // this.props.actions.importShows(theShows);
+                  this.props.actions.importShows(theShows);
                 })
 
             })

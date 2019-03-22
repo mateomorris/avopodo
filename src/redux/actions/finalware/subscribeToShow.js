@@ -1,8 +1,10 @@
 import { SUBSCRIBE_TO_SHOW } from '../actionTypes'
 
 export function subscribeToShow(show) {
+    console.log(show)
     return {
       type: SUBSCRIBE_TO_SHOW,
+      ...show,
       id : show.id,
       title : show.title,
       image : show.thumbnail,
