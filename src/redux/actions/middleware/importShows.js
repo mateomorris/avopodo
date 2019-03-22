@@ -4,6 +4,8 @@ import { fetchArtworkColor, getDetailsAndSubscribe } from '../middleware'
 export function importShows (showUrls) {
     return (dispatch, getState) => {
 
+        let state = getState()
+
         let iterations = Math.ceil(showUrls.length / 10) // (43 / 10).ceil => 5 => Go 5 times 
 
         Promise.all((() => (
@@ -14,34 +16,31 @@ export function importShows (showUrls) {
             })
         ))()).then((result) => {
             let shows = result.flat()
-            console.log('the good stuff', shows)
             subscribeToShows(shows);
         })
 
         function subscribeToShows(shows) {
-            let formattedShows = shows.map(show => {
-                return formatShow(show)
-            } )
-            // dispatch(subscribeToMultipleShows(formattedShows))
             shows.forEach(show => {
-                dispatch(getDetailsAndSubscribe(show))
-                // dispatch(fetchArtworkColor(show.id, show.image))
+                if (state.subscribedShows.filter(subbedShow => subbedShow.id == show.id).length > 0) {
+
+                } else {
+                    dispatch(getDetailsAndSubscribe(show))
+                }
             })
-
         }
 
-        function formatShow (show) {
-            return {
-                id : show.id,
-                title : show.title,
-                image : show.thumbnail,
-                description : show.description,
-                publisher : show.publisher,
-                imageHighRes: show.image,
-                itunesId : show.itunes_id,
-                color: null
-            }
-        }
+        // function formatShow (show) {
+        //     return {
+        //         id : show.id,
+        //         title : show.title,
+        //         image : show.thumbnail,
+        //         description : show.description,
+        //         publisher : show.publisher,
+        //         imageHighRes: show.image,
+        //         itunesId : show.itunes_id,
+        //         color: null
+        //     }
+        // }
 
 
         async function fetchShows(RSSUrls) {
@@ -58,7 +57,6 @@ export function importShows (showUrls) {
             })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson.podcasts)
                 return responseJson.podcasts
                 // return responseJson.podcasts
             })

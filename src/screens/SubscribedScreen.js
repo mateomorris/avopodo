@@ -108,22 +108,16 @@ DocumentPicker.show({
             RNFetchBlob.fs.readFile(filePath, 'utf8')
             .then((data) => {
               // handle the data ..
-              console.log(data)
 
                 parseString(data, (err, { opml }) => {
                   
-                  console.log(opml);
-
                   let theShows = eachRecursive(opml.body)
                   .map(node => node.$.xmlUrl)
-
-                  console.log(theShows)
 
                   function eachRecursive(obj) {
                       for (var k in obj) {
                         if (typeof obj[k] == "object" && obj[k] !== null && (k == 0 || k == 'outline')){
                           if (Array.isArray(obj) && obj.length > 2) {
-                            console.log('Returning obj', obj, k)
                             return obj
                           } else {
                             return eachRecursive(obj[k]);

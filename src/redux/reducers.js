@@ -612,20 +612,22 @@ function reducer(state = initialState, action) {
             firebase.analytics().logEvent('show_subscribe', {
                 title: action.title
             }) 
+
+            // console.log(action)
             
-            let newShow = {
-                id: action.id,
-                title: action.title,
-                image: action.image,
-                description: action.description,
-                publisher : action.publisher,
-                imageHighRes: action.imageHighRes,
-                itunesId : action.itunesId,
-                newEpisodesAvailable : true
-            }
+            // let newShow = {
+            //     id: action.id,
+            //     title: action.title,
+            //     image: action.image,
+            //     description: action.description,
+            //     publisher : action.publisher,
+            //     imageHighRes: action.imageHighRes,
+            //     itunesId : action.itunesId,
+            //     newEpisodesAvailable : true
+            // }
             return {
                 ...state, 
-                subscribedShows: [newShow, ...state.subscribedShows]
+                subscribedShows: [action.show, ...state.subscribedShows]
             }
         case 'Unsubscribe from show': 
 

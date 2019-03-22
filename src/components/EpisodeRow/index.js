@@ -62,16 +62,16 @@ export default class EpisodeRow extends React.Component {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: '100%',
-                    height: 120
+                    height: 110
                 }} onPress={this.props.onDetailPress}>
                     <View style={{
                         paddingRight: 45
                     }}>
-                        <Text style={{
+                        {/* <Text style={{
                             fontSize: 14,
                             fontWeight: "500",
                             color: '#666666'
-                        }}>{theDate}</Text>
+                        }}>{theDate}</Text> */}
                         <Text style={{
                             fontSize: 16,
                             fontWeight: "600",
@@ -81,7 +81,7 @@ export default class EpisodeRow extends React.Component {
                             fontSize: 14,
                             fontWeight: "500",
                             color: '#666666'
-                        }} ellipsizeMode='tail' numberOfLines={3}>{info.description}</Text>
+                        }} ellipsizeMode='tail' numberOfLines={3}><Text style={{ fontWeight: '600' }}>{theDate}</Text> | {info.description}</Text>
                     </View>
                     <View style={{
                         paddingLeft: 10,
