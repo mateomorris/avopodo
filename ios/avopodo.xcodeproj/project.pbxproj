@@ -52,6 +52,7 @@
 		A20D79D42138CF99007118F9 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20D79D12138CF6A007118F9 /* libReactNativeNavigation.a */; };
 		A20D7A7D2138E6C8007118F9 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20D7A7C2138E6C8007118F9 /* dummy.swift */; };
 		A266E6FA21B2E5FC006F6BBD /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A266E6F221B2E5E5006F6BBD /* libRNFetchBlob.a */; };
+		A271937522441AB30005AAA4 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A271936C22441AA20005AAA4 /* libRNDocumentPicker.a */; };
 		A276460521952CAD00DBB804 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A276460221952CA000DBB804 /* libART.a */; };
 		A2AF307A2140C2A5006A1293 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF30792140C2A5006A1293 /* GameKit.framework */; };
 		A2AF307C2140C2AB006A1293 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF307B2140C2AB006A1293 /* StoreKit.framework */; };
@@ -449,6 +450,13 @@
 			remoteGlobalIDString = A15C300E1CD25C330074CB35;
 			remoteInfo = RNFetchBlob;
 		};
+		A271936B22441AA20005AAA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A271933822441AA20005AAA4 /* RNDocumentPicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E01DD9DB1D2311A600C39062;
+			remoteInfo = RNDocumentPicker;
+		};
 		A276460121952CA000DBB804 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A27645FC21952CA000DBB804 /* ART.xcodeproj */;
@@ -537,6 +545,7 @@
 		A20D7A7B2138E6C8007118F9 /* avopodo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avopodo-Bridging-Header.h"; sourceTree = "<group>"; };
 		A20D7A7C2138E6C8007118F9 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
+		A271933822441AA20005AAA4 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDocumentPicker.xcodeproj; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; };
 		A27645FC21952CA000DBB804 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		A2AF30792140C2A5006A1293 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A2AF307B2140C2AB006A1293 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -580,6 +589,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A271937522441AB30005AAA4 /* libRNDocumentPicker.a in Frameworks */,
 				A266E6FA21B2E5FC006F6BBD /* libRNFetchBlob.a in Frameworks */,
 				A276460521952CAD00DBB804 /* libART.a in Frameworks */,
 				A20D79D42138CF99007118F9 /* libReactNativeNavigation.a in Frameworks */,
@@ -812,6 +822,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A271933822441AA20005AAA4 /* RNDocumentPicker.xcodeproj */,
 				A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */,
 				A27645FC21952CA000DBB804 /* ART.xcodeproj */,
 				A20D79A62138CF6A007118F9 /* ReactNativeNavigation.xcodeproj */,
@@ -983,6 +994,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A271933922441AA20005AAA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A271936C22441AA20005AAA4 /* libRNDocumentPicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A27645FD21952CA000DBB804 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1150,6 +1169,9 @@
 							com.apple.Siri = {
 								enabled = 1;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -1242,6 +1264,10 @@
 				{
 					ProductGroup = A20D7A1C2138D970007118F9 /* Products */;
 					ProjectRef = F708B6C5867C4820B2DB638F /* RNBlur.xcodeproj */;
+				},
+				{
+					ProductGroup = A271933922441AA20005AAA4 /* Products */;
+					ProjectRef = A271933822441AA20005AAA4 /* RNDocumentPicker.xcodeproj */;
 				},
 				{
 					ProductGroup = A266E6BF21B2E5E5006F6BBD /* Products */;
@@ -1638,6 +1664,13 @@
 			fileType = archive.ar;
 			path = libRNFetchBlob.a;
 			remoteRef = A266E6F121B2E5E5006F6BBD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A271936C22441AA20005AAA4 /* libRNDocumentPicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDocumentPicker.a;
+			remoteRef = A271936B22441AA20005AAA4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A276460221952CA000DBB804 /* libART.a */ = {

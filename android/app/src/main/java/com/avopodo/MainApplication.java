@@ -3,6 +3,7 @@ package com.avopodo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.horcrux.svg.SvgPackage;
@@ -50,6 +51,7 @@ import java.util.List;
 //       return Arrays.<ReactPackage>asList(
 //             new TrackPlayer(),
 //             new MainReactPackage(),
+            new ReactNativeDocumentPicker(),
             new RNFetchBlobPackage(),
             new TrackPlayer(),
             new SvgPackage(),

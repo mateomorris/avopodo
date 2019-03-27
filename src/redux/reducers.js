@@ -32,7 +32,8 @@ import {
     UPDATE_EPISODE_DOWNLOAD_PROGRESS,
     SET_EPISODE_AS_DOWNLOADING,
     UNSTORE_EPISODE,
-    CANCEL_EPISODE_DOWNLOAD
+    CANCEL_EPISODE_DOWNLOAD,
+    SUBSCRIBE_TO_MULTIPLE_SHOWS
 } from './actions/actionTypes';
 
 import { Navigation } from "react-native-navigation";
@@ -62,6 +63,19 @@ import initialState from './store';
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'Clear shows': 
+            return {
+                ...state,
+                subscribedShows : []
+            }
+        case SUBSCRIBE_TO_MULTIPLE_SHOWS: 
+            return {
+                ...state,
+                subscribedShows : [
+                    ...action.shows,
+                    ...state.subscribedShows,
+                ]
+            }
         case CANCEL_EPISODE_DOWNLOAD: 
             return {
                 ...state,
@@ -270,7 +284,6 @@ function reducer(state = initialState, action) {
             });
 
             let currentEpisodePosition = state.playQueue.map(episode => episode.id).indexOf(state.nowPlaying.id)
-
             if ('id' in state.nowPlaying) {
                 let playQueue = state.playQueue.slice(currentEpisodePosition).map((episode) => {
                     return trackDetails(episode)
@@ -599,20 +612,22 @@ function reducer(state = initialState, action) {
             firebase.analytics().logEvent('show_subscribe', {
                 title: action.title
             }) 
+
+            // console.log(action)
             
-            let newShow = {
-                id: action.id,
-                title: action.title,
-                image: action.image,
-                description: action.description,
-                publisher : action.publisher,
-                imageHighRes: action.imageHighRes,
-                itunesId : action.itunesId,
-                newEpisodesAvailable : true
-            }
+            // let newShow = {
+            //     id: action.id,
+            //     title: action.title,
+            //     image: action.image,
+            //     description: action.description,
+            //     publisher : action.publisher,
+            //     imageHighRes: action.imageHighRes,
+            //     itunesId : action.itunesId,
+            //     newEpisodesAvailable : true
+            // }
             return {
                 ...state, 
-                subscribedShows: [newShow, ...state.subscribedShows]
+                subscribedShows: [action.show, ...state.subscribedShows]
             }
         case 'Unsubscribe from show': 
 

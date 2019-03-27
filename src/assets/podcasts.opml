@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<opml version="1.0">
+	<head>
+		<title>Pocket Casts Feeds</title>
+	</head>
+	<body>
+		<outline text="feeds">
+			<outline type="rss" text="Embedded" xmlUrl="https://www.npr.org/rss/podcast.php?id=510311" />
+			<outline type="rss" text="Revisionist History" xmlUrl="https://feeds.megaphone.fm/revisionisthistory" />
+			<outline type="rss" text="Planet Money" xmlUrl="http://www.npr.org/rss/podcast.php?id=510289" />
+			<outline type="rss" text="TED Radio Hour" xmlUrl="http://www.npr.org/rss/podcast.php?id=510298" />
+			<outline type="rss" text="Radiolab" xmlUrl="http://feeds.wnyc.org/radiolab" />
+			<outline type="rss" text="Dan Carlin&apos;s Hardcore History" xmlUrl="http://feeds.feedburner.com/dancarlin/history?format=xml" />
+			<outline type="rss" text="99% Invisible" xmlUrl="http://feeds.99percentinvisible.org/99percentinvisible" />
+			<outline type="rss" text="The Joe Rogan Experience" xmlUrl="http://joeroganexp.joerogan.libsynpro.com/rss" />
+			<outline type="rss" text="You Made It Weird with Pete Holmes" xmlUrl="http://feeds.feedburner.com/YouMadeItWeird" />
+			<outline type="rss" text="Timothy Keller Sermons Podcast by Gospel in Life" xmlUrl="https://ginl-podcast.s3.amazonaws.com/0_Resources/Timothy_Keller_Podcasts.xml" />
+			<outline type="rss" text="ShopTalk" xmlUrl="https://shoptalkshow.com/feed/podcast" />
+			<outline type="rss" text="All Things Comedy Live" xmlUrl="http://feeds.soundcloud.com/users/soundcloud:users:25905339/sounds.rss" />
+			<outline type="rss" text="Stay Tuned with Preet" xmlUrl="https://rss.art19.com/stay-tuned-with-preet" />
+			<outline type="rss" text="All Songs Considered" xmlUrl="http://www.npr.org/rss/podcast.php?id=510019&amp;uid=n1qe4e85742c986fdb81d2d38ffa0d5d53" />
+			<outline type="rss" text="Fresh Air" xmlUrl="https://www.npr.org/rss/podcast.php?id=381444908" />
+			<outline type="rss" text="The Daily" xmlUrl="http://rss.art19.com/the-daily" />
+			<outline type="rss" text="How I Built This with Guy Raz" xmlUrl="https://www.npr.org/rss/podcast.php?id=510313" />
+			<outline type="rss" text="Up First" xmlUrl="https://www.npr.org/rss/podcast.php?id=510318" />
+			<outline type="rss" text="Battle Ready | Erwin McManus" xmlUrl="https://battleready.blubrry.net/feed/podcast" />
+			<outline type="rss" text="Mosaic - Erwin McManus  (Audio)" xmlUrl="https://mosaicla.blubrry.net/feed/podcast" />
+			<outline type="rss" text="The Indicator from Planet Money" xmlUrl="https://www.npr.org/rss/podcast.php?id=510325" />
+			<outline type="rss" text="The Daily Show With Trevor Noah: Ears Edition" xmlUrl="https://feeds.megaphone.fm/the-daily-show" />
+			<outline type="rss" text="Change Agent" xmlUrl="https://rss.art19.com/change-agent" />
+			<outline type="rss" text="Today, Explained" xmlUrl="https://rss.art19.com/today-explained" />
+			<outline type="rss" text="WorkLife with Adam Grant" xmlUrl="https://feeds.feedburner.com/WorklifeWithAdamGrant" />
+			<outline type="rss" text="Comedy Bang Bang: The Podcast" xmlUrl="https://rss.art19.com/comedy-bang-bang" />
+			<outline type="rss" text="Common Sense with Dan Carlin" xmlUrl="http://feeds.feedburner.com/dancarlin/commonsense?format=xml" />
+			<outline type="rss" text="10 Minute Writer&apos;s Workshop" xmlUrl="http://feeds.megaphone.fm/PPY4168247956" />
+			<outline type="rss" text="Invisibilia" xmlUrl="https://www.npr.org/rss/podcast.php?id=510307" />
+			<outline type="rss" text="This American Life" xmlUrl="http://feed.thisamericanlife.org/talpodcast" />
+			<outline type="rss" text="Hidden Brain" xmlUrl="https://www.npr.org/rss/podcast.php?id=510308" />
+			<outline type="rss" text="The Tim Ferriss Show" xmlUrl="https://rss.art19.com/tim-ferriss-show" />
+			<outline type="rss" text="How To Do Everything" xmlUrl="https://www.npr.org/rss/podcast.php?id=510303" />
+			<outline type="rss" text="Adam Ruins Everything" xmlUrl="https://maximumfun.org/feeds/are.xml" />
+			<outline type="rss" text="The Trip" xmlUrl="http://feeds.megaphone.fm/thetrip" />
+			<outline type="rss" text="Freakonomics Radio" xmlUrl="http://feeds.feedburner.com/freakonomicsradio" />
+			<outline type="rss" text="Reply All" xmlUrl="HTTP://Feeds.gimletmedia.com/hearreplyall" />
+			<outline type="rss" text="Waking Up with Sam Harris" xmlUrl="http://wakingup.libsyn.com/rss" />
+			<outline type="rss" text="Monday Morning Podcast" xmlUrl="http://billburr.libsyn.com/rss" />
+			<outline type="rss" text="1 Year Daily Audio Bible" xmlUrl="http://feeds.feedburner.com/dailyaudiobible" />
+			<outline type="rss" text="1 Year Daily Audio Bible En Espanol" xmlUrl="http://feeds.feedburner.com/dailyaudiobiblespanish" />
+			<outline type="rss" text="Radio Ambulante" xmlUrl="https://www.npr.org/rss/podcast.php?id=510315" />
+			<outline type="rss" text="Crazy/Genius" xmlUrl="https://feeds.megaphone.fm/crazygenius" />
+			<outline type="rss" text="It&apos;s Been a Minute with Sam Sanders" xmlUrl="https://www.npr.org/rss/podcast.php?id=510317" />
+			<outline type="rss" text="Varandas ITS" xmlUrl="http://feeds.soundcloud.com/users/soundcloud:users:235636850/sounds.rss" />
+			<outline type="rss" text="Rough Translation" xmlUrl="https://www.npr.org/rss/podcast.php?id=510324" />
+			<outline type="rss" text="Andy Stanley Leadership Podcast" xmlUrl="http://feeds.feedburner.com/andystanleyleader" />
+			<outline type="rss" text="Daily Radio Program with Charles Stanley - In Touch Ministries" xmlUrl="https://www.intouch.org/listen/podcast/today-on-radio" />
+			<outline type="rss" text="Welcome to Night Vale" xmlUrl="http://feeds.nightvalepresents.com/welcometonightvalepodcast" />
+			<outline type="rss" text="Conversations with People Who Hate Me" xmlUrl="http://feeds.nightvalepresents.com/ConversationsWithPeopleWhoHateMe" />
+			<outline type="rss" text="Endless Thread" xmlUrl="https://rss.wbur.org/endlessthread/podcast" />
+			<outline type="rss" text="Everything Is Stories" xmlUrl="http://eisradio.libsyn.com/rss" />
+			<outline type="rss" text="Here Be Monsters" xmlUrl="http://feeds.feedburner.com/herebemonsterspodcast/" />
+			<outline type="rss" text="Science Vs" xmlUrl="http://feeds.gimletmedia.com/sciencevs" />
+			<outline type="rss" text="How It Began: A History of the Modern World" xmlUrl="http://howitbeganshow.libsyn.com/rss" />
+			<outline type="rss" text="The Third Wave" xmlUrl="http://psychedelia.libsyn.com/rss" />
+			<outline type="rss" text="StartUp Podcast" xmlUrl="http://feeds.hearstartup.com/hearstartup" />
+			<outline type="rss" text="Bundyville" xmlUrl="https://podcasts.opb.org/rss/bundyville" />
+			<outline type="rss" text="Sleep With Me | The Podcast That Puts You To Sleep" xmlUrl="http://feeds.nightvalepresents.com/sleepwithme" />
+			<outline type="rss" text="Trumpcast" xmlUrl="https://feeds.megaphone.fm/trumpcast" />
+			<outline type="rss" text="ID10T with Chris Hardwick" xmlUrl="https://rss.art19.com/id10t" />
+			<outline type="rss" text="Pod Save America" xmlUrl="http://feeds.feedburner.com/pod-save-america" />
+			<outline type="rss" text="The Vergecast" xmlUrl="https://feeds.megaphone.fm/vergecast" />
+			<outline type="rss" text="NPR Politics Podcast" xmlUrl="https://www.npr.org/rss/podcast.php?id=510310" />
+			<outline type="rss" text="FiveThirtyEight Politics" xmlUrl="http://www.espn.com/espnradio/podcast/feeds/itunes/podCast?id=14554755" />
+			<outline type="rss" text="Can He Do That?" xmlUrl="http://podcast.posttv.com/itunes-58861635e4b039a652877de6.xml" />
+			<outline type="rss" text="Order 9066" xmlUrl="https://feeds.publicradio.org/public_feeds/order-9066/itunes/rss" />
+			<outline type="rss" text="The Jordan B. Peterson Podcast" xmlUrl="https://feeds.blubrry.com/feeds/jordanbpeterson.xml" />
+			<outline type="rss" text="The RobCast" xmlUrl="https://robbell.podbean.com/feed.xml" />
+			<outline type="rss" text="Heston&apos;s Pod &amp; Chips" xmlUrl="https://audioboom.com/channels/4977433.rss" />
+		</outline>
+	</body>
+</opml>

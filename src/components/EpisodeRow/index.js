@@ -53,31 +53,39 @@ export default class EpisodeRow extends React.Component {
                 style={{
                     borderBottomWidth: 1,
                     borderBottomColor: '#CCC',
+                    marginLeft: 10,
                     padding: 20,
+                    paddingLeft: 10,
                     paddingRight: 10,
                     // marginLeft: 10, 
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                     width: '100%',
-                    height: 75
+                    height: 110
                 }} onPress={this.props.onDetailPress}>
                     <View style={{
                         paddingRight: 45
                     }}>
-                        <Text style={{
+                        {/* <Text style={{
                             fontSize: 14,
                             fontWeight: "500",
                             color: '#666666'
-                        }}>{theDate}</Text>
+                        }}>{theDate}</Text> */}
                         <Text style={{
                             fontSize: 16,
                             fontWeight: "600",
                             color: '#333'
                         }} ellipsizeMode='tail' numberOfLines={1}>{info.title}</Text>
+                        <Text style={{
+                            fontSize: 14,
+                            fontWeight: "500",
+                            color: '#666666'
+                        }} ellipsizeMode='tail' numberOfLines={3}><Text style={{ fontWeight: '600' }}>{theDate}</Text> | {info.description}</Text>
                     </View>
                     <View style={{
                         paddingLeft: 10,
-                        paddingRight: 15,
+                        paddingRight: 25,
                         position: 'absolute',
                         right: 0,
                         alignItems: 'center',

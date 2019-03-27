@@ -5,6 +5,7 @@ import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
 import { animate } from 'helpers/animations';
 import { genreColors } from 'utilities/constants';
+import styled from 'styled-components/native'
 
 const styles = StyleSheet.create({
     container: {
@@ -19,42 +20,41 @@ const styles = StyleSheet.create({
     },
 });
 
-export class GhostButton extends React.Component {
-    state = {}
 
-    render() {
+export const GhostButton = styled(TouchableOpacity).attrs(({ style, label, icon, onPress }) => ({
+    label : 'Ghost Button',
+    icon : require('assets/big-pause.png'),
+    onPress : () => {},
+    children : (
+        <View style={{ flexDirection: 'row' }}>
+            <Text style={{
+                color: 'white',
+                fontWeight: '900'
+            }}>{ label }</Text>
+            {
+                icon &&
+                <Image style={{
+                    height: 15,
+                    width: 15,
+                    marginTop: 2,
+                    marginLeft: 5,
+                }} source={ icon } />
+            }
+        </View>
+    )
+}))`
+    padding-left: 10;
+    padding-right: 10;
+    padding-top: 5;
+    padding-bottom: 5;
+    border-color: whitesmoke;
+    border-width: 2;
+    border-radius: 35;
+    flex-direction: row;
+    background-color: black;
+    ${props => props.style}
+`;
 
-        let { label, icon } = this.props;
-        return (
-            <TouchableOpacity style={[{
-                paddingLeft: 10,
-                paddingRight: 10,
-                paddingTop: 5,
-                paddingBottom: 5,
-                borderColor: 'whitesmoke',
-                borderWidth: 2,
-                borderRadius: 35,
-                flexDirection: 'row',
-                // marginBottom: 10
-            }, this.props.style]} 
-            onPress={() => {this.props.onPress()}}>
-                <Text style={{
-                    color: 'white',
-                    fontWeight: '900'
-                }}>{ label }</Text>
-                {
-                    icon &&
-                    <Image style={{
-                        height: 15,
-                        width: 15,
-                        marginTop: 2,
-                        marginLeft: 5,
-                    }} source={ icon } />
-                }
-            </TouchableOpacity>
-        )
-    }
-}
 
 export class DiscoverButton extends React.Component {
 

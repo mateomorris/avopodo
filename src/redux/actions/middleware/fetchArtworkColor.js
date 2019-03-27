@@ -13,5 +13,8 @@ export function fetchArtworkColor(id, imageUrl) {
             let color = responseJson.tags[0].color;
             dispatch(setArtworkColor(id, color));
         })
+        .catch(err => {
+            console.log(err)
+        })
     }
 }

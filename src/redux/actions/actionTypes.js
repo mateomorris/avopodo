@@ -36,3 +36,4 @@ export const UPDATE_EPISODE_DOWNLOAD_PROGRESS = 'Update episode download progres
 export const SET_EPISODE_AS_DOWNLOADING = 'Set episode as downloading';
 export const UNSTORE_EPISODE = 'Unstore episode';
 export const CANCEL_EPISODE_DOWNLOAD = 'Cancel episode download';
+export const SUBSCRIBE_TO_MULTIPLE_SHOWS = 'Subscribe to multiple shows';

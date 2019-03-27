@@ -110,7 +110,7 @@ class ShowDetailScreen extends React.Component {
         }
     }
 
-    // _renderEpisodeList = (title, image, imageHighRes, description, color, episodes) => {
+    // _renderEpisodeList = (title, image, image, description, color, episodes) => {
     //     if (this.state.loadingEpisodes) {
     //         return <LoadingIndicator />
     //     } else {
@@ -119,7 +119,7 @@ class ShowDetailScreen extends React.Component {
     //                 <EpisodeRow 
     //                     info={episode} 
     //                     onDetailPress={() => { this._handleEpisodeDetailPress(episode) } } 
-    //                     onPlayPress={() => { this._playAudio(title, image, imageHighRes, description, color, episode) }}
+    //                     onPlayPress={() => { this._playAudio(title, image, image, description, color, episode) }}
     //                     finished={this.props.state.finishedEpisodes.find(episodeId => episodeId == episode.id) ? true : false}
     //                     playProgress={this._getPlayProgress(episode)}
     //                     playing={}
@@ -295,7 +295,7 @@ class ShowDetailScreen extends React.Component {
                             />
                         }
                     >
-                        {/* { this._renderEpisodeList(title, image, imageHighRes, description, color, this.state.episodes) } */}
+                        {/* { this._renderEpisodeList(title, image, image, description, color, this.state.episodes) } */}
                         {
                             this.state.loadingEpisodes ? 
                             <LoadingIndicator /> : 
