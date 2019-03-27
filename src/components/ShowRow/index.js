@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import SvgUri from 'react-native-svg-uri';
+import generalIcons from 'assets/generalIcons';
 
 const styles = StyleSheet.create({
 
@@ -33,8 +35,7 @@ export class ShowRow extends React.Component {
                 paddingBottom: 15, 
                 borderBottomColor: '#DDD', 
                 borderBottomWidth: 1, 
-                height: 100, 
-                overflow: 'hidden' 
+                overflow: 'hidden'
               }} 
               onPress={() => {this.props.onSearchResultPress()}}
             >
@@ -59,10 +60,12 @@ export class ShowRow extends React.Component {
               <TouchableOpacity style={{ justifyContent: 'center'}} onPress={() => {
                 this._subscribeToShow()
               }}>
-                <Image 
+                <SvgUri style={{
+                }} width="25" height="25" svgXmlData={generalIcons['bookmark']} fill={this.state.subscribed ? '#222' : '#AAA'} fillAll={true}/>
+                {/* <Image 
                   source={ this.state.subscribed ? require('assets/bookmark-black.png') : require('assets/bookmark.png') } 
                   style={{ width: 25, height: 25 }}
-                />
+                /> */}
               </TouchableOpacity>
             </TouchableOpacity>
         );
