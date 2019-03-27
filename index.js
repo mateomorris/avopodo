@@ -32,6 +32,11 @@ console.disableYellowBox = true;
 if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 
+const TAB_OPTIONS = {
+  textColor : '#555',
+  selectedTextColor: '#222',  
+}
+
 persistStore(store, null, () => {
 
   Navigation.registerComponentWithRedux('example.HomeScreen', () => HomeScreen, Provider, store);
@@ -69,6 +74,7 @@ persistStore(store, null, () => {
                   }],
                   options: {
                     bottomTab: {
+                      ...TAB_OPTIONS,
                       text: 'Feed',
                       icon: require('./src/assets/tab-icons/feed.png'),
                       selectedIcon: require('./src/assets/tab-icons/feed-active.png'),
@@ -100,6 +106,7 @@ persistStore(store, null, () => {
                   }],
                   options: {
                     bottomTab: {
+                      ...TAB_OPTIONS,
                       text: 'Discover',
                       icon: require('./src/assets/tab-icons/discover.png'),
                       selectedIcon: require('./src/assets/tab-icons/discover-active.png'),
@@ -147,6 +154,7 @@ persistStore(store, null, () => {
                   }],
                   options: {
                     bottomTab: {
+                      ...TAB_OPTIONS,
                       text: 'Subscribed',
                       icon: require('./src/assets/tab-icons/subscribed.png'),
                       selectedIcon: require('./src/assets/tab-icons/subscribed-active.png'),
