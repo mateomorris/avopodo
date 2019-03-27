@@ -8,6 +8,7 @@ import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import GridView from 'react-native-super-grid';
 import SvgUri from 'react-native-svg-uri';
 import Tabs from 'react-native-tabs';
+import styled from 'styled-components/native'
 import { genreColors } from 'utilities/constants';
 
 import { DiscoverButton } from 'components/Button';
@@ -20,10 +21,42 @@ import SearchResults from './SearchResults';
 import { Headline } from 'components/Headline'
 
 import icons from 'assets/genre-icons';
+import generalIcons from 'assets/generalIcons';
 
 import * as specialActions from 'actions';
 
 import SearchBar from 'react-native-search-bar';
+
+
+const SuggestionRow = styled(TouchableOpacity).attrs(({ show }) => ({
+  children : (
+    <View style={{ flexDirection: 'row', flex: 1 }}>
+      <View style={{
+        paddingRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <SvgUri style={{
+        }} width="25" height="25" svgXmlData={generalIcons['search']} fill={'#555'} fillAll={true}/>
+      </View>
+      <View style={{ flex: 1 }}>
+          <Text style={{
+            fontSize: 16,
+            fontWeight: '600',
+            color: '#222'
+          }} ellipsizeMode='tail' numberOfLines={1}>{ show.title_original }</Text>
+          <Text style={{ color: '#555' }} ellipsizeMode='tail' numberOfLines={1}>{ show.publisher_original }</Text>
+      </View>
+    </View>
+  )
+}))`
+  flex: 1;
+  border-bottom-width: 1px;
+  border-bottom-color: gainsboro;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 15px;
+`;
 
 class DiscoverScreen extends React.Component {
 
@@ -176,24 +209,34 @@ class DiscoverScreen extends React.Component {
     })
   }
 
-  _getShowDetails = (show) => {
-    this.props.actions.getShowDetails(show.id).then((result) => {
-      Navigation.showOverlay({
-        component: {
-          name: 'example.ShowPreviewScreen',
-          passProps: { 
-            item : result,
-            subscribed: this._checkIfSubscribed(result.id),
-            onSubscribe: () => {this._subscribeToShow(result)},
-          }, // simple serializable object that will pass as props to the lightbox (optional)
-          options: {
-            overlay: {
-              interceptTouchOutside: false
-            }
-          }
-        }
-      });
+  _getShowDetails = ({ title_original }) => {
+    this.myTextInput.state.keyword = title_original
+    this.setState({
+      search : title_original,
+      showSuggestions : false,
+      searching: true
+    }, () => {
+      this.myTextInput.onSearch()
     })
+
+
+    // this.props.actions.getShowDetails(show.id).then((result) => {
+    //   Navigation.showOverlay({
+    //     component: {
+    //       name: 'example.ShowPreviewScreen',
+    //       passProps: { 
+    //         item : result,
+    //         subscribed: this._checkIfSubscribed(result.id),
+    //         onSubscribe: () => {this._subscribeToShow(result)},
+    //       }, // simple serializable object that will pass as props to the lightbox (optional)
+    //       options: {
+    //         overlay: {
+    //           interceptTouchOutside: false
+    //         }
+    //       }
+    //     }
+    //   });
+    // })
   }
 
   _getSearchResults = (term, type) => {
@@ -260,15 +303,14 @@ class DiscoverScreen extends React.Component {
             return new Promise((resolve, reject) => {
                 clearTimeout(this.change);
 
-                // 
-                if (!this.state.showSearchResults && !this.state.searching) {
+                // if (!this.state.showSearchResults && !this.state.searching) {
+                if (!this.state.showSearchResults) {
                   this.setState({ search: text }, () => {
                     if (text.length > 5) {
                       this.setState({
                         searching: true,
                         showGenres: false,
                         showSuggestions : true,
-                        // showSuggestions: this.state.showSuggestions === true ? false : null
                       })
                       this.change = setTimeout(() => {
                         this.props.actions.getTypeAhead(text).then((result) => {
@@ -371,7 +413,7 @@ class DiscoverScreen extends React.Component {
           }}>
             {
               this.state.typeAheadShows.length > 0 &&
-              this.state.showSuggestions > 0 &&
+              this.state.showSuggestions &&
               <View style={{
                 flexDirection : 'column',
                 paddingBottom: 20
@@ -379,7 +421,7 @@ class DiscoverScreen extends React.Component {
                 <Headline text={'Search Suggestions'}/>
                 <View
                   style={{
-                    flexDirection: 'row'
+                    flexDirection: 'column'
                   }}
                   onLayout={(e) => {
                       this.setState({
@@ -390,18 +432,12 @@ class DiscoverScreen extends React.Component {
                   {
                     this.state.typeAheadShows.map((show) => {
                       return (
-                        <ShowThumbnail
-                        style={{
-                          height: this.state.containerWidth / 5,
-                          width: this.state.containerWidth / 5,
-                          opacity: this.state.containerWidth > 0 ? 1 : 0
-                        }}
-                        art={show.thumbnail}
-                        color={'black'}
-                        onPress={() => {
-                          this._getShowDetails(show)
-                        }}
-                        />  
+                        <SuggestionRow 
+                          show={show} 
+                          onPress={() => {
+                            this._getShowDetails(show)
+                          }}
+                        />
                       )
                     })
                   }
@@ -494,129 +530,6 @@ class DiscoverScreen extends React.Component {
             }}>No results found</Text>
           </View>
         }
-
-        {/* <ScrollView contentContainerStyle={[styles.container, 
-        {
-          paddingBottom: this.props.details.active ? 70 : 20
-        }]}>
-          <View style={{
-            paddingLeft: 10,
-            paddingRight: 10
-          }}>
-            {
-              this.state.typeAheadShows.length > 0 &&
-              this.state.showSuggestions > 0 &&
-              <View style={{
-                flexDirection : 'column',
-                paddingBottom: 20
-              }}>
-                <Headline text={'Search Suggestions'}/>
-                <View
-                  style={{
-                    flexDirection: 'row'
-                  }}
-                  onLayout={(e) => {
-                      this.setState({
-                          containerWidth: e.nativeEvent.layout.width,
-                      })
-                  }}
-                >
-                  {
-                    this.state.typeAheadShows.map((show) => {
-                      return (
-                        <ShowThumbnail
-                        style={{
-                          height: this.state.containerWidth / 5,
-                          width: this.state.containerWidth / 5,
-                          opacity: this.state.containerWidth > 0 ? 1 : 0
-                        }}
-                        art={show.thumbnail}
-                        color={'black'}
-                        onPress={() => {
-                          this._getShowDetails(show)
-                        }}
-                        />  
-                      )
-                    })
-                  }
-                </View>
-              </View>
-            }
-            { 
-              this.state.showSearchResults && 
-              <View>
-                <Headline 
-                  text={'Search Results'}
-                  style={{
-                    marginBottom: 0
-                  }}
-                />
-                {              
-                  this._renderSearchResults(this.state.searchResults) 
-                }
-              </View>
-            }
-            { 
-              this.state.searching && 
-              <LoadingIndicator /> 
-            }
-          </View>
-          {
-            this.state.showGenres &&
-            <GridView
-              itemContainerStyle={{
-              //   backgroundColor: 'red',
-              //   padding: 0,
-              //   margin: 0
-              }}
-              style={{
-                // backgroundColor: 'yellow'
-              }}
-              spacing={10}
-              itemDimension={130}
-              items={this.state.genres}
-              renderItem={genre => (
-                <DiscoverButton 
-                  genre={genre} 
-                  icon={this._getIcon(genre)}
-                  onPress={() => {
-                    Navigation.push(this.props.componentId, {
-                    component: {
-                        name: 'example.GenreDetailScreen',
-                        passProps: {
-                        componentId: this.props.componentId,
-                        genre
-                        },
-                        noBorder: false,
-                        options: {
-                        topBar: {
-                            title: {
-                            text: genre.name,
-                            }
-                        }
-                        }
-                    }
-                    });
-                  }}
-                  style={{
-
-                  }}
-                />
-              )}
-            />
-          }
-              <View style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                  <Image 
-                  resizeMode={'contain'}
-                  source={require('assets/listen-notes.png')} style={{
-                      width: 200,
-                      height: 20,
-                  }}/>
-              </View>
-        </ScrollView>  */}
       </View>
     );
   }
