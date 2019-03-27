@@ -8,7 +8,7 @@ export function importShows (showUrls) {
 
         let iterations = Math.ceil(showUrls.length / 10) // (43 / 10).ceil => 5 => Go 5 times 
 
-        Promise.all((() => (
+        return Promise.all((() => (
             Array(iterations).fill().map((_, index) => {
                 let start = index * 10
                 let end = start + 9
@@ -28,19 +28,6 @@ export function importShows (showUrls) {
                 }
             })
         }
-
-        // function formatShow (show) {
-        //     return {
-        //         id : show.id,
-        //         title : show.title,
-        //         image : show.thumbnail,
-        //         description : show.description,
-        //         publisher : show.publisher,
-        //         imageHighRes: show.image,
-        //         itunesId : show.itunes_id,
-        //         color: null
-        //     }
-        // }
 
 
         async function fetchShows(RSSUrls) {

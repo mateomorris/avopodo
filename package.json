@@ -53,6 +53,7 @@
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.3.0",
     "rn-fetch-blob": "^0.10.13",
+    "styled-components": "^4.2.0",
     "tinycolor2": "^1.4.1"
   },
   "devDependencies": {

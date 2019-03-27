@@ -374,6 +374,10 @@ export class HomeScreen extends React.Component {
           padding: 50,
           paddingTop: 0
         }}>
+          <GhostButton 
+            icon={require('assets/big-pause.png')}
+            label={'Ghost button'}
+          />
           <Image 
             source={require('assets/avopodo.png')}
             style={{
