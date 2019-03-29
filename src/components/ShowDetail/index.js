@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { BORDER_RADIUS, COLORS } from 'constants';
 
 const styles = StyleSheet.create({
     container: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     thumbnail: { 
         width: 120, 
         height: 120, 
-        borderRadius: 4
+        borderRadius: BORDER_RADIUS
     }
 });
 
@@ -41,7 +42,7 @@ export class ShowDetail extends React.Component {
                     shadowOpacity: 0.5, 
                     paddingLeft: 10, 
                     paddingRight: 10, 
-                    backgroundColor: 'black', 
+                    backgroundColor: COLORS.black, 
                     paddingTop: 10, 
                     paddingBottom: 10,
                     borderBottomWidth: 5, 

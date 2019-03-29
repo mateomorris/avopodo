@@ -7,7 +7,7 @@ import { animate } from 'helpers/animations'
 import { Circle } from 'react-native-progress';
 
 import icons from 'assets/generalIcons';
-import { BORDER_RADIUS, SHADOW } from 'constants';
+import { BORDER_RADIUS, SHADOW, COLORS } from 'constants';
 
 const styles = StyleSheet.create({
     container: {
@@ -151,7 +151,7 @@ export class EpisodeSnippet extends React.Component {
                 >
                     <View 
                         style={{ 
-                            backgroundColor: '#111', 
+                            backgroundColor: COLORS.black, 
                             borderBottomLeftRadius: 5,
                             borderTopRightRadius: 5,
                             paddingLeft: 5, 
@@ -297,7 +297,7 @@ export class EpisodeSnippet extends React.Component {
                         <Text 
                             numberOfLines={2}
                             ellipsizeMode={'tail'}
-                            style={{fontSize: 16, color: '#222', fontWeight: '700', flex: 1}} 
+                            style={{fontSize: 16, color: COLORS.black, fontWeight: '700', flex: 1}} 
                             onLayout={(e) => {
                                 this.setState({
                                     titleHeight : e.nativeEvent.layout.height
