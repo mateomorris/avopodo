@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { BlurView } from 'react-native-blur';
 import SvgUri from 'react-native-svg-uri';
 import tinycolor from 'tinycolor2';
+import { BORDER_RADIUS } from 'constants';
 
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Carousel from 'react-native-snap-carousel';
@@ -154,7 +155,7 @@ class PlayingScreen extends React.Component {
           justifyContent: 'center', 
           alignItems: 'center', 
           overflow: 'hidden', 
-          borderRadius: 5, 
+          borderRadius: BORDER_RADIUS, 
           height: Dimensions.get('window').width - 100, 
           width: Dimensions.get('window').width - 100, 
           backgroundColor: item.showColor

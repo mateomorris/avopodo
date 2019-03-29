@@ -79,25 +79,27 @@ class ShowDetailScreen extends React.Component {
         });
     }
 
-    _handleEpisodeDetailPress = (episode) => {
 
-        Navigation.showOverlay({
-            component: {
-                name: 'example.EpisodeDetailScreen',
-                passProps: { 
-                    episode,
-                    playing : this.props.state.nowPlaying.id == episode.id ? true : false,
-                    onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)}
-                }, // simple serializable object that will pass as props to the lightbox (optional)
-                options: {
-                    overlay: {
-                        interceptTouchOutside: false
-                    }
-                }
-            }
-        });
+    // _handleEpisodeDetailPress = (episode) => {
 
-      }
+    //     Navigation.showOverlay({
+    //         component: {
+    //             name: 'example.EpisodeDetailScreen',
+    //             passProps: { 
+    //                 episode,
+    //                 playing : this.props.state.nowPlaying.id == episode.id ? true : false,
+    //                 onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)},
+    //                 onDownloadPress : () => {this._handleEpisodeDownload(episode)}
+    //             }, // simple serializable object that will pass as props to the lightbox (optional)
+    //             options: {
+    //                 overlay: {
+    //                     interceptTouchOutside: false
+    //                 }
+    //             }
+    //         }
+    //     });
+
+    //   }
 
     _getPlayProgress = (episode) => {
 
@@ -204,6 +206,22 @@ class ShowDetailScreen extends React.Component {
         
     }
 
+    _handleEpisodeDownload = (episode) => {
+        let downloadedEpisode = this.props.downloadsInProgress.filter(d => d.episodeId == episode.id)[0]
+
+        if (!downloadedEpisode) { // Not even started
+            this.props.actions.downloadEpisode(episode);
+        } else if (downloadedEpisode.progress < 0.99) {  // Started but not finished
+        // Cancel download functionality -> https://github.com/joltup/rn-fetch-blob#cancel-request
+            this.props.actions.cancelEpisodeDownload(episode);
+        // this.props.pauseEpisodeDownload(episode);
+        } else if (downloadedEpisode.progress >= 0.99){
+            this.props.actions.removeEpisodeDownload(episode);
+        } else {
+        // Alert.alert('None of the above');
+        }
+    }
+
     _handleEpisodeDetailPress = (episode) => {
         Navigation.showOverlay({
             component: {
@@ -211,7 +229,8 @@ class ShowDetailScreen extends React.Component {
                 passProps: { 
                     episode,
                     playing : this.props.state.nowPlaying.id == episode.id ? true : false,
-                    onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)}
+                    onPlayPress : () => {this._handleEpisodeThumbnailPress(episode)},
+                    onDownloadPress : () => {this._handleEpisodeDownload(episode)}
                 }, // simple serializable object that will pass as props to the lightbox (optional)
                 options: {
                     overlay: {
@@ -330,6 +349,7 @@ class ShowDetailScreen extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
+        downloadsInProgress : state.downloadsInProgress,
 		state: state
 	};
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
@@ -54,7 +53,6 @@
 		A266E6FA21B2E5FC006F6BBD /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A266E6F221B2E5E5006F6BBD /* libRNFetchBlob.a */; };
 		A271937522441AB30005AAA4 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A271936C22441AA20005AAA4 /* libRNDocumentPicker.a */; };
 		A276460521952CAD00DBB804 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A276460221952CA000DBB804 /* libART.a */; };
-		A2AF307A2140C2A5006A1293 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF30792140C2A5006A1293 /* GameKit.framework */; };
 		A2AF307C2140C2AB006A1293 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF307B2140C2AB006A1293 /* StoreKit.framework */; };
 		A2AF307E2140C2AD006A1293 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AF307D2140C2AD006A1293 /* AudioToolbox.framework */; };
 		A2B4FF43215B12E70047F055 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2B4FF42215B12E60047F055 /* GoogleService-Info.plist */; };
@@ -547,7 +545,6 @@
 		A266E6BE21B2E5E5006F6BBD /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		A271933822441AA20005AAA4 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDocumentPicker.xcodeproj; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; };
 		A27645FC21952CA000DBB804 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
-		A2AF30792140C2A5006A1293 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A2AF307B2140C2AB006A1293 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A2AF307D2140C2AD006A1293 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A2AF307F2140C2AD006A1293 /* avopodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = avopodo.entitlements; path = avopodo/avopodo.entitlements; sourceTree = "<group>"; };
@@ -599,7 +596,6 @@
 				A2AF307E2140C2AD006A1293 /* AudioToolbox.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -607,7 +603,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				A2AF307A2140C2A5006A1293 /* GameKit.framework in Frameworks */,
 				A2AF307C2140C2AB006A1293 /* StoreKit.framework in Frameworks */,
 				B7F2270ED93F426985AD4FCE /* libRNBlur.a in Frameworks */,
 				E90D105E2EA44874A72BE7B8 /* libBVLinearGradient.a in Frameworks */,
@@ -776,7 +771,6 @@
 			children = (
 				A2AF307D2140C2AD006A1293 /* AudioToolbox.framework */,
 				A2AF307B2140C2AB006A1293 /* StoreKit.framework */,
-				A2AF30792140C2A5006A1293 /* GameKit.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				137C01D034F18EEFE287CE30 /* libPods-avopodo-tvOS.a */,
 				F8D564883CF556E3AA5BE8B0 /* libPods-avopodo-tvOSTests.a */,
@@ -1152,7 +1146,7 @@
 								enabled = 1;
 							};
 							com.apple.GameCenter.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -1164,7 +1158,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Siri = {
 								enabled = 1;

@@ -8,6 +8,7 @@ import * as Animatable from 'react-native-animatable';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import tinycolor from 'tinycolor2'
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
+import { BORDER_RADIUS } from 'constants';
 
 import PlayProgressIndicator from 'components/PlayProgressIndicator';
 import { MaterialIndicator } from 'react-native-indicators';
@@ -435,7 +436,7 @@ class PlayBar extends React.Component {
                             >
                                 <View style={{
                                     backgroundColor: nowPlaying.showColor,
-                                    borderRadius: 2,
+                                    borderRadius: BORDER_RADIUS / 3,
                                     overflow: 'hidden',
                                 }}>
                                     {

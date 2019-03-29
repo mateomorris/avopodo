@@ -33,8 +33,8 @@ if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 
 const TAB_OPTIONS = {
-  textColor : '#555',
-  selectedTextColor: '#222',  
+  textColor : 'rgb(163,163,163)',
+  selectedTextColor: 'rgb(144, 174, 65)',  
 }
 
 persistStore(store, null, () => {
