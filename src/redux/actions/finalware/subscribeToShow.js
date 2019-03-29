@@ -8,7 +8,7 @@ export function subscribeToShow(show) {
         id : show.id,
         title : show.title,
         image : show.thumbnail,
-        description : show.description,
+        description : show.description.trim().replace(/<(?:.|\n)*?>/gm, ''), // strip html,
         publisher : show.publisher,
         imageHighRes: show.image || show.imageHighRes,
         itunesId : show.itunesId,

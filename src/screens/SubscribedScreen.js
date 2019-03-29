@@ -191,13 +191,13 @@ class SubscribedScreen extends React.Component {
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <ScrollView contentContainerStyle={[styles.container, { paddingBottom: this.props.state.active ? 50 : 5 }]}>
           {/* { this._renderFavorites(this.props.state.subscribedShows) } */}
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          {/* <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={() => {
               this.props.clearShows()
             }}>
               <Text>Clear shows</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <FlatList 
             numColumns={3}
             data={this.props.state.subscribedShows}

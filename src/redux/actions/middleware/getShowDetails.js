@@ -16,7 +16,7 @@ export function getShowDetails (showId) {
                 title: responseJson.title,
                 image: responseJson.image,
                 imageHighRes: responseJson.image, 
-                description: responseJson.description.trim().replace(/(<([^>]+)>)/ig,""), // strip html,
+                description: responseJson.description,
                 publisher: responseJson.publisher_original,
                 itunesId: responseJson.itunes_id
             }

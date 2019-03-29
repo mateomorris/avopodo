@@ -416,7 +416,7 @@ class PlayBar extends React.Component {
                         paddingBottom: 0, 
                         height: 50, 
                         zIndex: 1, 
-                        backgroundColor: '#010101',
+                        backgroundColor: '#111',
                         flexDirection: 'row'
                     }}>
                         <View 
