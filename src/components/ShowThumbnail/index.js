@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, Alert, Dimensions, ImageBackground, Animated } from 'react-native';
 import { OfflineImage, OfflineImageStore } from 'react-native-image-offline';
 import { animate } from 'helpers/animations'
+import { BORDER_RADIUS, SHADOW } from 'constants';
 
 import { TouchableView } from 'components/Button'
 
@@ -9,14 +10,7 @@ const thumbnailSize = ( Dimensions.get('window').width / 3 ) - (10 / 3)
 
 const styles = StyleSheet.create({
     container: {
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: 0
-        },
-        shadowRadius: 2,
-        shadowOpacity: 0.5,
-        borderRadius: 5,
+        ...SHADOW,
         justifyContent: 'center',
         alignItems: 'center',
         width: thumbnailSize,
@@ -25,10 +19,11 @@ const styles = StyleSheet.create({
     thumbnail: { 
         width: '90%',
         height: '90%',
-        borderRadius: 5,
+        borderRadius: BORDER_RADIUS,
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
+        overflow: 'hidden'
     },
     featured: {
         width: 120,
@@ -158,7 +153,8 @@ export default class ShowThumbnail extends React.Component {
                         fontWeight: '700',
                         textAlign: 'center',
                         padding: 10
-                    }}>{ this.props.name ? this.props.name.match(/\b(\w)/g).join('') : '' }</Text>
+                    }}>{ this.props.name }</Text>
+                    {/* }}>{ this.props.name ? this.props.name.match(/\b(\w)/g).join('') : '' }</Text> */}
                     {
                         this.state.reStoreCompleted &&
                         <OfflineImage

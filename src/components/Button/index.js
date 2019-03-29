@@ -7,6 +7,8 @@ import { animate } from 'helpers/animations';
 import { genreColors } from 'utilities/constants';
 import styled from 'styled-components/native'
 
+import { BORDER_RADIUS, SHADOW } from 'constants';
+
 const styles = StyleSheet.create({
     container: {
         margin: 5, 
@@ -96,16 +98,10 @@ export class DiscoverButton extends React.Component {
                 height: 100,
                 paddingLeft: 10,
                 paddingRight: 10,
-                borderRadius: 5,
+                borderRadius: BORDER_RADIUS,
                 backgroundColor: genreColors[genre.name] || '#222',
                 transform : [{ scale : this.state.pressedScale }],
-                shadowColor: '#000000',
-                shadowOffset: {
-                    width: 0,
-                    height: 0
-                },
-                shadowRadius: 2,
-                shadowOpacity: 0.25,
+                ...SHADOW
             }, style]} 
             onInitialPress={() => {
                 this._animateButton()
