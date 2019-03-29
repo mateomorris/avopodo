@@ -33,12 +33,12 @@ export class EpisodeSnippet extends React.Component {
         pressedScale: new Animated.Value(1)
     }
 
-    _normalizeDuration = (duration) => {
+    _normalizeDuration = (duration, accessible = false) => {
         let durationInHours = parseFloat(duration / (60 * 60)).toFixed(1)
         if (durationInHours < 1) {
-            return `${durationInHours * 60}m`
+            return accessible ? `${durationInHours * 60} minutes` : `${durationInHours * 60}m`
         } else {
-            return `${durationInHours}h`
+            return accessible ? `${durationInHours == 1 ? ' hour' : ' hours' }` : `${durationInHours}h`
         }
     }
 
@@ -243,10 +243,16 @@ export class EpisodeSnippet extends React.Component {
     render() {
 
         const { playing } = this.props
-        const { title, showImage, showImageHighRes, duration, description, publishDate, showColor } = this.props.data; 
+        const { title, showImage, showImageHighRes, showTitle, duration, description, publishDate, showColor } = this.props.data; 
 
         return (
-            <View style={{ flexDirection: 'row', height: 120 }}>
+            <View style={{ flexDirection: 'row', height: 120 }} accessible={true} accessibilityRole={'button'} accessibilityLabel={`
+                ${showTitle},
+                ${title},
+                ${this._getDate(publishDate)},
+                ${this._normalizeDuration(duration, true)},
+                ${description}
+            `}>
                 <Animated.View style={[styles.container, { 
                     transform: [{
                         scale: this.state.pressedScale
@@ -263,7 +269,7 @@ export class EpisodeSnippet extends React.Component {
                     this._handleCancel()
                 }}
                 >
-                    <View style={styles.thumbnail}>
+                    <View style={styles.thumbnail} accessibilityIgnoresInvertColors={true}>
                         <OfflineImage
                             key={showImage}
                             resizeMode={'contain'}
