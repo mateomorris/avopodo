@@ -34,7 +34,8 @@ Text.defaultProps.allowFontScaling = false;
 
 const TAB_OPTIONS = {
   textColor : 'rgb(163,163,163)',
-  selectedTextColor: 'rgb(144, 174, 65)',  
+  selectedTextColor: '#8E8E93',  
+  // selectedTextColor: 'rgb(144, 174, 65)',  
 }
 
 persistStore(store, null, () => {
@@ -76,8 +77,8 @@ persistStore(store, null, () => {
                     bottomTab: {
                       ...TAB_OPTIONS,
                       text: 'Feed',
-                      icon: require('./src/assets/tab-icons/feed.png'),
-                      selectedIcon: require('./src/assets/tab-icons/feed-active.png'),
+                      icon: require('./src/assets/new-tab-icons/feed-three.png'),
+                      selectedIcon: require('./src/assets/new-tab-icons/feed-three-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     },
                     topBar: {
@@ -108,8 +109,8 @@ persistStore(store, null, () => {
                     bottomTab: {
                       ...TAB_OPTIONS,
                       text: 'Discover',
-                      icon: require('./src/assets/tab-icons/discover.png'),
-                      selectedIcon: require('./src/assets/tab-icons/discover-active.png'),
+                      icon: require('./src/assets/new-tab-icons/discover.png'),
+                      selectedIcon: require('./src/assets/new-tab-icons/discover-active.png'),
                       testID: 'SECOND_TAB_BAR_BUTTON'
                     }
                   }
@@ -156,8 +157,8 @@ persistStore(store, null, () => {
                     bottomTab: {
                       ...TAB_OPTIONS,
                       text: 'Subscribed',
-                      icon: require('./src/assets/tab-icons/subscribed.png'),
-                      selectedIcon: require('./src/assets/tab-icons/subscribed-active.png'),
+                      icon: require('./src/assets/new-tab-icons/subscribed.png'),
+                      selectedIcon: require('./src/assets/new-tab-icons/subscribed-active.png'),
                       testID: 'FIRST_TAB_BAR_BUTTON'
                     },
                     topBar: {
